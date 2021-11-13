@@ -76,14 +76,38 @@ public class XmlFiles {
                     Element element = (Element) node;
 
                     name.add (element.getAttribute("name"));
-                    x.add (Integer.valueOf(element.getAttribute("x")));
-                    y.add (Integer.valueOf(element.getAttribute("y")));
-                    width.add (Integer.valueOf(element.getAttribute("width")));
-                    height.add (Integer.valueOf(element.getAttribute("height")));
-                    frameX.add (Integer.valueOf(element.getAttribute("frameX")));
-                    frameY.add (Integer.valueOf(element.getAttribute("frameY")));
-                    frameWidth.add (Integer.valueOf(element.getAttribute("frameWidth")));
-                    frameHeight.add (Integer.valueOf(element.getAttribute("frameHeight")));
+
+                    if (element.getAttribute("x")!=""){
+                        x.add (Integer.valueOf(element.getAttribute("x")));
+                    } else {x.add(0);}
+
+                    if (element.getAttribute("y")!=""){
+                        y.add (Integer.valueOf(element.getAttribute("y")));
+                    } else {y.add(0);}
+
+                    if (element.getAttribute("width")!=""){
+                        width.add (Integer.valueOf(element.getAttribute("width")));
+                    } else {width.add(0);}
+
+                    if (element.getAttribute("height")!=""){
+                        height.add (Integer.valueOf(element.getAttribute("height")));
+                    } else {height.add(0);}
+
+                    if (element.getAttribute("frameX")!=""){
+                        frameX.add (Integer.valueOf(element.getAttribute("x")));
+                    } else {frameX.add(0);}
+
+                    if (element.getAttribute("frameY")!=""){
+                        frameY.add (Integer.valueOf(element.getAttribute("x")));
+                    } else {frameY.add(0);}
+
+                    if (element.getAttribute("frameWidth")!=""){
+                        frameWidth.add (Integer.valueOf(element.getAttribute("frameWidth")));
+                    } else {frameWidth.add(0);}
+
+                    if (element.getAttribute("frameHeight")!=""){
+                        frameHeight.add (Integer.valueOf(element.getAttribute("frameHeight")));
+                    } else {frameHeight.add(0);}
 
                     AtlasConfig tempAtlas =new AtlasConfig(
                             imagePath,name, x,  y,  width,  height,  frameX,  frameY,  frameWidth,  frameHeight);

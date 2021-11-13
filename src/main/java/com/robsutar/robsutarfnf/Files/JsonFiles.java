@@ -20,18 +20,18 @@ public class JsonFiles {
         String imageXmlName = "lianna.xml";
         String author = "Robsutar";
 
-        String idle = "LuciferSarvIDLE";
-        String up = "LuciferSarvUP";
-        String left = "LuciferSarvLEFT";
-        String down = "LuciferSarvDOWN";
-        String right = "LuciferSarvRIGHT";
+        String idle = "Dad Sing Note IDLE";
+        String up = "Dad Sing Note UP";
+        String left = "Dad Sing Note LEFT";
+        String down = "Dad Sing Note DOWN";
+        String right = "Dad Sing Note RIGHT";
 
         List<String> customAnim = new ArrayList<>();
-        List<String> customAnimName = new ArrayList<>();
-        String rap = down;
-        String rapName = "rap";
-        customAnimName.add(rapName);
-        customAnim.add(rap);
+
+        customAnim.add("Dad idle dance");
+        customAnim.add("dance");
+        customAnim.add("poop");
+        customAnim.add("stress");
 
         //ANIMATIONS
         JSONObject animations = new JSONObject();
@@ -42,14 +42,9 @@ public class JsonFiles {
         animations.put("right", right);
 
         //CUSTOM ANIMATIONS
-        JSONObject customAnimations = new JSONObject();
+        JSONArray customAnimations = new JSONArray();
         for (int i = 0;i < customAnim.toArray().length;i++) {
-            if (customAnim!=null) {
-                if(customAnimName.get(i) == null) {
-                    customAnim.set(i,customAnim.get(i));
-                }
-                customAnimations.put(customAnimName,customAnim);
-            }
+                customAnimations.add(i,customAnim.get(i));
         }
 
         //ANIMATIONS OBJECT
@@ -117,7 +112,7 @@ public class JsonFiles {
 
         JSONObject baseConfig = (JSONObject) config.get("baseConfig"); //base config
         JSONObject animations = (JSONObject) baseConfig.get("animations"); //animations part
-        JSONObject customAnimations = (JSONObject) baseConfig.get("customAnimations"); //custom animations part
+        JSONArray customAnimations = (JSONArray) baseConfig.get("customAnimations"); //custom animations part
 
         String author = (String) baseConfig.get("author");
 
@@ -134,7 +129,9 @@ public class JsonFiles {
 
         String right = (String) animations.get("right");
 
-        SpriteJsonConfig phaseConfig = new SpriteJsonConfig(author, imageXmlName, idle, up, left, down, right);
+        List<String> customAnims = customAnimations;
+
+        SpriteJsonConfig phaseConfig = new SpriteJsonConfig(author, imageXmlName, idle, up, left, down, right,customAnims);
         return phaseConfig;
     }
 }

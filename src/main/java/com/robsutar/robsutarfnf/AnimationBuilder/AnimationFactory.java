@@ -3,24 +3,28 @@ package com.robsutar.robsutarfnf.AnimationBuilder;
 import com.robsutar.robsutarfnf.Files.JsonFiles;
 import com.robsutar.robsutarfnf.Files.XmlFiles;
 import com.robsutar.robsutarfnf.ImageBuffer.ImageManager;
+import com.robsutar.robsutarfnf.Main;
 
 import java.awt.image.BufferedImage;
 
 public class AnimationFactory {
+    public AnimatedObject getAnimatedObject() {
+        return animatedObject;
+    }
 
     SpriteJsonConfig config;
 
     AtlasConfig atlas;
     BufferedImage mainImage;
     AnimatedObject animatedObject;
-    public AnimationFactory(String SPRITEJSONCONFIG){
+    public AnimationFactory(String SPRITEJSONCONFIG,String FOLDER){
 
         //Read Json Sprite Config (Image path, Animations name...)
         this.config= JsonFiles.readSpriteJsonConfig(SPRITEJSONCONFIG);
 
-        this.atlas = XmlFiles.readTextureAtlasXml(config.getXmlPath());
+        this.atlas = XmlFiles.readTextureAtlasXml(FOLDER+config.getXmlPath());
 
-        this.mainImage = ImageManager.loadImage(atlas.imagePath);
+        this.mainImage = ImageManager.loadImage(FOLDER+atlas.imagePath);
 
         this.animatedObject = new AnimatedObject(mainImage,atlas,config);
     }

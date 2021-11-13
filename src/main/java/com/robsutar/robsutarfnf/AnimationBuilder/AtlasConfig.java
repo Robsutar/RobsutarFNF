@@ -59,4 +59,38 @@ public class AtlasConfig {
     public List<Integer> getFrameHeight() {
         return frameHeight;
     }
+
+    public String getName(int index) {return name.get(index);}
+
+    public int getX(int index) {
+        return x.get(index);
+    }
+
+    public int getY(int index) {
+        return y.get(index);
+    }
+
+    public int getWidth(int index) {
+        return width.get(index);
+    }
+
+    public int getHeight(int index) {
+        return height.get(index);
+    }
+
+    public int getFrameX(int index) {
+        return frameX.get(index);
+    }
+
+    public int getFrameY(int index) {
+        return frameY.get(index);
+    }
+
+    public int getFrameWidth(int index) {
+        return frameWidth.get(index);
+    }
+
+    public int getFrameHeight(int index) {
+        return frameHeight.get(index);
+    }
 }
