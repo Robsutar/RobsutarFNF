@@ -39,15 +39,11 @@ public class AnimatedObject {
         return right.get(index);
     }
 
-    public List<BufferedImage> getAnimImages(int index) {
-        return animImages.get(index);
+    public ArrayList<ArrayList<BufferedImage>> getAnimatedImages() {
+        return animatedImages;
     }
 
-    public List<List<BufferedImage>> getAnimImages() {
-        return animImages;
-    }
-
-    List<List<BufferedImage>> animImages = new ArrayList<>();
+    ArrayList<ArrayList<BufferedImage>> animatedImages = new ArrayList<ArrayList<BufferedImage>>();
 
     public AnimatedObject(BufferedImage img, AtlasConfig atlas, SpriteJsonConfig config) {
 
@@ -55,15 +51,20 @@ public class AnimatedObject {
 
         for (int i = 0;i < atlas.getName().toArray().length;i++){
             String name = atlas.getName(i).substring(0,atlas.getName(i).length()-4);
+
             ArrayList<String> innerAnimationsName = new ArrayList<String>();
+            ArrayList<BufferedImage> innerAnimations = new ArrayList<BufferedImage>();
 
             while (atlas.getName(i).contains(name)){
                 name = atlas.getName(i).substring(0,atlas.getName(i).length()-4);
-                innerAnimationsName.add(name);
+                innerAnimationsName.add(atlas.getName(i));
+                innerAnimations.add(ImageManager.cropImage(img, atlas.getX(i),atlas.getY(i),atlas.getWidth(i),atlas.getHeight(i)));
                 i+=1;
             }
+            i-=1;
             System.out.println("Else: "+atlas.getName(i)+" ; "+name);
             animationsName.add(innerAnimationsName);
+            animatedImages.add(innerAnimations);
         }
 
         for (int i = 0;i < animationsName.toArray().length;i++){
