@@ -5,6 +5,8 @@ import com.robsutar.robsutarfnf.ImageBuffer.ImageManager;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.util.List;
 
 public class GuiHandler extends BaseHandler {
 
@@ -18,7 +20,7 @@ public class GuiHandler extends BaseHandler {
     @Override
     public void onTick() {
         animIndex = age;
-        int lastAnimFrame = factory.getAnimatedObject().getUp().toArray().length;
+        int lastAnimFrame = 6;
         if (animIndex >= lastAnimFrame) {
             animIndex = animIndex - lastAnimFrame*(animIndex/lastAnimFrame);
         }
@@ -27,6 +29,6 @@ public class GuiHandler extends BaseHandler {
     @Override
     public void renderer(Graphics2D g) {
         AffineTransform at = AffineTransform.getTranslateInstance(20,20);
-        ImageManager.makeImage(g,factory.getAnimatedObject().getUp(animIndex),at);
+        //ImageManager.makeImage(g,factory.getAnimatedObject().getAnimImages().get(0).get(0), at);
     }
 }

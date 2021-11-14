@@ -29,9 +29,10 @@ public class JsonFiles {
         List<String> customAnim = new ArrayList<>();
 
         customAnim.add("Dad idle dance");
-        customAnim.add("dance");
-        customAnim.add("poop");
-        customAnim.add("stress");
+        customAnim.add("Dad Sing Note UP");
+        customAnim.add("Dad Sing Note LEFT");
+        customAnim.add("Dad Sing Note DOWN");
+        customAnim.add("Dad Sing Note RIGHT");
 
         //ANIMATIONS
         JSONObject animations = new JSONObject();

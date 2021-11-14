@@ -17,6 +17,7 @@ public class ImageManager {
     }
 
     public static BufferedImage loadImage(String path){
+
         BufferedImage img = null;
         try{
             path = path;

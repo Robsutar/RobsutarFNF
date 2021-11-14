@@ -60,13 +60,17 @@ public class AtlasConfig {
         return frameHeight;
     }
 
-    public String getName(int index) {return name.get(index);}
+    public String getName(int index) {
+        if (index>=name.toArray().length||index<0){return "";}
+        return name.get(index);}
 
     public int getX(int index) {
+        if (index>=x.toArray().length||index<0){return 0;}
         return x.get(index);
     }
 
     public int getY(int index) {
+        if (index>=y.toArray().length||index<0){return 0;}
         return y.get(index);
     }
 

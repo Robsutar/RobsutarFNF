@@ -2,11 +2,9 @@ package com.robsutar.robsutarfnf.AnimationBuilder;
 
 import com.robsutar.robsutarfnf.ImageBuffer.ImageManager;
 
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class AnimatedObject {
     List<BufferedImage> up = new ArrayList<>();
@@ -41,40 +39,64 @@ public class AnimatedObject {
         return right.get(index);
     }
 
-    List<List<BufferedImage>> customAnimImages = new ArrayList<>();
+    public List<BufferedImage> getAnimImages(int index) {
+        return animImages.get(index);
+    }
 
-    public AnimatedObject(BufferedImage img, AtlasConfig atlas, SpriteJsonConfig config){
+    public List<List<BufferedImage>> getAnimImages() {
+        return animImages;
+    }
 
-        int tL = atlas.getName().toArray().length;
+    List<List<BufferedImage>> animImages = new ArrayList<>();
 
-        List<String> customAnimsName = config.getCustomAnimations();
+    public AnimatedObject(BufferedImage img, AtlasConfig atlas, SpriteJsonConfig config) {
 
-        for (int i = 0;i<customAnimsName.toArray().length;i++){
-            String lastFourDigits = atlas.getName(i).substring(atlas.getName(i).length()-4);
-            if (customAnimsName.get(i).replace(lastFourDigits,"")==customAnimsName.get(i)){
-                System.out.println(lastFourDigits);
-                //customAnimImages.get(5).get(5)=
-            } else {
-                System.out.println(customAnimsName.get(i).replace(lastFourDigits,"")+" / "+customAnimsName.get(i));
+        ArrayList<ArrayList<String>> animationsName = new ArrayList<ArrayList<String>>();
+
+        for (int i = 0;i < atlas.getName().toArray().length;i++){
+            String name = atlas.getName(i).substring(0,atlas.getName(i).length()-4);
+            ArrayList<String> innerAnimationsName = new ArrayList<String>();
+
+            while (atlas.getName(i).contains(name)){
+                name = atlas.getName(i).substring(0,atlas.getName(i).length()-4);
+                innerAnimationsName.add(name);
+                i+=1;
+            }
+            System.out.println("Else: "+atlas.getName(i)+" ; "+name);
+            animationsName.add(innerAnimationsName);
+        }
+
+        for (int i = 0;i < animationsName.toArray().length;i++){
+            for (int z = 0;z < animationsName.get(i).toArray().length;z++) {
+                    System.out.println(+i + ":" + z + " / " + animationsName.get(i).get(z));
             }
         }
 
-        for (int i = 0;i<tL;i++){
-            String lastFourDigits = atlas.getName().get(i).substring(atlas.getName().get(i).length() - 4);
+        /*
+        int cCA = config.getCustomAnimations().toArray().length;
+        int aN = atlas.getName().toArray().length;
+        loop : for (int i = 0; i < aN; i++ ){
+            for (int z = 0; z < cCA; z++ ){
 
-            if (atlas.getName().get(i).contains(config.getUp())){
-                this.up.add(ImageManager.cropImage(img,atlas.getX().get(i),atlas.getY().get(i),
-                        atlas.getWidth().get(i),atlas.getHeight().get(i)));
-            } else if (Objects.equals(atlas.getName().get(i), config.getUp())){
-                this.left.add(ImageManager.cropImage(img,atlas.getX().get(i),atlas.getY().get(i),
-                        atlas.getWidth().get(i),atlas.getHeight().get(i)));
-            } else if (Objects.equals(atlas.getName().get(i), config.getUp())){
-                this.down.add(ImageManager.cropImage(img,atlas.getX().get(i),atlas.getY().get(i),
-                        atlas.getWidth().get(i),atlas.getHeight().get(i)));
-            } else if (Objects.equals(atlas.getName().get(i), config.getUp())){
-                this.right.add(ImageManager.cropImage(img,atlas.getX().get(i),atlas.getY().get(i),
-                        atlas.getWidth().get(i),atlas.getHeight().get(i)));
+                List<BufferedImage> images = new ArrayList<>();
+
+                while (atlas.getName(i).contains(config.getCustomAnimations(z))){
+                        System.out.println(atlas.getName(i)+" : "+(config.getCustomAnimations(z)));
+                    System.out.println("Image printed!");
+
+                    images.add(ImageManager.cropImage(img, atlas.getX(i),atlas.getY(i),atlas.getWidth(i),atlas.getHeight(i) ));
+
+                    i+=1;
+                    if (i>=aN){this.animImages.add(images);break loop;}
+                }
+                System.out.println("LONGURA"+images.toArray().length);
+
+                this.animImages.add(images);
+
             }
+            i--;
         }
+
+         */
     }
 }
