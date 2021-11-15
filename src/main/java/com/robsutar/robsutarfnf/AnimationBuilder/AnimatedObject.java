@@ -2,6 +2,8 @@ package com.robsutar.robsutarfnf.AnimationBuilder;
 
 import com.robsutar.robsutarfnf.ImageBuffer.ImageManager;
 
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +45,13 @@ public class AnimatedObject {
         return animatedImages;
     }
 
+    public ArrayList<ArrayList<AffineTransform>> getAffineTransforms() {
+        return affineTransforms;
+    }
+
     ArrayList<ArrayList<BufferedImage>> animatedImages = new ArrayList<ArrayList<BufferedImage>>();
+
+    ArrayList<ArrayList<AffineTransform>> affineTransforms = new ArrayList<ArrayList<AffineTransform>>();
 
     public AnimatedObject(BufferedImage img, AtlasConfig atlas, SpriteJsonConfig config) {
 
@@ -53,51 +61,31 @@ public class AnimatedObject {
             String name = atlas.getName(i).substring(0,atlas.getName(i).length()-4);
 
             ArrayList<String> innerAnimationsName = new ArrayList<String>();
-            ArrayList<BufferedImage> innerAnimations = new ArrayList<BufferedImage>();
+            ArrayList<BufferedImage> innerImages = new ArrayList<BufferedImage>();
+            ArrayList<AffineTransform> innerAfineTransforms = new ArrayList<>();
 
             while (atlas.getName(i).contains(name)){
                 name = atlas.getName(i).substring(0,atlas.getName(i).length()-4);
                 innerAnimationsName.add(atlas.getName(i));
-                innerAnimations.add(ImageManager.cropImage(img, atlas.getX(i),atlas.getY(i),atlas.getWidth(i),atlas.getHeight(i)));
+
+                BufferedImage tempI = ImageManager.cropImage(img, atlas.getX(i),atlas.getY(i),atlas.getWidth(i),atlas.getHeight(i));
+                innerImages.add(tempI);
+
+                AffineTransform tempT = new AffineTransform();
+                double xLoc = tempI.getWidth()/2.0;
+                double yLoc = tempI.getHeight()/2.0;
+                tempT.translate(-atlas.getFrameX(i),-atlas.getFrameY(i));
+
+                //tempT.translate(-xLoc,-yLoc);
+
+                innerAfineTransforms.add(tempT);
+
                 i+=1;
             }
             i-=1;
-            System.out.println("Else: "+atlas.getName(i)+" ; "+name);
             animationsName.add(innerAnimationsName);
-            animatedImages.add(innerAnimations);
+            animatedImages.add(innerImages);
+            affineTransforms.add(innerAfineTransforms);
         }
-
-        for (int i = 0;i < animationsName.toArray().length;i++){
-            for (int z = 0;z < animationsName.get(i).toArray().length;z++) {
-                    System.out.println(+i + ":" + z + " / " + animationsName.get(i).get(z));
-            }
-        }
-
-        /*
-        int cCA = config.getCustomAnimations().toArray().length;
-        int aN = atlas.getName().toArray().length;
-        loop : for (int i = 0; i < aN; i++ ){
-            for (int z = 0; z < cCA; z++ ){
-
-                List<BufferedImage> images = new ArrayList<>();
-
-                while (atlas.getName(i).contains(config.getCustomAnimations(z))){
-                        System.out.println(atlas.getName(i)+" : "+(config.getCustomAnimations(z)));
-                    System.out.println("Image printed!");
-
-                    images.add(ImageManager.cropImage(img, atlas.getX(i),atlas.getY(i),atlas.getWidth(i),atlas.getHeight(i) ));
-
-                    i+=1;
-                    if (i>=aN){this.animImages.add(images);break loop;}
-                }
-                System.out.println("LONGURA"+images.toArray().length);
-
-                this.animImages.add(images);
-
-            }
-            i--;
-        }
-
-         */
     }
 }

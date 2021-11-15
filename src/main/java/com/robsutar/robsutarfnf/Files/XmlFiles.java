@@ -94,11 +94,11 @@ public class XmlFiles {
                     } else {height.add(0);}
 
                     if (element.getAttribute("frameX")!=""){
-                        frameX.add (Integer.valueOf(element.getAttribute("x")));
+                        frameX.add (Integer.valueOf(element.getAttribute("frameX")));
                     } else {frameX.add(0);}
 
                     if (element.getAttribute("frameY")!=""){
-                        frameY.add (Integer.valueOf(element.getAttribute("x")));
+                        frameY.add (Integer.valueOf(element.getAttribute("frameY")));
                     } else {frameY.add(0);}
 
                     if (element.getAttribute("frameWidth")!=""){

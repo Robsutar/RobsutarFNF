@@ -10,10 +10,9 @@ import java.io.IOException;
 
 public class ImageManager {
 
-    public static void makeImage (Graphics g, BufferedImage img,AffineTransform at){
-        Graphics2D g2d = (Graphics2D) g;
+    public static void makeImage (Graphics2D g, BufferedImage img,AffineTransform at){
 
-        g2d.drawImage(img,at,null);
+        g.drawImage(img,at,null);
     }
 
     public static BufferedImage loadImage(String path){
