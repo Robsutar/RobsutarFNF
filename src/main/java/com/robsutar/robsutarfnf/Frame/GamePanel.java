@@ -1,32 +1,27 @@
 package com.robsutar.robsutarfnf.Frame;
-
-import com.robsutar.robsutarfnf.Handlers.Handlers;
 import com.robsutar.robsutarfnf.Main;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 
 
-public class GamePanel extends JPanel implements ActionListener {
+public class GamePanel extends JPanel implements ActionListener, MouseListener {
 
     public static final int WIDTH = 1280;
     public static final int HEIGHT = 720;
-    private static final int DELAY = 20;
+    private static final int DELAY = 2 ;
     boolean running = false;
+    boolean mouseOnScreen = false;
 
     Timer timer;
-    private final Handlers handlers;
 
-    GamePanel(Handlers handlers){
+    GamePanel(){
         this.setPreferredSize(new Dimension(WIDTH,HEIGHT));
         this.setBackground(Color.BLACK);
         this.setFocusable(true);
         this.addKeyListener(new MyKeyAdapter());
-        this.handlers = handlers;
+        this.addMouseListener(this);
         startGame();
     }
 
@@ -43,13 +38,46 @@ public class GamePanel extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (running){
-            PointerInfo a = MouseInfo.getPointerInfo();
-            Point b = a.getLocation();
-            Main.xMouse = (int) b.getX(); Main.yMouse = (int) b.getY();
+        if(running) {
+            if(mouseOnScreen) {
+                Point b = this.getMousePosition();
+                if (b!=null) {
+                    int xMs = (int) b.getX();
+                    int yMs = (int) b.getY();
+                    Main.xMouse = xMs;
+                    Main.yMouse = yMs;
+                }
+            }
             repaint();
         }
     }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        mouseOnScreen=true;
+        Main.mousePressed(e);
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        Main.mouseReleased(e);
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        mouseOnScreen=true;
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        mouseOnScreen=false;
+    }
+
     public class MyKeyAdapter extends KeyAdapter{
         @Override
         public void keyPressed(KeyEvent e ){

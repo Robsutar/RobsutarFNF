@@ -1,6 +1,5 @@
 package com.robsutar.robsutarfnf.AnimationBuilder;
 
-import com.robsutar.robsutarfnf.AbstractObjects.Position;
 import com.robsutar.robsutarfnf.Files.JsonFiles;
 import com.robsutar.robsutarfnf.Files.XmlFiles;
 import com.robsutar.robsutarfnf.ImageBuffer.ImageManager;
@@ -9,7 +8,7 @@ import com.robsutar.robsutarfnf.Main;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public abstract class AnimationFactory extends Position {
+public abstract class AnimationFactory{
     public AnimatedObject getAnimatedObject() {
         return animatedObject;
     }

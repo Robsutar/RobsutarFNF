@@ -1,48 +1,18 @@
 package com.robsutar.robsutarfnf.AnimationBuilder;
 
-import com.robsutar.robsutarfnf.AbstractObjects.Position;
 import com.robsutar.robsutarfnf.ImageBuffer.ImageManager;
-import com.robsutar.robsutarfnf.Main;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AnimatedObject {
-    protected List<BufferedImage> up = new ArrayList<>();
-    protected List<BufferedImage> left = new ArrayList<>();
-    protected List<BufferedImage> down = new ArrayList<>();
-    protected List<BufferedImage> right = new ArrayList<>();
 
-    public List<BufferedImage> getUp() {
-        return up;
-    }
+    ArrayList<ArrayList<BufferedImage>> animatedImages = new ArrayList<ArrayList<BufferedImage>>();
 
-    public List<BufferedImage> getLeft() {
-        return left;
-    }
-
-    public List<BufferedImage> getDown() {
-        return down;
-    }
-
-    public List<BufferedImage> getRight() {
-        return right;
-    }
-
-    public BufferedImage getUp(int index) {return up.get(index);}
-    public BufferedImage geLeft(int index) {
-        return left.get(index);
-    }
-    public BufferedImage getDown(int index) {
-        return down.get(index);
-    }
-    public BufferedImage getRight(int index) {
-        return right.get(index);
-    }
+    ArrayList<ArrayList<AffineTransform>> affineTransforms = new ArrayList<ArrayList<AffineTransform>>();
 
     public ArrayList<ArrayList<BufferedImage>> getAnimatedImages() {
         return animatedImages;
@@ -51,10 +21,6 @@ public class AnimatedObject {
     public ArrayList<ArrayList<AffineTransform>> getAffineTransforms() {
         return affineTransforms;
     }
-
-    ArrayList<ArrayList<BufferedImage>> animatedImages = new ArrayList<ArrayList<BufferedImage>>();
-
-    ArrayList<ArrayList<AffineTransform>> affineTransforms = new ArrayList<ArrayList<AffineTransform>>();
 
     public AnimatedObject(BufferedImage img, AtlasConfig atlas, SpriteJsonConfig config) {
 
