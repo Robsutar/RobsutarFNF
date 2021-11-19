@@ -17,7 +17,7 @@ public class Handlers extends BaseHandler{
     public void handlersTick(){
         for (BaseHandler h: handlers
         ) {
-            h.tick();
+            h.onTick();
         }
     }
     public void handlersRenderer(Graphics2D g){
@@ -27,7 +27,7 @@ public class Handlers extends BaseHandler{
         }
     }
     @Override
-    public void onTick() {
+    public void tick() {
         handlersTick();
     }
 

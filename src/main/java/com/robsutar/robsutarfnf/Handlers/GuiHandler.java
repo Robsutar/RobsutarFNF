@@ -12,31 +12,16 @@ import java.util.ArrayList;
 
 public class GuiHandler extends BaseHandler {
 
-    int animIndex;
-    byte state=0;
-
-    AnimationFactory factory;
-    ArrayList<ArrayList<BufferedImage>> images;
-    ArrayList<ArrayList<AffineTransform>> affineTransforms;
-
-    public GuiHandler(AnimationFactory factory){
-        this.factory=factory;
-        this.images=factory.getAnimatedObject().getAnimatedImages();
-        this.affineTransforms =factory.getAnimatedObject().getAffineTransforms();
+    public GuiHandler(){
     }
 
     @Override
-    public void onTick() {
-        animIndex = age;
-        state = Main.state;
-        int lastAnimFrame = images.get(state).toArray().length;
-        if (animIndex >= lastAnimFrame) {
-            animIndex = animIndex - lastAnimFrame*(animIndex/lastAnimFrame);
-        }
+    public void tick() {
     }
 
     @Override
     public void renderer(Graphics2D g) {
+        /*
         int x = 640;
         int y = 370;
 
@@ -47,5 +32,8 @@ public class GuiHandler extends BaseHandler {
         at.translate(x,y);
 
         ImageManager.makeImage(g,img,at);
+
+
+         */
     }
 }

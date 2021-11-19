@@ -19,12 +19,12 @@ public abstract class Ticable {
 
     public int getAge(){return this.age;}
 
-    public void tick(){
+    public void onTick(){
         if (age<agelimit&&isAlive()){
             age++;
-            onTick();
+            tick();
         } else{setAlive(false);}
     }
 
-    protected abstract void onTick();
+    protected abstract void tick();
 }

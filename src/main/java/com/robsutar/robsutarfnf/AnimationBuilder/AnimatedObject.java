@@ -1,7 +1,10 @@
 package com.robsutar.robsutarfnf.AnimationBuilder;
 
+import com.robsutar.robsutarfnf.AbstractObjects.Position;
 import com.robsutar.robsutarfnf.ImageBuffer.ImageManager;
+import com.robsutar.robsutarfnf.Main;
 
+import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -9,10 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AnimatedObject {
-    List<BufferedImage> up = new ArrayList<>();
-    List<BufferedImage> left = new ArrayList<>();
-    List<BufferedImage> down = new ArrayList<>();
-    List<BufferedImage> right = new ArrayList<>();
+    protected List<BufferedImage> up = new ArrayList<>();
+    protected List<BufferedImage> left = new ArrayList<>();
+    protected List<BufferedImage> down = new ArrayList<>();
+    protected List<BufferedImage> right = new ArrayList<>();
 
     public List<BufferedImage> getUp() {
         return up;

@@ -13,11 +13,17 @@ public abstract class BaseHandler extends Renderable {
     }
 
     @Override
-    public void onRenderer(Graphics2D g) {
+    public void renderer(Graphics2D g) {
         for (Renderable r:renderableList
              ) {
             r.onRenderer(g);
         }
-        renderer(g);
+    }
+    @Override
+    public void tick(){
+        for (Renderable r:renderableList
+        ) {
+            r.onTick();
+        }
     }
 }

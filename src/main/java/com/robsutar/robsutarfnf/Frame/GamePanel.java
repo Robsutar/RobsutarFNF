@@ -38,13 +38,16 @@ public class GamePanel extends JPanel implements ActionListener {
     public void paintComponent(Graphics g ){
         super.paintComponent(g);
         Main.renderer(g);
+        Main.tick();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (running){
+            PointerInfo a = MouseInfo.getPointerInfo();
+            Point b = a.getLocation();
+            Main.xMouse = (int) b.getX(); Main.yMouse = (int) b.getY();
             repaint();
-            Main.tick();
         }
     }
     public class MyKeyAdapter extends KeyAdapter{

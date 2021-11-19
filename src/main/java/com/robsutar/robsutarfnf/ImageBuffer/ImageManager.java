@@ -34,38 +34,10 @@ public class ImageManager {
         return croppedImage;
     }
 
-    public static AffineTransform loadImageTansformer(int x , int y,BufferedImage img,int rotation){
-        double rotationRequired = Math.toRadians (rotation);
-        double locationX = img.getWidth() / 2.0;
-        double locationY = img.getHeight() / 2.0;
-        AffineTransform tx =new AffineTransform();
-        tx.translate(x,y);
-        tx.rotate(rotationRequired);
-        tx.translate(-locationX,-locationY);
-        return tx;
-    }
-
-    public static AffineTransform loadImageTansformer(int x , int y,BufferedImage img , int rotation, double scale){
-        double rotationRequired = Math.toRadians (rotation);
-        double locationX = img.getWidth() / 2.0;
-        double locationY = img.getHeight() / 2.0;
-        AffineTransform tx =new AffineTransform();
-        tx.translate(x,y);
-        tx.rotate(rotationRequired);
-        tx.scale(scale,scale);
-        tx.translate(-locationX,-locationY);
-        return  tx;
-    }
-    public static AffineTransform loadImageTansformer(int x , int y,BufferedImage img){
-        double locationX = img.getWidth() / 2.0;
-        double locationY = img.getHeight() / 2.0;
-        AffineTransform tx =new AffineTransform();
-        tx.translate(x,y);
-        tx.translate(-locationX,-locationY);
-        return  tx;
-    }
-
     public static void makeImage(BufferedImage img , AffineTransform at,Graphics2D g2d){
         g2d.drawImage(img,at,null);
+    }
+    public static void makeImage(BufferedImage img,int x,int y, Graphics2D g2d){
+        g2d.drawImage(img,x,y,null);
     }
 }
