@@ -32,7 +32,7 @@ public abstract class AnimationFactory{
 
         this.mainImage = ImageManager.loadImage(FOLDER+atlas.imagePath);
 
-        this.animatedObject = new AnimatedObject(mainImage,atlas,config);
+        this.animatedObject = new AnimatedObject(SPRITEJSONCONFIG);
     }
 
 }

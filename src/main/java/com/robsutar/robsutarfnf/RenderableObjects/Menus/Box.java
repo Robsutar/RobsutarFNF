@@ -1,6 +1,7 @@
 package com.robsutar.robsutarfnf.RenderableObjects.Menus;
 
 
+import com.robsutar.robsutarfnf.AnimationBuilder.AnimatedObject;
 import com.robsutar.robsutarfnf.ImageBuffer.ImageManager;
 import com.robsutar.robsutarfnf.Main;
 import com.robsutar.robsutarfnf.RenderableObjects.RenderableObject;
@@ -13,11 +14,20 @@ public abstract class Box extends RenderableObject {
     private int width=0,height=0;
 
     private BufferedImage image;
+    private AnimatedObject animatedObject;
 
     private boolean wasClicked=false;
+    private boolean isAnimated=false;
 
-    public Box(int x, int y, int width, int height){
-        setX(x);setY(y);setWidth(width);setHeight(height);
+    private byte state=0;
+    private int animIndex=0;
+
+    public Box(int x, int y, int width, int height, BufferedImage img){
+        setX(x);setY(y);setWidth(width);setHeight(height);setImage(img);
+    }
+
+    public Box(int x, int y, int width, int height, AnimatedObject animatedObject){
+        setX(x);setY(y);setWidth(width);setHeight(height);setImage(animatedObject);
     }
 
     public void setWidth(int width) {
@@ -34,6 +44,11 @@ public abstract class Box extends RenderableObject {
 
     public void setImage(BufferedImage image){
         this.image= ImageManager.cropImage(image,0,0,width,height);
+    }
+
+    public void setImage(AnimatedObject animatedObject){
+        this.animatedObject= animatedObject;
+        this.isAnimated=true;
     }
 
     public int getWidth() {
@@ -57,16 +72,25 @@ public abstract class Box extends RenderableObject {
         return isInto();
     }
 
+    public void isAnimated(Boolean bool){this.isAnimated=bool;}
+
+    public void setState(int stateNumber){
+        int anmObjectStateL = animatedObject.getAffineTransforms().toArray().length;
+        this.state= (byte) (stateNumber-(anmObjectStateL*(stateNumber/anmObjectStateL)));
+    }
+
+    private void setAnimIndex(int animIndex){
+        int anmObjectStateL = animatedObject.getAffineTransforms().get(state).toArray().length;
+        this.animIndex= animIndex-(anmObjectStateL*(animIndex/anmObjectStateL));}
+
     @Override
     protected void renderer(Graphics2D g2d) {
-        if (isMouseAbove()){
-            g2d.setColor(Color.cyan);
+        if(isAnimated){
+            setAnimIndex(getAge());
+            g2d.drawImage(animatedObject.getAnimatedImages().get(state).get(animIndex),animatedObject.getAffineTransforms().get(state).get(animIndex),null);
+        } else {
             g2d.drawImage(image,getX(),getY(),null);
-        } else{
-            g2d.setColor(Color.yellow);
         }
-        g2d.fillRect(getX(),getY(),getWidth()/2,getHeight()/2);
-        g2d.drawString((Main.getxMouse()+"  "+Main.getyMouse()),Main.getxMouse(),Main.getyMouse());
     }
 
     @Override
