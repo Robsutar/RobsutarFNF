@@ -29,4 +29,11 @@ public class MainHandler{
             h.onMouseReleased(e);
         }
     }
+
+    public void onBpm() {
+        for (Handlers h:handlers
+        ) {
+            h.onBpm();
+        }
+    }
 }

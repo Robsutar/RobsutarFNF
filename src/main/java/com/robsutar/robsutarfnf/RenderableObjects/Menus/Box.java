@@ -59,10 +59,6 @@ public abstract class Box extends RenderableObject {
         return height;
     }
 
-    public boolean isInto(int x,int y){
-        return x >= this.getX() && x <= width && y >= this.getY() && y <= height;
-    }
-
     public boolean isInto(){
         int x= Main.getxMouse(), y = Main.getyMouse();
         return x >= this.getX() && x <= width && y >= this.getY() && y <= height;
@@ -83,10 +79,15 @@ public abstract class Box extends RenderableObject {
         int anmObjectStateL = animatedObject.getAffineTransforms().get(state).toArray().length;
         this.animIndex= animIndex-(anmObjectStateL*(animIndex/anmObjectStateL));}
 
+    public void onPressed(MouseEvent e){
+        if (isInto()) {
+            clicked(e);
+        }
+    }
+
     @Override
     protected void renderer(Graphics2D g2d) {
         if(isAnimated){
-            setAnimIndex(getAge());
             g2d.drawImage(animatedObject.getAnimatedImages().get(state).get(animIndex),animatedObject.getAffineTransforms().get(state).get(animIndex),null);
         } else {
             g2d.drawImage(image,getX(),getY(),null);
@@ -97,10 +98,9 @@ public abstract class Box extends RenderableObject {
     protected void tick() {
     }
 
-    public void onPressed(MouseEvent e){
-        if (isInto()) {
-            clicked(e);
-        }
+    @Override
+    protected void bpm() {
+        setAnimIndex(animIndex+1);
     }
 
     public  void clicked(MouseEvent e){

@@ -13,4 +13,8 @@ public class MenuHandler extends Handlers{
     @Override
     protected void tick() {
     }
+
+    @Override
+    protected void bpm() {
+    }
 }

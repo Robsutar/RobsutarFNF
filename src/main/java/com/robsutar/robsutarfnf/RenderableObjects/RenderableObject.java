@@ -25,9 +25,15 @@ public abstract class RenderableObject extends Position{
         }
     }
 
+    public void onBpm(){
+        bpm();
+    }
+
     protected abstract void renderer(Graphics2D g2d);
 
     protected abstract void tick();
+
+    protected abstract void bpm();
 
     public int getAge() {
         return age;

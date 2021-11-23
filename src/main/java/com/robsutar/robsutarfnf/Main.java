@@ -22,6 +22,10 @@ public class Main {
 
     public static byte state = 0;
 
+    private static float bpm = 30;
+    private static double timer = System.currentTimeMillis();
+    private static char divisor = 64;
+
     public static MainHandler mainHandler = new MainHandler();
 
     public static void main(String[] args){
@@ -45,6 +49,10 @@ public class Main {
     }
 
     public static void tick(){
+        if(System.currentTimeMillis() - timer > 1000.0/(bpm/60.0)/divisor) {
+            timer += 1000.0/(bpm/60.0)/divisor;
+            mainHandler.onBpm();
+        }
     }
 
     public static void renderer(Graphics g){

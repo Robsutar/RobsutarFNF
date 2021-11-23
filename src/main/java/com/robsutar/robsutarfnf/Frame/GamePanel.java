@@ -10,7 +10,7 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 
     public static final int WIDTH = 1280;
     public static final int HEIGHT = 720;
-    private static final int DELAY = 2 ;
+    private static final int DELAY =2;
     boolean running = false;
     boolean mouseOnScreen = false;
 
@@ -30,10 +30,12 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
         timer.start();
         running = true;
     }
+
+    @Override
     public void paintComponent(Graphics g ){
         super.paintComponent(g);
-        Main.renderer(g);
         Main.tick();
+        Main.renderer(g);
     }
 
     @Override

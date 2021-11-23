@@ -13,17 +13,15 @@ public abstract class Handlers extends RenderableObject {
 
     public void addRenderableObject(RenderableObject object){renderableObjects.add(object);}
 
-    public void addRenderableObject(Box object){boxes.add(object);}
+    public void addRenderableObject(Box object){
+        renderableObjects.add(object);
+        boxes.add(object);}
 
     @Override
     public void renderer(Graphics2D g2d) {
         for (RenderableObject r:renderableObjects
              ) {
             r.onRenderer(g2d);
-        }
-        for (Box b:boxes
-        ) {
-            b.onRenderer(g2d);
         }
     }
 
@@ -38,6 +36,12 @@ public abstract class Handlers extends RenderableObject {
         for (Box b:boxes
         ) {
             b.onReleased(e);
+        }
+    }
+    public void onBpm(){
+        for (RenderableObject r:renderableObjects
+        ) {
+            r.onBpm();
         }
     }
 }
