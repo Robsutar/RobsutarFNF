@@ -12,7 +12,7 @@ public class MainHandler{
     public void onRenderer(Graphics2D g2d){
         for (Handlers h:handlers
              ) {
-            h.onRenderer(g2d);
+            h.renderer(g2d);
         }
     }
 

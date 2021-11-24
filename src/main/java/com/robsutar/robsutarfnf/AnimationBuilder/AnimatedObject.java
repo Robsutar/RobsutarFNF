@@ -17,6 +17,8 @@ public class AnimatedObject {
 
     ArrayList<ArrayList<AffineTransform>> affineTransforms = new ArrayList<ArrayList<AffineTransform>>();
 
+    private int width=0,height=0;
+
     public ArrayList<ArrayList<BufferedImage>> getAnimatedImages() {
         return animatedImages;
     }
@@ -52,9 +54,9 @@ public class AnimatedObject {
                 BufferedImage tempI = ImageManager.cropImage(img, atlas.getX(i),atlas.getY(i),atlas.getWidth(i),atlas.getHeight(i));
                 innerImages.add(tempI);
 
+                width += tempI.getWidth();height+= tempI.getHeight();
+
                 AffineTransform tempT = new AffineTransform();
-                double xLoc = tempI.getWidth()/2.0;
-                double yLoc = tempI.getHeight()/2.0;
                 tempT.translate(-atlas.getFrameX(i),-atlas.getFrameY(i));
 
                 //tempT.translate(-xLoc,-yLoc);
@@ -68,5 +70,14 @@ public class AnimatedObject {
             animatedImages.add(innerImages);
             affineTransforms.add(innerAfineTransforms);
         }
+        width /= atlas.getName().toArray().length;
+        height /= atlas.getName().toArray().length;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+    public int getHeight(){
+        return height;
     }
 }

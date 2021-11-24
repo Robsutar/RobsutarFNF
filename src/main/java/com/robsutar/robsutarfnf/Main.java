@@ -13,20 +13,26 @@ public class Main {
     public static String resourcesPath = new File("").getAbsolutePath()+"/resources/";
     public static String assetsPath = resourcesPath+"assets/";
     public static String phasesPath = assetsPath+"phases/";
-
     public static String loadingConsoleMessage = "Loading ";
     public static String failedToLoadConsoleMessage = ("Failed to load ");
 
     public static int xMouse;
     public static int yMouse;
+    private static int WIDTH=1280,HEIGHT=720;
+
+    private static double timer = System.currentTimeMillis();
 
     public static byte state = 0;
+    private static float bpm = 120;
+    private static char divisor = 16;
 
-    private static float bpm = 30;
-    private static double timer = System.currentTimeMillis();
-    private static char divisor = 64;
+    private static boolean showMousePos = true;
 
     public static MainHandler mainHandler = new MainHandler();
+
+    public static  Camera camera;
+
+    public static Camera.CameraState camState=new Camera.CameraState(0,0,0,1);
 
     public static void main(String[] args){
 
@@ -49,7 +55,7 @@ public class Main {
     }
 
     public static void tick(){
-        if(System.currentTimeMillis() - timer > 1000.0/(bpm/60.0)/divisor) {
+        while(System.currentTimeMillis() - timer > 1000.0/(bpm/60.0)/divisor) {
             timer += 1000.0/(bpm/60.0)/divisor;
             mainHandler.onBpm();
         }
@@ -57,7 +63,15 @@ public class Main {
 
     public static void renderer(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
+
+        if (camera!=null){
+            camState=camera.update();
+        }
+        Camera.construct(g2d,camState,getWindowDim().width,getWindowDim().height,1);
+
         mainHandler.onRenderer(g2d);
+
+        if (showMousePos){g2d.drawString(getxMouse()+" "+getyMouse(),getxMouse(),getyMouse());}
     }
 
     public static void mousePressed(MouseEvent e) {
@@ -66,5 +80,9 @@ public class Main {
 
     public static void mouseReleased(MouseEvent e) {
         mainHandler.onMouseReleased(e);
+    }
+
+    public static Dimension getWindowDim() {
+        return  new Dimension(WIDTH,HEIGHT);
     }
 }

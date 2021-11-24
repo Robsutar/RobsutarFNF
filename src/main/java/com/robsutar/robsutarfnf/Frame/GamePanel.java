@@ -1,4 +1,5 @@
 package com.robsutar.robsutarfnf.Frame;
+import com.robsutar.robsutarfnf.Camera;
 import com.robsutar.robsutarfnf.Main;
 
 import javax.swing.*;
@@ -7,17 +8,15 @@ import java.awt.event.*;
 
 
 public class GamePanel extends JPanel implements ActionListener, MouseListener {
-
-    public static final int WIDTH = 1280;
-    public static final int HEIGHT = 720;
     private static final int DELAY =2;
     boolean running = false;
     boolean mouseOnScreen = false;
+    long tim=System.currentTimeMillis();
 
     Timer timer;
 
     GamePanel(){
-        this.setPreferredSize(new Dimension(WIDTH,HEIGHT));
+        this.setPreferredSize(Main.getWindowDim());
         this.setBackground(Color.BLACK);
         this.setFocusable(true);
         this.addKeyListener(new MyKeyAdapter());
@@ -34,7 +33,10 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
     @Override
     public void paintComponent(Graphics g ){
         super.paintComponent(g);
-        Main.tick();
+        while(System.currentTimeMillis() - tim > 10) { //10 = 100 ticks per second ** 1 = 1000 ticks per second
+            tim += 10; //here the same
+            Main.tick();
+        }
         Main.renderer(g);
     }
 
@@ -43,9 +45,11 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
         if(running) {
             if(mouseOnScreen) {
                 Point b = this.getMousePosition();
-                if (b!=null) {
-                    int xMs = (int) b.getX();
-                    int yMs = (int) b.getY();
+                if (b!=null&&Main.camState!=null) {
+                    Camera.CameraState st = Main.camState;
+                    int xMs = (int) ((b.getX())/st.getScale());
+                    int yMs = (int) ((b.getY())/st.getScale());
+
                     Main.xMouse = xMs;
                     Main.yMouse = yMs;
                 }

@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 
-public abstract class Handlers extends RenderableObject {
+public abstract class Handlers {
     LinkedList<RenderableObject> renderableObjects = new LinkedList<>();
     LinkedList<Box> boxes = new LinkedList<>();
 
@@ -17,11 +17,11 @@ public abstract class Handlers extends RenderableObject {
         renderableObjects.add(object);
         boxes.add(object);}
 
-    @Override
     public void renderer(Graphics2D g2d) {
         for (RenderableObject r:renderableObjects
              ) {
             r.onRenderer(g2d);
+            r.onTick();
         }
     }
 
