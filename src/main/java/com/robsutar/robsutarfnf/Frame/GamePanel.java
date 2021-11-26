@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+import static com.robsutar.robsutarfnf.Main.getWindowDim;
+
 
 public class GamePanel extends JPanel implements ActionListener, MouseListener {
     private static final int DELAY =2;
@@ -16,7 +18,7 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
     Timer timer;
 
     GamePanel(){
-        this.setPreferredSize(Main.getWindowDim());
+        this.setPreferredSize(getWindowDim());
         this.setBackground(Color.BLACK);
         this.setFocusable(true);
         this.addKeyListener(new MyKeyAdapter());
@@ -47,11 +49,11 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
                 Point b = this.getMousePosition();
                 if (b!=null&&Main.camState!=null) {
                     Camera.CameraState st = Main.camState;
-                    int xMs = (int) ((b.getX())/st.getScale());
-                    int yMs = (int) ((b.getY())/st.getScale());
+                    double xMs = b.getX()/st.getScale()-st.getX();
+                    double yMs = b.getY()/st.getScale()-st.getY();
 
-                    Main.xMouse = xMs;
-                    Main.yMouse = yMs;
+                    Main.xMouse = (int)xMs;
+                    Main.yMouse = (int)yMs;
                 }
             }
             repaint();

@@ -68,10 +68,11 @@ public class Main {
             camState=camera.update();
         }
         Camera.construct(g2d,camState,getWindowDim().width,getWindowDim().height,1);
-
         mainHandler.onRenderer(g2d);
 
-        if (showMousePos){g2d.drawString(getxMouse()+" "+getyMouse(),getxMouse(),getyMouse());}
+        if (showMousePos){
+            g2d.setColor(Color.yellow);
+            g2d.drawString(getxMouse()+" "+getyMouse(),getxMouse(),getyMouse());}
     }
 
     public static void mousePressed(MouseEvent e) {
