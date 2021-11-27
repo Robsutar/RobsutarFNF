@@ -83,12 +83,16 @@ public class StartMenu extends Box{
             switch (event){
                 case weeks:
                     System.out.println(event);
+                    break;
                 case freeplay:
                     System.out.println(event);
+                    break;
                 case credits:
                     System.out.println(event);
+                    break;
                 case donate:
                     System.out.println(event);
+                    break;
             }
         }
 

@@ -1,8 +1,6 @@
 package com.robsutar.robsutarfnf.RenderableObjects;
 
-import com.robsutar.robsutarfnf.Main;
-
-public abstract class Position {
+public class Position {
 
     public Position(){
 

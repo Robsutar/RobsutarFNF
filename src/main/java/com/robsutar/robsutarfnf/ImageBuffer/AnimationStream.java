@@ -25,4 +25,5 @@ public class AnimationStream extends Position {
     public List<AffineTransform> getTransforms() {
         return transforms;
     }
+
 }
