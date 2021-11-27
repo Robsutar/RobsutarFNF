@@ -1,5 +1,6 @@
 package com.robsutar.robsutarfnf.AnimationBuilder;
 
+import com.robsutar.robsutarfnf.Assets;
 import com.robsutar.robsutarfnf.Files.JsonFiles;
 import com.robsutar.robsutarfnf.Files.XmlFiles;
 import com.robsutar.robsutarfnf.ImageBuffer.ImageManager;
@@ -27,16 +28,11 @@ public class AnimatedObject {
         return affineTransforms;
     }
 
-    public AnimatedObject(String SPRITEJSONCONFIG) {
+    public AnimatedObject(AtlasConfig atlasXml) {
 
+        AtlasConfig atlas = atlasXml;
 
-        String FOLDER = Main.phasesPath+"lianna/";
-
-        SpriteJsonConfig config= JsonFiles.readSpriteJsonConfig(SPRITEJSONCONFIG);
-
-        AtlasConfig atlas = XmlFiles.readTextureAtlasXml(FOLDER+config.getXmlPath());
-
-        BufferedImage img = ImageManager.loadImage(FOLDER+atlas.imagePath);
+        BufferedImage img = ImageManager.loadImage(Assets.AssetsXml.packFolder+atlas.imagePath);
 
         ArrayList<ArrayList<String>> animationsName = new ArrayList<ArrayList<String>>();
 

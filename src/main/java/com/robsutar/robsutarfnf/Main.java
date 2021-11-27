@@ -12,7 +12,7 @@ import java.io.File;
 public class Main {
     public static String resourcesPath = new File("").getAbsolutePath()+"/resources/";
     public static String assetsPath = resourcesPath+"assets/";
-    public static String phasesPath = assetsPath+"phases/";
+    public static String phasesPath = resourcesPath+"phases/";
     public static String loadingConsoleMessage = "Loading ";
     public static String failedToLoadConsoleMessage = ("Failed to load ");
 
@@ -42,10 +42,6 @@ public class Main {
 
         mainHandler.addHandler(menuHandler);
 
-        String liannaPhaseFolder = phasesPath+"lianna/";
-        String lianaJsonConfig = liannaPhaseFolder+"lianna-Config.json";
-        JsonFiles.writePhaseConfig(liannaPhaseFolder+"lianna-Config.json");
-
     }
     public static int getxMouse() {
         return xMouse;
@@ -67,7 +63,8 @@ public class Main {
         if (camera!=null){
             camState=camera.update();
         }
-        Camera.construct(g2d,camState,getWindowDim().width,getWindowDim().height,1);
+        Camera.construct(g2d,camState);
+
         mainHandler.onRenderer(g2d);
 
         if (showMousePos){

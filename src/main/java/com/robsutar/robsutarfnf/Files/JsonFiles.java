@@ -98,11 +98,7 @@ public class JsonFiles {
             //Iterate over employee array
             //employeeList.forEach( emp -> readPhaseConfig( (JSONObject) emp ) );
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();System.out.println(Main.failedToLoadConsoleMessage);
-        } catch (IOException e) {
-            e.printStackTrace();System.out.println(Main.failedToLoadConsoleMessage);
-        } catch (ParseException e) {
+        } catch (IOException | ParseException e) {
             e.printStackTrace();System.out.println(Main.failedToLoadConsoleMessage);
         }
         return config;
@@ -132,7 +128,6 @@ public class JsonFiles {
 
         List<String> customAnims = customAnimations;
 
-        SpriteJsonConfig phaseConfig = new SpriteJsonConfig(author, imageXmlName, idle, up, left, down, right,customAnims);
-        return phaseConfig;
+        return new SpriteJsonConfig(author, imageXmlName, idle, up, left, down, right,customAnims);
     }
 }

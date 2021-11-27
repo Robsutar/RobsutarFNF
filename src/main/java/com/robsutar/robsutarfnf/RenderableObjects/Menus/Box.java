@@ -52,4 +52,13 @@ public abstract class Box extends RenderableObject {
     public  void released(MouseEvent e){
         System.out.println("no RELEASED action for this button");
     }
+
+    @Override
+    protected void tick() {
+        if (isInto()){
+            setScale(0.1);
+        } else {
+            setScale(0);
+        }
+    }
 }

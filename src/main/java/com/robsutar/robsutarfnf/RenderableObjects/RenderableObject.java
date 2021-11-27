@@ -10,11 +10,9 @@ import java.awt.image.BufferedImage;
 
 public abstract class RenderableObject extends Position{
     private int age;
-    private int ageLimit=2134567893;
+    private final int ageLimit=2134567893;
     private int animIndex=0;
     private int width=0,height=0;
-
-    private double scale=0;
 
     private boolean immortal=false;
 
@@ -53,10 +51,6 @@ public abstract class RenderableObject extends Position{
         this.image = animatedObject.getAnimatedImages().get(0).get(0);
     }
 
-    public void setScale(double scale){
-        this.scale=scale;
-    }
-
     public void setWidth(int width) {
         this.width = width;
     }
@@ -92,10 +86,6 @@ public abstract class RenderableObject extends Position{
 
     public int getAgeLimit() {
         return ageLimit;
-    }
-
-    public double getScale() {
-        return scale;
     }
 
     public boolean isImmortal() {
@@ -139,11 +129,15 @@ public abstract class RenderableObject extends Position{
         if(isAnimated){
             AffineTransform at = new AffineTransform( animatedObject.getAffineTransforms().get(state).get(animIndex));
             at.translate(getX(),getY());
-            at.translate(-image.getWidth()/2.0*scale,-image.getHeight()/2.0*scale);
-            at.scale(scale+1,scale+1);
+            at.translate(-image.getWidth()/2.0*getScale(),-image.getHeight()/2.0*getScale());
+            at.scale(getScale()+1,getScale()+1);
             g2d.drawImage(animatedObject.getAnimatedImages().get(state).get(animIndex),at,null);
         } else {
-            g2d.drawImage(image,getX(),getY(),null);
+            AffineTransform at = new AffineTransform();
+            at.translate(getX(),getY());
+            at.translate(-image.getWidth()/2.0*getScale(),-image.getHeight()/2.0*getScale());
+            at.scale(getScale()+1,getScale()+1);
+            g2d.drawImage(image,at,null);
         }
     }
 
