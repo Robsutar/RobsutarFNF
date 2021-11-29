@@ -19,6 +19,8 @@ public abstract class AnimatedObject extends RenderableObject {
 
     private int width=0,height=0,animationIndex=0,imageIndex=0;
 
+    private double scale = 1;
+
     private boolean animating = true;
 
     public AnimatedObject(int x, int y, AtlasConfig atlasXml) {
@@ -90,13 +92,18 @@ public abstract class AnimatedObject extends RenderableObject {
         this.animating=true;
     }
 
+    public void setScale(double scale) {
+        this.scale = scale;
+    }
+
     public BufferedImage getActualImage(){
         return animatedImages.get(animationIndex).get(imageIndex);
     }
 
     public AffineTransform getActualTransform(){
         AffineTransform at = new AffineTransform(affineTransforms.get(animationIndex).get(imageIndex));
-        at.translate(getX()-getWidth()/2.0,getY()-getHeight()/2.0);
+        at.translate(getX()-(getWidth()/2.0)*scale,getY()-(getHeight()/2.0)*scale);
+        at.scale(scale,scale);
         return at;
     }
 
