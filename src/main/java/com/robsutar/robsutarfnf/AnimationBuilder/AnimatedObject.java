@@ -1,10 +1,7 @@
 package com.robsutar.robsutarfnf.AnimationBuilder;
 
 import com.robsutar.robsutarfnf.Assets;
-import com.robsutar.robsutarfnf.Files.JsonFiles;
-import com.robsutar.robsutarfnf.Files.XmlFiles;
 import com.robsutar.robsutarfnf.ImageBuffer.ImageManager;
-import com.robsutar.robsutarfnf.Main;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -19,14 +16,6 @@ public class AnimatedObject {
     ArrayList<ArrayList<AffineTransform>> affineTransforms = new ArrayList<ArrayList<AffineTransform>>();
 
     private int width=0,height=0;
-
-    public ArrayList<ArrayList<BufferedImage>> getAnimatedImages() {
-        return animatedImages;
-    }
-
-    public ArrayList<ArrayList<AffineTransform>> getAffineTransforms() {
-        return affineTransforms;
-    }
 
     public AnimatedObject(AtlasConfig atlasXml) {
 
@@ -54,8 +43,6 @@ public class AnimatedObject {
 
                 AffineTransform tempT = new AffineTransform();
                 tempT.translate(-atlas.getFrameX(i),-atlas.getFrameY(i));
-
-                //tempT.translate(-xLoc,-yLoc);
 
                 innerAfineTransforms.add(tempT);
 
