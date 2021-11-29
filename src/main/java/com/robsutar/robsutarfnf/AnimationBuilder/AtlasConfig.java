@@ -28,36 +28,8 @@ public class AtlasConfig {
         return name;
     }
 
-    public List<Integer> getX() {
-        return x;
-    }
-
-    public List<Integer> getY() {
-        return y;
-    }
-
-    public List<Integer> getWidth() {
-        return width;
-    }
-
-    public List<Integer> getHeight() {
-        return height;
-    }
-
-    public List<Integer> getFrameX() {
-        return frameX;
-    }
-
-    public List<Integer> getFrameY() {
-        return frameY;
-    }
-
-    public List<Integer> getFrameWidth() {
-        return frameWidth;
-    }
-
-    public List<Integer> getFrameHeight() {
-        return frameHeight;
+    public String getImagePath() {
+        return imagePath;
     }
 
     public String getName(int index) {

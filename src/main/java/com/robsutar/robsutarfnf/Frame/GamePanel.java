@@ -9,7 +9,7 @@ import static com.robsutar.robsutarfnf.Main.getWindowDim;
 
 
 public class GamePanel extends JPanel implements ActionListener, MouseListener {
-    private static final int DELAY =1;
+    private static final int DELAY =2;
     boolean running = false;
     boolean mouseOnScreen = false;
     long tim=System.currentTimeMillis();
@@ -37,8 +37,8 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
         while(System.currentTimeMillis() - tim > 10) { //10 = 100 ticks per second ** 1 = 1000 ticks per second
             tim += 10;
             Main.tick();
-            Main.renderer(g);
         }
+        Main.renderer(g);
     }
 
     @Override
@@ -82,7 +82,7 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
         mouseOnScreen=false;
     }
 
-    public class MyKeyAdapter extends KeyAdapter{
+    public static class MyKeyAdapter extends KeyAdapter{
         @Override
         public void keyPressed(KeyEvent e ){
             if (e.getKeyCode()==KeyEvent.VK_UP||e.getKeyCode()==KeyEvent.VK_W){
