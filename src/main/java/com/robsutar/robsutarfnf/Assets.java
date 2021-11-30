@@ -19,7 +19,7 @@ public class Assets {
 
 
     }
-    public static class AssetsTextures{
+    public static class AssetsImages{
         public static final String packFolder = resourcepackFolder+"textures/";
         public static BufferedImage START_MENU_BACKGROUND = ImageManager.loadImage(packFolder+"startMenuBackground.png");
         public static BufferedImage START_MENU_OPTION = ImageManager.loadImage(packFolder+"startMenuOption.png");

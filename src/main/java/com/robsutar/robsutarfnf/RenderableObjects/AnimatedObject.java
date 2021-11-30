@@ -17,11 +17,7 @@ public abstract class AnimatedObject extends RenderableObject {
 
     ArrayList<ArrayList<AffineTransform>> affineTransforms = new ArrayList<ArrayList<AffineTransform>>();
 
-    private int width=0,height=0,animationIndex=0,imageIndex=0;
-
-    private double scale = 1;
-
-    private boolean animating = true;
+    private int animationIndex=0,imageIndex=0;
 
     public AnimatedObject(int x, int y, AtlasConfig atlasXml) {
         super(x,y);
@@ -46,7 +42,7 @@ public abstract class AnimatedObject extends RenderableObject {
                 BufferedImage tempI = ImageManager.cropImage(img, atlas.getX(i),atlas.getY(i),atlas.getWidth(i),atlas.getHeight(i));
                 innerImages.add(tempI);
 
-                width += tempI.getWidth();height+= tempI.getHeight();
+                setWidth(getWidth()+tempI.getWidth());setHeight(getHeight()+tempI.getHeight());
 
                 AffineTransform tempT = new AffineTransform();
                 tempT.translate(-atlas.getFrameX(i),-atlas.getFrameY(i));
@@ -60,15 +56,8 @@ public abstract class AnimatedObject extends RenderableObject {
             animatedImages.add(innerImages);
             affineTransforms.add(innerAfineTransforms);
         }
-        width /= atlas.getName().toArray().length;
-        height /= atlas.getName().toArray().length;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-    public int getHeight(){
-        return height;
+        setWidth(getWidth()/atlas.getName().toArray().length);
+        setHeight(getHeight()/atlas.getName().toArray().length);
     }
 
     public void setIndex(int index){
@@ -85,36 +74,9 @@ public abstract class AnimatedObject extends RenderableObject {
         }
     }
 
-    public void stopAnimation(){
-        this.animating=false;
-    }
-    public  void startAnimation(){
-        this.animating=true;
-    }
-
-    public void setScale(double scale) {
-        this.scale = scale;
-    }
-
-    public BufferedImage getActualImage(){
-        return animatedImages.get(animationIndex).get(imageIndex);
-    }
-
-    public AffineTransform getActualTransform(){
-        AffineTransform at = new AffineTransform(affineTransforms.get(animationIndex).get(imageIndex));
-        at.translate(getX()-(getWidth()/2.0)*scale,getY()-(getHeight()/2.0)*scale);
-        at.scale(scale,scale);
-        return at;
-    }
-
     @Override
     protected void onBpmTick() {
-        if(animating) {
-            setImageIndex(imageIndex + 1);
-        }
-    }
-    @Override
-    protected void onRenderer(Graphics2D g2d) {
-        g2d.drawImage(getActualImage(),getActualTransform(),null);
+        setActualImage(animatedImages.get(animationIndex).get(imageIndex));setActualTransform(affineTransforms.get(animationIndex).get(imageIndex));
+        setImageIndex(imageIndex + 1);
     }
 }
