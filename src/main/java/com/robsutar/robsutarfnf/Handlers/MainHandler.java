@@ -1,6 +1,7 @@
 package com.robsutar.robsutarfnf.Handlers;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +34,20 @@ public class MainHandler{
         for (Handler h:handlers
         ) {
             h.bpmTick();
+        }
+    }
+
+    public void mousePressed(MouseEvent e ){
+        for (Handler h:handlers
+        ) {
+            h.onMousePressed(e);
+        }
+    }
+
+    public void mouseReleased(MouseEvent e ){
+        for (Handler h:handlers
+        ) {
+            h.onMouseReleased(e);
         }
     }
 }

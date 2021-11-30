@@ -23,7 +23,7 @@ public class Main {
     private static double timer = System.currentTimeMillis();
 
     public static byte state = 0;
-    private static float bpm = 154;
+    private static float bpm = 120;
 
     private static boolean showMousePos = true;
 
@@ -67,9 +67,11 @@ public class Main {
         return  new Dimension(WIDTH,HEIGHT);
     }
 
-    public static void mouseReleased(MouseEvent e) {
+    public static void mousePressed(MouseEvent e) {
+        mainHandler.mousePressed(e);
     }
 
-    public static void mousePressed(MouseEvent e) {
+    public static void mouseReleased(MouseEvent e) {
+        mainHandler.mouseReleased(e);
     }
 }

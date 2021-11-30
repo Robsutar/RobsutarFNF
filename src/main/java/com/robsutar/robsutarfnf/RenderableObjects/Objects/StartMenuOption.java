@@ -1,23 +1,22 @@
 package com.robsutar.robsutarfnf.RenderableObjects.Objects;
 
+import com.robsutar.robsutarfnf.Assets;
 import com.robsutar.robsutarfnf.RenderableObjects.StaticBox;
 
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 public class StartMenuOption extends StaticBox {
-    public StartMenuOption(int x, int y, BufferedImage img) {
-        super(x, y, img);
+    public StartMenuOption(int x, int y) {
+        super(x, y, Assets.AssetsImages.START_MENU_OPTION);
     }
 
     @Override
-    protected void onTick() {
-        if (isInto(getX(),getY(),getWidth(),getHeight())){
-            setTargetScale(1.3);
-        }
+    public void onMousePressed(MouseEvent e) {
+
     }
 
     @Override
-    protected void onBpmTick() {
-
+    public void onMouseReleased(MouseEvent e) {
     }
 }

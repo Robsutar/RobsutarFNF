@@ -12,12 +12,10 @@ import java.util.List;
 public class Assets {
     boolean externalTexture = false;
     private static String resourcepackFolder = Main.resourcesPath+"assets/";
-    public  Assets(String resourcepackFolder){
+    public Assets(String resourcepackFolder){
         if (resourcepackFolder != null){
             Assets.resourcepackFolder =  Main.resourcesPath+resourcepackFolder+"/";externalTexture=true;
         }
-
-
     }
     public static class AssetsImages{
         public static final String packFolder = resourcepackFolder+"textures/";

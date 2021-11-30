@@ -1,6 +1,9 @@
 package com.robsutar.robsutarfnf.RenderableObjects;
 
+import com.robsutar.robsutarfnf.Main;
+
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
@@ -13,6 +16,7 @@ public abstract class RenderableObject extends Position{
 
     protected boolean animating = true;
     protected boolean backToOriginalScale = true;
+    protected boolean mouseInteractive = false;
 
     private BufferedImage actualImage;
 
@@ -62,13 +66,32 @@ public abstract class RenderableObject extends Position{
     public void setScale(double scale) {
         this.scale = scale;
     }
+
+    public double getScale() {
+        return scale;
+    }
+
     public void setTargetScale(double targetScale) {
         this.targetScale = targetScale;
     }
+    public double getTargetScale() {
+        return targetScale;
+    }
 
+    public void setMouseInteractive(boolean mouseInteractive) {
+        this.mouseInteractive = mouseInteractive;
+    }
 
+    public boolean isInto(){
+        double xS = getX()-getWidth()/2.0;
+        double yS = getY()-getHeight()/2.0;
+        return Main.getxMouse() >= xS && Main.getxMouse() <= getWidth()+xS && Main.getyMouse() >= yS && Main.getyMouse() <= getHeight()+yS;
+    }
 
     public void tick() {
+        if (mouseInteractive&&isInto()){
+            setTargetScale(1.3);
+        }
         onTick();
     }
 
@@ -90,6 +113,32 @@ public abstract class RenderableObject extends Position{
         onBpmTick();
     }
 
-    protected abstract void onTick();
-    protected abstract void onBpmTick();
+    public void mousePressed(MouseEvent e){
+        if (mouseInteractive){
+            onMousePressed(e);
+        }
+    }
+
+    public void mouseReleased(MouseEvent e){
+        if (mouseInteractive){
+            if (isInto()) {
+                onMouseReleased(e);
+            }
+        }
+    }
+
+    public void onTick(){
+
+    }
+    public void onBpmTick(){
+
+    }
+
+    public void onMousePressed(MouseEvent e) {
+
+    }
+
+    public void onMouseReleased(MouseEvent e) {
+
+    }
 }

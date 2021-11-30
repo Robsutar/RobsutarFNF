@@ -75,7 +75,7 @@ public abstract class AnimatedObject extends RenderableObject {
     }
 
     @Override
-    protected void onBpmTick() {
+    public void onBpmTick() {
         setActualImage(animatedImages.get(animationIndex).get(imageIndex));setActualTransform(affineTransforms.get(animationIndex).get(imageIndex));
         setImageIndex(imageIndex + 1);
     }
