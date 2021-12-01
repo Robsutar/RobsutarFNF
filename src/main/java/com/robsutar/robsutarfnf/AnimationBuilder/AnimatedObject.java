@@ -1,15 +1,12 @@
-package com.robsutar.robsutarfnf.RenderableObjects;
+package com.robsutar.robsutarfnf.AnimationBuilder;
 
-import com.robsutar.robsutarfnf.AnimationBuilder.AtlasConfig;
 import com.robsutar.robsutarfnf.Assets;
 import com.robsutar.robsutarfnf.ImageBuffer.ImageManager;
 import com.robsutar.robsutarfnf.RenderableObjects.RenderableObject;
 
-import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.List;
 
 public abstract class AnimatedObject extends RenderableObject {
 
@@ -42,7 +39,7 @@ public abstract class AnimatedObject extends RenderableObject {
                 BufferedImage tempI = ImageManager.cropImage(img, atlas.getX(i),atlas.getY(i),atlas.getWidth(i),atlas.getHeight(i));
                 innerImages.add(tempI);
 
-                setWidth(getWidth()+tempI.getWidth());setHeight(getHeight()+tempI.getHeight());
+                width+=tempI.getWidth();height+=tempI.getHeight();
 
                 AffineTransform tempT = new AffineTransform();
                 tempT.translate(-atlas.getFrameX(i),-atlas.getFrameY(i));
@@ -56,8 +53,8 @@ public abstract class AnimatedObject extends RenderableObject {
             animatedImages.add(innerImages);
             affineTransforms.add(innerAfineTransforms);
         }
-        setWidth(getWidth()/atlas.getName().toArray().length);
-        setHeight(getHeight()/atlas.getName().toArray().length);
+        width/=atlas.getName().toArray().length;
+        height/=atlas.getName().toArray().length;
     }
 
     public void setIndex(int index){
@@ -72,11 +69,5 @@ public abstract class AnimatedObject extends RenderableObject {
         } else {
             this.imageIndex = 0;
         }
-    }
-
-    @Override
-    public void onBpmTick() {
-        setActualImage(animatedImages.get(animationIndex).get(imageIndex));setActualTransform(affineTransforms.get(animationIndex).get(imageIndex));
-        setImageIndex(imageIndex + 1);
     }
 }

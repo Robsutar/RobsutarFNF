@@ -1,9 +1,7 @@
 package com.robsutar.robsutarfnf;
 
 import com.robsutar.robsutarfnf.Frame.GameFrame;
-import com.robsutar.robsutarfnf.Handlers.Handler;
 import com.robsutar.robsutarfnf.Handlers.MainHandler;
-import com.robsutar.robsutarfnf.Handlers.StartMenuHandler;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -27,12 +25,10 @@ public class Main {
 
     private static boolean showMousePos = true;
 
-    private static MainHandler mainHandler = new MainHandler();
-    private static StartMenuHandler startMenuHandler = new StartMenuHandler();
+    public static MainHandler mainHandler = new MainHandler();
 
     public static void main(String[] args){
         new GameFrame();
-        mainHandler.addHandler(startMenuHandler);
     }
     public static int getxMouse() {
         return xMouse;
@@ -43,13 +39,12 @@ public class Main {
 
     public static void tick(){
         bpmTick();
-        mainHandler.tick();
     }
 
     public static void renderer(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
 
-        mainHandler.render(g2d);
+        mainHandler.renderer(g2d);
 
         if (showMousePos){
             g2d.setColor(Color.yellow);
@@ -59,7 +54,6 @@ public class Main {
     public static void bpmTick(){
         while(System.currentTimeMillis() - timer > 1000.0/(bpm/60.0)/15) {
             timer += 1000.0/(bpm/60.0)/15;
-            mainHandler.bpmTick();
         }
     }
 
@@ -68,10 +62,10 @@ public class Main {
     }
 
     public static void mousePressed(MouseEvent e) {
-        mainHandler.mousePressed(e);
+
     }
 
     public static void mouseReleased(MouseEvent e) {
-        mainHandler.mouseReleased(e);
+
     }
 }

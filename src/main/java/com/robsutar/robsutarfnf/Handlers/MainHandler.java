@@ -1,53 +1,26 @@
 package com.robsutar.robsutarfnf.Handlers;
 
+import com.robsutar.robsutarfnf.RenderableObjects.Renderable;
+import com.robsutar.robsutarfnf.RenderableObjects.RenderableObject;
+
 import java.awt.*;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainHandler{
-    private List<Handler> handlers = new ArrayList<>();
+public class MainHandler {
+    List<Renderable> renderables = new ArrayList<>();
 
-    public void addHandler(Handler handler){
-        handlers.add(handler);
+    public void addObject(Renderable object){
+        renderables.add(object);
     }
 
-    public void removeHandler(Handler handler){
-        handlers.remove(handler);
+    public void removeObject(Renderable object){
+        renderables.remove(object);
     }
 
-    public void render(Graphics2D g2d){
-        for (Handler h:handlers
-             ) {
-            h.render(g2d);
-        }
-    }
-
-    public void tick() {
-        for (Handler h:handlers
-        ) {
-            h.tick();
-        }
-    }
-
-    public void bpmTick() {
-        for (Handler h:handlers
-        ) {
-            h.bpmTick();
-        }
-    }
-
-    public void mousePressed(MouseEvent e ){
-        for (Handler h:handlers
-        ) {
-            h.onMousePressed(e);
-        }
-    }
-
-    public void mouseReleased(MouseEvent e ){
-        for (Handler h:handlers
-        ) {
-            h.onMouseReleased(e);
+    public void renderer(Graphics2D g2d){
+        for (Renderable r:renderables){
+            r.renderer(g2d);
         }
     }
 }
