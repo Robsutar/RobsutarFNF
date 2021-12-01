@@ -5,8 +5,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-import static com.robsutar.robsutarfnf.Main.getWindowDim;
-
 
 public class GamePanel extends JPanel implements ActionListener, MouseListener {
     private static final int DELAY =2;
@@ -17,7 +15,7 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
     Timer timer;
 
     GamePanel(){
-        this.setPreferredSize(getWindowDim());
+        this.setPreferredSize(GameFrame.getWindowDim());
         this.setBackground(Color.BLACK);
         this.setFocusable(true);
         this.addKeyListener(new MyKeyAdapter());

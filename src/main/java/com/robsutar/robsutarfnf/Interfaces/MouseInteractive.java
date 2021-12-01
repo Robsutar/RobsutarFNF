@@ -1,4 +1,4 @@
-package com.robsutar.robsutarfnf.RenderableObjects;
+package com.robsutar.robsutarfnf.Interfaces;
 
 import java.awt.event.MouseEvent;
 

@@ -2,10 +2,14 @@ package com.robsutar.robsutarfnf;
 
 import com.robsutar.robsutarfnf.Frame.GameFrame;
 import com.robsutar.robsutarfnf.Handlers.MainHandler;
+import com.robsutar.robsutarfnf.RenderableObjects.Menu.StartMenu;
+import com.robsutar.robsutarfnf.RenderableObjects.Position;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.io.File;
+
+import static com.robsutar.robsutarfnf.Frame.GameFrame.getWindowDim;
 
 public class Main {
     public static String resourcesPath = new File("").getAbsolutePath()+"/resources/";
@@ -29,6 +33,7 @@ public class Main {
 
     public static void main(String[] args){
         new GameFrame();
+        new StartMenu(new Position(Position.PositionTypes.CENTER));
     }
     public static int getxMouse() {
         return xMouse;
@@ -54,11 +59,8 @@ public class Main {
     public static void bpmTick(){
         while(System.currentTimeMillis() - timer > 1000.0/(bpm/60.0)/15) {
             timer += 1000.0/(bpm/60.0)/15;
+            mainHandler.bpmTick();
         }
-    }
-
-    public static Dimension getWindowDim() {
-        return  new Dimension(WIDTH,HEIGHT);
     }
 
     public static void mousePressed(MouseEvent e) {

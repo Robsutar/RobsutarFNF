@@ -2,22 +2,24 @@ package com.robsutar.robsutarfnf.AnimationBuilder;
 
 import com.robsutar.robsutarfnf.Assets;
 import com.robsutar.robsutarfnf.ImageBuffer.ImageManager;
+import com.robsutar.robsutarfnf.Interfaces.BpmTicable;
+import com.robsutar.robsutarfnf.RenderableObjects.Position;
 import com.robsutar.robsutarfnf.RenderableObjects.RenderableObject;
 
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public abstract class AnimatedObject extends RenderableObject {
+public abstract class AnimatedObject extends RenderableObject implements BpmTicable {
 
     ArrayList<ArrayList<BufferedImage>> animatedImages = new ArrayList<ArrayList<BufferedImage>>();
-
     ArrayList<ArrayList<AffineTransform>> affineTransforms = new ArrayList<ArrayList<AffineTransform>>();
 
     private int animationIndex=0,imageIndex=0;
+    private boolean animating = true;
 
-    public AnimatedObject(int x, int y, AtlasConfig atlasXml) {
-        super(x,y);
+    public AnimatedObject(Position pos, AtlasConfig atlasXml) {
+        super(pos);
 
         AtlasConfig atlas = atlasXml;
 
@@ -58,16 +60,36 @@ public abstract class AnimatedObject extends RenderableObject {
     }
 
     public void setIndex(int index){
-        if (animatedImages.toArray().length-1<=index) {
-            this.animationIndex = index;
-        } else this.animationIndex=0;
+        if (affineTransforms.toArray().length-1<=index) {
+            this.animationIndex = 0;
+        } else this.animationIndex=index;
+    }
+    public void setImageIndex(int index){
+        if (animatedImages.get(animationIndex).toArray().length-1<=index) {
+            this.imageIndex = 0;
+        } else {
+            this.imageIndex = index;
+        }
     }
 
-    public void setImageIndex(int index){
-        if (index<animatedImages.get(animationIndex).toArray().length) {
-            this.imageIndex = index;
-        } else {
-            this.imageIndex = 0;
+    @Override
+    public void spawn() {
+        super.spawn();
+        bpmSpawn();
+    }
+    @Override
+    public void kill() {
+        super.kill();
+        bpmKill();
+    }
+
+    @Override
+    public void bpmTick() {
+        if (animating){
+            setIndex(animationIndex+1);
+            setImageIndex(imageIndex+1);
+            setActualImage(animatedImages.get(animationIndex).get(imageIndex));
+            setActualTransform(affineTransforms.get(animationIndex).get(imageIndex));
         }
     }
 }
