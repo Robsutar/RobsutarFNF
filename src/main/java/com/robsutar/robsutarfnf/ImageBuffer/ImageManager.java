@@ -33,11 +33,11 @@ public class ImageManager {
         BufferedImage croppedImage = img.getSubimage(x, y, width, height);
         return croppedImage;
     }
-
-    public static void makeImage(BufferedImage img , AffineTransform at,Graphics2D g2d){
-        g2d.drawImage(img,at,null);
-    }
-    public static void makeImage(BufferedImage img,int x,int y, Graphics2D g2d){
-        g2d.drawImage(img,x,y,null);
+    public static BufferedImage moveImage(BufferedImage source, int frameX, int frameY){
+        BufferedImage b = new BufferedImage(source.getWidth()+frameX, source.getHeight()+frameY, source.getType());
+        Graphics g = b.getGraphics();
+        g.drawImage(source,frameX,frameY, null);
+        g.dispose();
+        return b;
     }
 }

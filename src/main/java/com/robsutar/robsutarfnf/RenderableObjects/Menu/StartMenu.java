@@ -20,7 +20,7 @@ public class StartMenu extends AnimatedObject implements MouseInteractive, Ticab
 
     @Override
     public void tick() {
-        if (isInto(x,y,width,height)){
+        if (isInto(x,y,getWidth(),getHeight())){
             setScale(1.3);
         } else {setScale(1);}
     }
