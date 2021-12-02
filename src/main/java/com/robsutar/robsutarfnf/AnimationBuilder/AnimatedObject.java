@@ -41,7 +41,7 @@ public abstract class AnimatedObject extends RenderableObject implements BpmTica
                 BufferedImage tempI = ImageManager.cropImage(img, atlas.getX(i),atlas.getY(i),atlas.getWidth(i),atlas.getHeight(i));
                 innerImages.add(tempI);
 
-                width+=tempI.getWidth();height+=tempI.getHeight();
+                originalWidth+=tempI.getWidth();originalHeight+=tempI.getHeight();
 
                 AffineTransform tempT = new AffineTransform();
                 tempT.translate(-atlas.getFrameX(i),-atlas.getFrameY(i));
@@ -55,8 +55,10 @@ public abstract class AnimatedObject extends RenderableObject implements BpmTica
             animatedImages.add(innerImages);
             affineTransforms.add(innerAfineTransforms);
         }
-        width/=atlas.getName().toArray().length;
-        height/=atlas.getName().toArray().length;
+        originalWidth/=atlas.getName().toArray().length;
+        originalHeight/=atlas.getName().toArray().length;
+        width=originalWidth;
+        height=originalHeight;
     }
 
     public void setIndex(int index){
