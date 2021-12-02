@@ -9,10 +9,13 @@ import com.robsutar.robsutarfnf.RenderableObjects.RenderableObject;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class AnimatedObject extends RenderableObject implements BpmTicable {
 
-    ArrayList<ArrayList<BufferedImage>> animatedImages = new ArrayList<ArrayList<BufferedImage>>();
+    private ArrayList<ArrayList<BufferedImage>> animatedImages = new ArrayList<ArrayList<BufferedImage>>();
+
+    private List<Stream> streams = new ArrayList<>();
 
     private int animationIndex=0,imageIndex=0;
     private boolean animating = true;
@@ -31,6 +34,8 @@ public abstract class AnimatedObject extends RenderableObject implements BpmTica
 
             ArrayList<String> innerAnimationsName = new ArrayList<String>();
             ArrayList<BufferedImage> innerImages = new ArrayList<BufferedImage>();
+
+            streams.add(new Stream());
 
             while (atlas.getName(i).contains(name)){
                 name = atlas.getName(i).substring(0,atlas.getName(i).length()-4);
