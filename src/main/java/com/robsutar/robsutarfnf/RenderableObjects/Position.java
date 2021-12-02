@@ -6,7 +6,10 @@ import com.robsutar.robsutarfnf.Main;
 public class Position {
     protected int x=0,y=0;
 
-    Position (Position pos){
+    public Position(){
+    }
+
+    public Position (Position pos){
         this.x= pos.x;this.y= pos.y;
     }
 
@@ -20,5 +23,13 @@ public class Position {
     }
     public enum PositionTypes{
         CENTER()
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 }

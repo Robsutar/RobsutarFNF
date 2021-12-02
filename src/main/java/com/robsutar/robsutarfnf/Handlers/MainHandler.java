@@ -1,8 +1,11 @@
 package com.robsutar.robsutarfnf.Handlers;
 
+import com.robsutar.robsutarfnf.Frame.Camera;
+import com.robsutar.robsutarfnf.Frame.GameFrame;
 import com.robsutar.robsutarfnf.Interfaces.BpmTicable;
 import com.robsutar.robsutarfnf.Interfaces.MouseInteractive;
 import com.robsutar.robsutarfnf.Interfaces.Ticable;
+import com.robsutar.robsutarfnf.RenderableObjects.Position;
 import com.robsutar.robsutarfnf.RenderableObjects.Renderable;
 
 import java.awt.*;
@@ -15,6 +18,7 @@ public class MainHandler {
     List<BpmTicable> bpmTicables = new ArrayList<>();
     List<MouseInteractive> mouseInteractives = new ArrayList<>();
     List<Ticable> ticables = new ArrayList<>();
+    public Camera mainCamera = new Camera();
 
     public void addObject(Renderable object){
         renderables.add(object);
@@ -45,6 +49,9 @@ public class MainHandler {
     }
 
     public void renderer(Graphics2D g2d){
+        g2d.rotate(Math.toRadians(mainCamera.getRotation()), GameFrame.width()/2.0,GameFrame.height()/2.0);
+        g2d.translate(mainCamera.getX(), mainCamera.getY());
+        g2d.scale(mainCamera.getScale(),mainCamera.getScale());
         for (Renderable r:renderables){
             r.renderer(g2d);
         }

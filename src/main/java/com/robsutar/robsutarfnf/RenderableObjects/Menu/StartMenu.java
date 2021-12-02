@@ -12,6 +12,7 @@ import java.awt.event.MouseEvent;
 public class StartMenu extends AnimatedObject implements MouseInteractive, Ticable {
     public StartMenu(Position pos) {
         super(pos, Assets.AssetsXml.GF_DANCE);
+        setStream(Assets.AssetsAnimationStream.SIMPLE_ZOOM);
         bpmSpawn();
         renderableSpawn();
         mouseISpawn();
@@ -21,8 +22,8 @@ public class StartMenu extends AnimatedObject implements MouseInteractive, Ticab
     @Override
     public void tick() {
         if (isInto(x,y,getWidth(),getHeight())){
-            setScale(1.3);
-        } else {setScale(1);}
+            setActualStream(stream.getNextStream(false));
+        } else {setActualStream(stream.getNextStream(true));}
     }
 
     @Override

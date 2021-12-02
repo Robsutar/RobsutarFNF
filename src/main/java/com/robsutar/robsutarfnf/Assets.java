@@ -1,14 +1,12 @@
 package com.robsutar.robsutarfnf;
 
+import com.robsutar.robsutarfnf.AnimationBuilder.AnimationStream;
 import com.robsutar.robsutarfnf.AnimationBuilder.AtlasConfig;
 import com.robsutar.robsutarfnf.Files.XmlFiles;
 import com.robsutar.robsutarfnf.ImageBuffer.ImageManager;
 
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class Assets {
     boolean externalTexture = false;
@@ -27,5 +25,8 @@ public class Assets {
         public static final String packFolder = resourcepackFolder+"animatedObjects/";
 
         public static AtlasConfig GF_DANCE = XmlFiles.readTextureAtlasXml(packFolder+"gfDance.xml");
+    }
+    public static class AssetsAnimationStream{
+        public static final AnimationStream SIMPLE_ZOOM = AnimationStream.genericZoom(15,0.3);
     }
 }

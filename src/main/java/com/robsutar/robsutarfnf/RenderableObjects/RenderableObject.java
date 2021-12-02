@@ -10,10 +10,11 @@ import java.awt.image.BufferedImage;
 
 public abstract class RenderableObject extends Position implements Renderable {
     private int width,height;
-    private double scale=0.5;
+    private double scale=1;
     double rotation = 0;
 
     protected BufferedImage actualImage;
+    protected AnimationStream stream = new AnimationStream();
     protected Stream actualStream = new Stream();
 
     public RenderableObject(Position position){
@@ -49,17 +50,25 @@ public abstract class RenderableObject extends Position implements Renderable {
         return (int) (height*getScale());
     }
 
+    public void setStream(AnimationStream stream) {
+        this.stream = stream;
+    }
+
+    public void setActualStream(Stream stream){
+        this.actualStream=stream;
+    }
+
     public AffineTransform getActualTransform() {
         AffineTransform at = new AffineTransform();
         at.translate(x-getWidth()/2,y-getWidth()/2);
-        at.translate(actualStream.getX(),actualStream.getY());
+        at.translate(actualStream.getX(), actualStream.getY());
         at.rotate(Math.toRadians(rotation),getWidth()/2.0,getHeight()/2.0);
         at.scale(getScale(),getScale());
         return at;
     }
 
     public double getScale() {
-        return scale+ actualStream.getScale();
+        return scale+actualStream.getScale();
     }
 
     @Override
