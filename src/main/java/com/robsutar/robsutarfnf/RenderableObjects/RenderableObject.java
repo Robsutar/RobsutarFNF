@@ -52,6 +52,7 @@ public abstract class RenderableObject extends Position implements Renderable {
     public AffineTransform getActualTransform() {
         AffineTransform at = new AffineTransform();
         at.translate(x-getWidth()/2,y-getWidth()/2);
+        at.translate(actualStream.getX(),actualStream.getY());
         at.rotate(Math.toRadians(rotation),getWidth()/2.0,getHeight()/2.0);
         at.scale(getScale(),getScale());
         return at;
