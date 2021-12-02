@@ -73,17 +73,6 @@ public abstract class AnimatedObject extends RenderableObject implements BpmTica
     }
 
     @Override
-    public void spawn() {
-        super.spawn();
-        bpmSpawn();
-    }
-    @Override
-    public void kill() {
-        super.kill();
-        bpmKill();
-    }
-
-    @Override
     public void bpmTick() {
         if (animating){
             setIndex(animationIndex+1);

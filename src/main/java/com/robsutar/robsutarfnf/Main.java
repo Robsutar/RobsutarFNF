@@ -43,6 +43,7 @@ public class Main {
     }
 
     public static void tick(){
+        mainHandler.tick();
         bpmTick();
     }
 
@@ -64,10 +65,10 @@ public class Main {
     }
 
     public static void mousePressed(MouseEvent e) {
-
+        mainHandler.mousePressed(e);
     }
 
     public static void mouseReleased(MouseEvent e) {
-
+        mainHandler.mouseReleased(e);
     }
 }

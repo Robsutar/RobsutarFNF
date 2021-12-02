@@ -2,16 +2,15 @@ package com.robsutar.robsutarfnf.Interfaces;
 
 import com.robsutar.robsutarfnf.Main;
 
-public interface BpmTicable {
-
-    default void bpmSpawn(){
+public interface Ticable {
+    default void ticableSpawn(){
         Main.mainHandler.addObject(this);
     }
-    default void bpmKill(){
+    default void ticableKill(){
         Main.mainHandler.removeObject(this);
     }
 
-    default void bpmTick(){
+    default void tick(){
 
     }
 }
