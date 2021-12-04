@@ -9,12 +9,6 @@ public class Stream extends Position {
     public Stream(){
 
     }
-    public void add(Stream b){
-        x=getX()+b.getX();
-        y=getY()+b.getY();
-        scale = getScale()+b.getScale();
-        rotation = getRotation()+b.getRotation();
-    }
 
     public Stream(int x, int y, double scale,double rotation){
         this.x=x;this.y=y;this.scale=scale;this.rotation=rotation;

@@ -30,6 +30,7 @@ public class AnimationStream {
         }
         return new Stream();
     }
+    
 
     public static AnimationStream genericZoom(int times, double scale){
         AnimationStream as = new AnimationStream();
@@ -40,5 +41,9 @@ public class AnimationStream {
             as.add(stream);
         }
         return as;
+    }
+
+    public List<Stream> getStreams() {
+        return animations;
     }
 }

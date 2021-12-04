@@ -1,8 +1,10 @@
 package com.robsutar.robsutarfnf.AnimationBuilder;
 
 import com.robsutar.robsutarfnf.Assets;
+import com.robsutar.robsutarfnf.Files.JsonFiles;
 import com.robsutar.robsutarfnf.ImageBuffer.ImageManager;
 import com.robsutar.robsutarfnf.Interfaces.BpmTicable;
+import com.robsutar.robsutarfnf.Main;
 import com.robsutar.robsutarfnf.RenderableObjects.Position;
 import com.robsutar.robsutarfnf.RenderableObjects.RenderableObject;
 
@@ -14,13 +16,12 @@ import java.util.List;
 public abstract class AnimatedObject extends RenderableObject implements BpmTicable {
 
     private ArrayList<ArrayList<BufferedImage>> animatedImages = new ArrayList<ArrayList<BufferedImage>>();
-
-    private List<Stream> streams = new ArrayList<>();
+    private AnimationStream streams = new AnimationStream();
 
     private int animationIndex=0,imageIndex=0;
     private boolean animating = true;
 
-    public AnimatedObject(Position pos, AtlasConfig atlasXml) {
+    public AnimatedObject(Position pos, AtlasConfig atlasXml,AnimationStream stream) {
         super(pos);
 
         AtlasConfig atlas = atlasXml;
@@ -29,13 +30,17 @@ public abstract class AnimatedObject extends RenderableObject implements BpmTica
 
         ArrayList<ArrayList<String>> animationsName = new ArrayList<ArrayList<String>>();
 
+        //AnimationStream megastream = new AnimationStream();
+
+        if (stream!=null){this.streams = stream;}
+
         for (int i = 0;i < atlas.getName().toArray().length;i++){
             String name = atlas.getName(i).substring(0,atlas.getName(i).length()-4);
 
             ArrayList<String> innerAnimationsName = new ArrayList<String>();
             ArrayList<BufferedImage> innerImages = new ArrayList<BufferedImage>();
 
-            streams.add(new Stream());
+            //megastream.add(new Stream());
 
             while (atlas.getName(i).contains(name)){
                 name = atlas.getName(i).substring(0,atlas.getName(i).length()-4);
@@ -54,8 +59,15 @@ public abstract class AnimatedObject extends RenderableObject implements BpmTica
             animationsName.add(innerAnimationsName);
             animatedImages.add(innerImages);
         }
+
+        //JsonFiles.writeAnimationConfig(megastream.getStreams(),Assets.AssetsXml.packFolder+atlas.getImagePath().replace("png","json"));
+
         setWidth(getOriginalWidth()/atlas.getName().toArray().length);
         setHeight(getOriginalHeight()/atlas.getName().toArray().length);
+    }
+
+    public AnimationStream getStreams() {
+        return streams;
     }
 
     public void setIndex(int index){
@@ -74,6 +86,7 @@ public abstract class AnimatedObject extends RenderableObject implements BpmTica
     @Override
     public void bpmTick() {
         if (animating){
+
             setImageIndex(imageIndex+1);
             setActualImage(animatedImages.get(animationIndex).get(imageIndex));
         }

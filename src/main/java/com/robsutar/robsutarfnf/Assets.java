@@ -2,15 +2,18 @@ package com.robsutar.robsutarfnf;
 
 import com.robsutar.robsutarfnf.AnimationBuilder.AnimationStream;
 import com.robsutar.robsutarfnf.AnimationBuilder.AtlasConfig;
+import com.robsutar.robsutarfnf.AnimationBuilder.Stream;
+import com.robsutar.robsutarfnf.Files.JsonFiles;
 import com.robsutar.robsutarfnf.Files.XmlFiles;
 import com.robsutar.robsutarfnf.ImageBuffer.ImageManager;
 
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 public class Assets {
     boolean externalTexture = false;
-    private static String resourcepackFolder = Main.resourcesPath+"assets/";
+    private static String resourcepackFolder = Main.assetsPath;
     public Assets(String resourcepackFolder){
         if (resourcepackFolder != null){
             Assets.resourcepackFolder =  Main.resourcesPath+resourcepackFolder+"/";externalTexture=true;
@@ -28,5 +31,6 @@ public class Assets {
     }
     public static class AssetsAnimationStream{
         public static final AnimationStream SIMPLE_ZOOM = AnimationStream.genericZoom(15,0.3);
+        public static final AnimationStream GF_STREAM = JsonFiles.readAnimationConfig(resourcepackFolder+"animatedObjects/gfDanceTitle.json");
     }
 }

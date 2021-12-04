@@ -12,7 +12,7 @@ import java.awt.event.MouseEvent;
 public class StartMenu extends AnimatedObject implements MouseInteractive, Ticable {
     private boolean inZoom = false;
     public StartMenu(Position pos) {
-        super(pos, Assets.AssetsXml.GF_DANCE);
+        super(pos, Assets.AssetsXml.GF_DANCE,Assets.AssetsAnimationStream.GF_STREAM);
         setStream(Assets.AssetsAnimationStream.SIMPLE_ZOOM);
         bpmSpawn();
         renderableSpawn();

@@ -21,6 +21,15 @@ public class Position {
             this.x = GameFrame.width()/2;this.y=GameFrame.height()/2;
         }
     }
+
+    public void setX(int x) {
+        this.x=x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
     public enum PositionTypes{
         CENTER()
     }
