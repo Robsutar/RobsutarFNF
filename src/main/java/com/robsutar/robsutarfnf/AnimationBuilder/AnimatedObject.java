@@ -5,10 +5,10 @@ import com.robsutar.robsutarfnf.Files.JsonFiles;
 import com.robsutar.robsutarfnf.ImageBuffer.ImageManager;
 import com.robsutar.robsutarfnf.Interfaces.BpmTicable;
 import com.robsutar.robsutarfnf.Main;
-import com.robsutar.robsutarfnf.RenderableObjects.Position;
+import com.robsutar.robsutarfnf.Position.ExtendedPosition;
 import com.robsutar.robsutarfnf.RenderableObjects.RenderableObject;
+import org.json.simple.JSONObject;
 
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,23 +16,23 @@ import java.util.List;
 public abstract class AnimatedObject extends RenderableObject implements BpmTicable {
 
     private ArrayList<ArrayList<BufferedImage>> animatedImages = new ArrayList<ArrayList<BufferedImage>>();
-    private AnimationStream streams = new AnimationStream();
 
+    private List<Integer> widths= new ArrayList<>();
+    private List<Integer> heights= new ArrayList<>();
+    private List<ExtendedPosition> posEps = new ArrayList<>();
     private int animationIndex=0,imageIndex=0;
     private boolean animating = true;
 
-    public AnimatedObject(Position pos, AtlasConfig atlasXml,AnimationStream stream) {
-        super(pos);
+    public AnimatedObject(int x, int y,AtlasConfig atlasXml) {
+        super(x,y);
 
         AtlasConfig atlas = atlasXml;
-
-        BufferedImage img = ImageManager.loadImage(Assets.AssetsXml.packFolder+atlas.getImagePath());
-
+        BufferedImage img = ImageManager.loadImage(atlas.getFolderPath() + atlas.getImageName());
         ArrayList<ArrayList<String>> animationsName = new ArrayList<ArrayList<String>>();
-
-        //AnimationStream megastream = new AnimationStream();
-
-        if (stream!=null){this.streams = stream;}
+        JSONObject testPosJson = JsonFiles.readJsonObject(atlas.getFolderPath()+(atlas.getImageName().replace("png","json")));
+        if (testPosJson!=null) {
+            this.posEps = JsonFiles.readBaseTransform(testPosJson);
+        }
 
         for (int i = 0;i < atlas.getName().toArray().length;i++){
             String name = atlas.getName(i).substring(0,atlas.getName(i).length()-4);
@@ -40,37 +40,64 @@ public abstract class AnimatedObject extends RenderableObject implements BpmTica
             ArrayList<String> innerAnimationsName = new ArrayList<String>();
             ArrayList<BufferedImage> innerImages = new ArrayList<BufferedImage>();
 
-            //megastream.add(new Stream());
+            int widt = 0,heigt=0;
+
+            if(this.posEps.toArray().length<=i){
+                this.posEps.add(new ExtendedPosition());
+            }
 
             while (atlas.getName(i).contains(name)){
                 name = atlas.getName(i).substring(0,atlas.getName(i).length()-4);
                 innerAnimationsName.add(atlas.getName(i));
 
-                BufferedImage tempI = ImageManager.cropImage(img, atlas.getX(i),atlas.getY(i),atlas.getWidth(i),atlas.getHeight(i));
-                tempI =  ImageManager.moveImage(tempI,-atlas.getFrameX(i),-atlas.getFrameY(i));
+                BufferedImage tempI =  ImageManager.cropImage(img, atlas.getX(i),atlas.getY(i),atlas.getWidth(i),atlas.getHeight(i));
+                tempI = ImageManager.moveImage(tempI, -atlas.getFrameX(i),-atlas.getFrameY(i));
                 innerImages.add(tempI);
 
-                setWidth(getOriginalWidth()+tempI.getWidth());
-                setHeight(getOriginalHeight()+tempI.getHeight());
+                widt+=tempI.getWidth();
+                heigt+=tempI.getHeight();
 
                 i+=1;
             }
             i-=1;
+
+            widt/=innerImages.toArray().length;
+            heigt/=innerImages.toArray().length;
             animationsName.add(innerAnimationsName);
+            widths.add(widt);
+            heights.add(heigt);
             animatedImages.add(innerImages);
         }
-
-        //JsonFiles.writeAnimationConfig(megastream.getStreams(),Assets.AssetsXml.packFolder+atlas.getImagePath().replace("png","json"));
-
-        setWidth(getOriginalWidth()/atlas.getName().toArray().length);
-        setHeight(getOriginalHeight()/atlas.getName().toArray().length);
+        if(testPosJson==null){
+            JsonFiles.writeBaseTransform(posEps, (atlas.getFolderPath())+(atlas.getImageName().replace("png","json")));
+        }
+        bpmSpawn();
     }
 
-    public AnimationStream getStreams() {
-        return streams;
+    @Override
+    public int getWidth() {
+        if (!(animationIndex >=widths.toArray().length)){
+            width=widths.get(animationIndex);
+        }
+        return super.getWidth();
+    }
+
+    @Override
+    public int getHeight() {
+        if (!(animationIndex >=heights.toArray().length)){
+            height=heights.get(animationIndex);
+        }
+        return super.getHeight();
+    }
+
+    public int getAnimationIndex() {
+        return animationIndex;
     }
 
     public void setIndex(int index){
+        if (index<0){
+            this.animationIndex = animatedImages.toArray().length-1;
+        } else
         if (animatedImages.toArray().length-1<=index) {
             this.animationIndex = 0;
         } else this.animationIndex=index;
@@ -84,11 +111,16 @@ public abstract class AnimatedObject extends RenderableObject implements BpmTica
     }
 
     @Override
+    public void tick() {
+        super.tick();
+    }
+
+    @Override
     public void bpmTick() {
         if (animating){
-
             setImageIndex(imageIndex+1);
             setActualImage(animatedImages.get(animationIndex).get(imageIndex));
+            setActualPosEP(posEps.get(animationIndex));
         }
     }
 }

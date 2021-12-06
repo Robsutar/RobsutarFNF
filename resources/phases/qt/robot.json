@@ -1,0 +1,52 @@
+{
+  "frameModifiers": [
+    {
+      "0": {
+        "rotation": 0.0 ,
+        "frameX": 0 ,
+        "scale": 1.0 ,
+        "frameY": 0
+      }
+    } ,
+    {
+      "1": {
+        "rotation": 0.0 ,
+        "frameX": 41 ,
+        "scale": 1.0 ,
+        "frameY": -8
+      }
+    } ,
+    {
+      "2": {
+        "rotation": 0.0 ,
+        "frameX": -40 ,
+        "scale": 1.0 ,
+        "frameY": 71
+      }
+    } ,
+    {
+      "3": {
+        "rotation": 0.0 ,
+        "frameX": -79 ,
+        "scale": 1.0 ,
+        "frameY": -142
+      }
+    } ,
+    {
+      "4": {
+        "rotation": 0.0 ,
+        "frameX": 231 ,
+        "scale": 1.0 ,
+        "frameY": 50
+      }
+    } ,
+    {
+      "5": {
+        "rotation": 0.0 ,
+        "frameX": 0 ,
+        "scale": 1.0 ,
+        "frameY": 0
+      }
+    }
+  ]
+}

@@ -1,17 +1,15 @@
 package com.robsutar.robsutarfnf;
 
-import com.robsutar.robsutarfnf.Files.JsonFiles;
+import com.robsutar.robsutarfnf.Files.XmlFiles;
 import com.robsutar.robsutarfnf.Frame.GameFrame;
 import com.robsutar.robsutarfnf.Handlers.MainHandler;
-import com.robsutar.robsutarfnf.RenderableObjects.Menu.StartMenu;
-import com.robsutar.robsutarfnf.RenderableObjects.Position;
+import com.robsutar.robsutarfnf.RenderableObjects.Menus.TitleScream;
+import com.robsutar.robsutarfnf.RenderableObjects.Player.Player;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.io.File;
-
-import static com.robsutar.robsutarfnf.Frame.GameFrame.getWindowDim;
-
 public class Main {
     public static String resourcesPath = new File("").getAbsolutePath()+"/resources/";
     public static String assetsPath = resourcesPath+"assets/";
@@ -26,7 +24,7 @@ public class Main {
     private static double timer = System.currentTimeMillis();
 
     public static byte state = 0;
-    private static float bpm = 83;
+    private static float bpm = 95;
 
     private static boolean showMousePos = true;
 
@@ -34,7 +32,8 @@ public class Main {
 
     public static void main(String[] args){
         new GameFrame();
-        new StartMenu(new Position(Position.PositionTypes.CENTER));
+        //new TitleScream(WIDTH/2,HEIGHT/2);
+        new Player(WIDTH/2,HEIGHT/2, XmlFiles.readTextureAtlasXml(phasesPath+"qt/robot.xml"));
     }
     public static int getxMouse() {
         return xMouse;
@@ -50,12 +49,11 @@ public class Main {
 
     public static void renderer(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
-
         mainHandler.renderer(g2d);
-
         if (showMousePos){
             g2d.setColor(Color.yellow);
             g2d.drawString(getxMouse()+" "+getyMouse(),getxMouse(),getyMouse());}
+
     }
 
     public static void bpmTick(){
@@ -71,5 +69,9 @@ public class Main {
 
     public static void mouseReleased(MouseEvent e) {
         mainHandler.mouseReleased(e);
+    }
+
+    public static void keyPressed(KeyEvent e){
+        mainHandler.keyPressed(e);
     }
 }

@@ -1,14 +1,10 @@
 package com.robsutar.robsutarfnf.Handlers;
 
-import com.robsutar.robsutarfnf.Frame.Camera;
-import com.robsutar.robsutarfnf.Frame.GameFrame;
-import com.robsutar.robsutarfnf.Interfaces.BpmTicable;
-import com.robsutar.robsutarfnf.Interfaces.MouseInteractive;
-import com.robsutar.robsutarfnf.Interfaces.Ticable;
-import com.robsutar.robsutarfnf.RenderableObjects.Position;
-import com.robsutar.robsutarfnf.RenderableObjects.Renderable;
+import com.robsutar.robsutarfnf.Interfaces.*;
+import com.robsutar.robsutarfnf.Main;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +14,7 @@ public class MainHandler {
     List<BpmTicable> bpmTicables = new ArrayList<>();
     List<MouseInteractive> mouseInteractives = new ArrayList<>();
     List<Ticable> ticables = new ArrayList<>();
-    public Camera mainCamera = new Camera();
+    List<WASDInteractive> wasd = new ArrayList<>();
 
     public void addObject(Renderable object){
         renderables.add(object);
@@ -48,12 +44,16 @@ public class MainHandler {
         ticables.remove(object);
     }
 
+    public void addObject(WASDInteractive object){
+        wasd.add(object);
+    }
+    public void removeObject(WASDInteractive object){
+        wasd.remove(object);
+    }
+
     public void renderer(Graphics2D g2d){
-        g2d.rotate(Math.toRadians(mainCamera.getRotation()), GameFrame.width()/2.0,GameFrame.height()/2.0);
-        g2d.translate(mainCamera.getX(), mainCamera.getY());
-        g2d.scale(mainCamera.getScale(),mainCamera.getScale());
         for (Renderable r:renderables){
-            r.renderer(g2d);
+            r.render(g2d);
         }
     }
     public void bpmTick(){
@@ -74,6 +74,19 @@ public class MainHandler {
     public void mouseReleased(MouseEvent e){
         for (MouseInteractive r:mouseInteractives){
             r.mouseReleased(e);
+        }
+    }
+    public void keyPressed(KeyEvent e){
+        for (WASDInteractive r:wasd){
+            if (e.getKeyCode()==KeyEvent.VK_UP||e.getKeyCode()==KeyEvent.VK_W){
+                r.wPressed();
+            } else if (e.getKeyCode()==KeyEvent.VK_LEFT||e.getKeyCode()==KeyEvent.VK_A){
+                r.aPressed();
+            } else if (e.getKeyCode()==KeyEvent.VK_DOWN||e.getKeyCode()==KeyEvent.VK_S){
+                r.sPressed();
+            } else if (e.getKeyCode()==KeyEvent.VK_RIGHT||e.getKeyCode()==KeyEvent.VK_D){
+                r.dPressed();
+            } else;
         }
     }
 }

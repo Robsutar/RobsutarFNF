@@ -22,9 +22,10 @@ public class XmlFiles {
 
     public static AtlasConfig readTextureAtlasXml(String file) {
         String FILENAME = file;
-        System.out.println(Main.loadingConsoleMessage+FILENAME+" and texture");
+        System.out.println(Main.loadingConsoleMessage+FILENAME+" ATLAS ");
 
-        String imagePath=null;
+        String imageName=null;
+        String folderPath=null;
 
         List<String> name = new ArrayList<>();
 
@@ -51,13 +52,17 @@ public class XmlFiles {
             // parse XML file
             DocumentBuilder db = dbf.newDocumentBuilder();
 
-            Document doc = db.parse(new File(FILENAME));
+            File xmlFile = new File(FILENAME);
+
+            Document doc = db.parse(xmlFile);
+
+            folderPath= xmlFile.getParentFile().getAbsolutePath()+"/";
 
             // optional, but recommended
             // http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
             doc.getDocumentElement().normalize();
 
-            imagePath = doc.getDocumentElement().getAttribute("imagePath");
+            imageName = doc.getDocumentElement().getAttribute("imagePath");
 
             /*
             System.out.println("Root Element :" + doc.getDocumentElement().getNodeName());
@@ -109,10 +114,6 @@ public class XmlFiles {
                         frameHeight.add (Integer.valueOf(element.getAttribute("frameHeight")));
                     } else {frameHeight.add(0);}
 
-                    AtlasConfig tempAtlas =new AtlasConfig(
-                            imagePath,name, x,  y,  width,  height,  frameX,  frameY,  frameWidth,  frameHeight);
-                    atlasMonos.add(tempAtlas);
-
 
                     /*
                     System.out.println("Name : " + name);
@@ -130,8 +131,6 @@ public class XmlFiles {
             System.out.println(Main.failedToLoadConsoleMessage +file);
             e.printStackTrace();
         }
-        AtlasConfig[] finalAtlas = new AtlasConfig[atlasMonos.toArray().length];
-        finalAtlas = atlasMonos.toArray(finalAtlas);
-        return new AtlasConfig(imagePath,name,x,y,width,height,frameX,frameY,frameWidth,frameHeight);
+        return new AtlasConfig(folderPath,imageName,name,x,y,width,height,frameX,frameY,frameWidth,frameHeight);
     }
 }

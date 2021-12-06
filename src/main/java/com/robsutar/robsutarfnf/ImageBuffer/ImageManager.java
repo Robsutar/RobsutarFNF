@@ -10,17 +10,11 @@ import java.io.IOException;
 
 public class ImageManager {
 
-    public static void makeImage (Graphics2D g, BufferedImage img,AffineTransform at){
-
-        g.drawImage(img,at,null);
-    }
-
     public static BufferedImage loadImage(String path){
 
         BufferedImage img = null;
         try{
-            path = path;
-            System.out.println(Main.loadingConsoleMessage+path);
+            System.out.println(Main.loadingConsoleMessage+path+" IMAGE ");
             img = ImageIO.read(new File(path));
         }catch( IOException e) {
             System.out.println();
