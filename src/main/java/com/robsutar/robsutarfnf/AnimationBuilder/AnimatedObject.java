@@ -71,7 +71,6 @@ public abstract class AnimatedObject extends RenderableObject implements BpmTica
         if(testPosJson==null){
             JsonFiles.writeBaseTransform(posEps, (atlas.getFolderPath())+(atlas.getImageName().replace("png","json")));
         }
-        bpmSpawn();
     }
 
     @Override
@@ -95,15 +94,16 @@ public abstract class AnimatedObject extends RenderableObject implements BpmTica
     }
 
     public void setIndex(int index){
+        setImageIndex(0);
         if (index<0){
             this.animationIndex = animatedImages.toArray().length-1;
         } else
-        if (animatedImages.toArray().length-1<=index) {
+        if (animatedImages.toArray().length-1<index) {
             this.animationIndex = 0;
         } else this.animationIndex=index;
     }
     public void setImageIndex(int index){
-        if (animatedImages.get(animationIndex).toArray().length-1<=index) {
+        if (animatedImages.get(animationIndex).toArray().length-1<index) {
             this.imageIndex = 0;
         } else {
             this.imageIndex = index;
@@ -111,13 +111,14 @@ public abstract class AnimatedObject extends RenderableObject implements BpmTica
     }
 
     @Override
-    public void tick() {
-        super.tick();
+    public void spawn() {
+        bpmSpawn();
+        super.spawn();
     }
 
     @Override
     public void bpmTick() {
-        if (animating){
+        if (animating&&alive){
             setImageIndex(imageIndex+1);
             setActualImage(animatedImages.get(animationIndex).get(imageIndex));
             setActualPosEP(posEps.get(animationIndex));

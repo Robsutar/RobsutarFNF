@@ -24,11 +24,6 @@ public class ExtendedPosition extends Position {
         this.rotation = rotation;
     }
 
-    @Override
-    public void multiplyPos(Vector2D v2d){
-        this.x*=v2d.getX();this.y*=v2d.getY();this.scale*=v2d.getScale();this.rotation*=v2d.getRotation();
-    }
-
     public double getScale() {
         return scale;
     }

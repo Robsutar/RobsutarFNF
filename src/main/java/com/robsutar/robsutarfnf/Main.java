@@ -24,7 +24,7 @@ public class Main {
     private static double timer = System.currentTimeMillis();
 
     public static byte state = 0;
-    private static float bpm = 95;
+    private static float bpm = 120;
 
     private static boolean showMousePos = true;
 
@@ -32,8 +32,8 @@ public class Main {
 
     public static void main(String[] args){
         new GameFrame();
-        //new TitleScream(WIDTH/2,HEIGHT/2);
-        new Player(WIDTH/2,HEIGHT/2, XmlFiles.readTextureAtlasXml(phasesPath+"qt/robot.xml"));
+        new TitleScream(WIDTH/2,HEIGHT/2);
+        //new Player(WIDTH/2,HEIGHT/2, XmlFiles.readTextureAtlasXml(phasesPath+"qt/robot.xml"));
     }
     public static int getxMouse() {
         return xMouse;

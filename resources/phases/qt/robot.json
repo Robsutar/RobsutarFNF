@@ -43,9 +43,9 @@
     {
       "5": {
         "rotation": 0.0 ,
-        "frameX": 0 ,
+        "frameX": -19 ,
         "scale": 1.0 ,
-        "frameY": 0
+        "frameY":-150
       }
     }
   ]

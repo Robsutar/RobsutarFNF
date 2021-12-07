@@ -13,7 +13,7 @@ public class Position {
     }
 
     public void multiplyPos(Vector2D v2d){
-        this.x*=v2d.getX();this.y*=v2d.getY();
+        this.x+=v2d.getX();this.y+=v2d.getY();
     }
 
     public void setX(int x) {
