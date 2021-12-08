@@ -31,12 +31,11 @@ public class ExtendedPosition extends Position {
     }
 
     public void setTargetPos(int targetX, int targetY) {
-        if (targetX>x-30&&targetX<x+30 &&targetY>y-30&&targetY<y+30) {
+        if (targetX>x-speed&&targetX<x+speed &&targetY>y-speed&&targetY<y+speed) {
             this.chasingTarget=false;
             this.vector.setX(0);
             this.vector.setY(0);
         } else {
-            System.out.println(x+" "+targetX+" : "+y+" "+targetY);
             this.targetX = targetX;
             this.targetY = targetY;
             this.chasingTarget = true;
