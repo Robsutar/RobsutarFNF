@@ -8,6 +8,11 @@ public class Player extends AnimatedObject implements WASDInteractive {
     public Player(int x, int y, AtlasConfig atlasXml) {
         super(x, y, atlasXml);
         moveByCenter(x,y);
+    }
+
+    @Override
+    public void spawn() {
+        super.spawn();
         wasdSpawn();
     }
 

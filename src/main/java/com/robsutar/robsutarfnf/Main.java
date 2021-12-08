@@ -3,6 +3,7 @@ package com.robsutar.robsutarfnf;
 import com.robsutar.robsutarfnf.Files.XmlFiles;
 import com.robsutar.robsutarfnf.Frame.GameFrame;
 import com.robsutar.robsutarfnf.Handlers.MainHandler;
+import com.robsutar.robsutarfnf.Handlers.MainMenu;
 import com.robsutar.robsutarfnf.RenderableObjects.Menus.TitleScream;
 import com.robsutar.robsutarfnf.RenderableObjects.Player.Player;
 
@@ -19,7 +20,8 @@ public class Main {
 
     public static int xMouse=0;
     public static int yMouse=0;
-    private static int WIDTH=1280,HEIGHT=720;
+    public static int WIDTH=1280;
+    public static int HEIGHT=720;
 
     private static double timer = System.currentTimeMillis();
 
@@ -32,8 +34,7 @@ public class Main {
 
     public static void main(String[] args){
         new GameFrame();
-        new TitleScream(WIDTH/2,HEIGHT/2);
-        //new Player(WIDTH/2,HEIGHT/2, XmlFiles.readTextureAtlasXml(phasesPath+"qt/robot.xml"));
+        new MainMenu();
     }
     public static int getxMouse() {
         return xMouse;

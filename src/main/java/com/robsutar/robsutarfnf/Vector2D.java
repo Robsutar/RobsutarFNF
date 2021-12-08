@@ -47,74 +47,43 @@ public class Vector2D {
     }
 
     public void update(){
-        if (targetScale>0){
-            targetScale-=resistance;
-            if (targetScale<0){
-                targetScale=0;
-            }
-        } else if (targetScale<0){
-            targetScale+=resistance;
-            if (targetScale>0){
-                targetScale=0;
-            }
-        }
-        if (targetRotation>0){
-            targetRotation-=resistance;
-            if (targetRotation<0){
-                targetRotation=0;
-            }
-        }else if (targetRotation<0){
-            targetRotation+=resistance;
-            if (targetRotation>0){
-                targetRotation=0;
-            }
-        }
-        if (x>0){
-            x-=resistance;
-            if (x<0){
-                x=0;
-            }
-        } else if (x<0){
-            x+=resistance;
-            if (x>0){
-                x=0;
-            }
-        }
-        if (y>0){
-            y-=resistance;
-            if (y<0){
-                y=0;
-            }
-        }else if (y<0){
-            y+=resistance;
-            if (y>0){
-                y=0;
-            }
-        }
-        if (scale>targetScale){
-            scale-=targetScale*resistance+resistance;
-            if (scale<targetScale){
-                scale=targetScale;
-            }
-        } else if (scale<targetScale){
-            scale+=targetScale*resistance-resistance;
-            if (scale>targetScale){
-                scale=targetScale;
-            }
-        }
-        if (rotation>targetRotation){
-            rotation-=targetRotation*resistance+resistance;
-            if (rotation<targetRotation){
-                rotation=targetRotation;
-            }
-        }else if (rotation<targetRotation){
-            rotation+=targetRotation*resistance-resistance;
-            if (rotation>targetRotation){
-                rotation=targetRotation;
-            }
-        }
+        if (x!=0) {x = update(x);}
+        if (y!=0) {y = update(y);}
+        scale = update(scale,targetScale);
+        /*
         System.out.println("X : "+x+" Y : "+y);
         System.out.println("Scale : "+scale+" Rotation : "+rotation);
         System.out.println("Target Scale : "+targetScale+" Target Rotation : "+targetRotation);
+
+         */
+    }
+    private double update (double sr, double target){
+        if (sr>target){
+            sr-=((target*resistance)+resistance)*(resistance*2);
+            if (sr<target){
+                sr=target;
+            }
+        } else if (sr<target){
+            sr +=((target*resistance)+resistance)*(resistance*2);
+            if (sr>target){
+                sr=target;
+            }
+        }
+        return sr;
+    }
+
+    private double update(double xy) {
+        if (xy<0) {
+            xy += resistance;
+            if (xy>0){
+                xy=0;
+            }
+        } else if (xy>0){
+            xy-= resistance;
+            if (xy<0){
+                xy=0;
+            }
+        }
+        return xy;
     }
 }
