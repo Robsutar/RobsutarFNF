@@ -3,9 +3,9 @@ package com.robsutar.robsutarfnf.RenderableObjects.Menus;
 import com.robsutar.robsutarfnf.AnimationBuilder.AnimatedObject;
 import com.robsutar.robsutarfnf.Assets;
 import com.robsutar.robsutarfnf.Interfaces.MouseInteractive;
+import com.robsutar.robsutarfnf.Main;
 
 import java.awt.event.MouseEvent;
-import java.util.Random;
 
 public class TitleScream extends AnimatedObject implements MouseInteractive {
     private boolean atZoom=false;
@@ -21,14 +21,12 @@ public class TitleScream extends AnimatedObject implements MouseInteractive {
     }
 
     @Override
+    public void tick() {
+        super.tick();
+        setTargetPos(Main.getxMouse(),Main.getyMouse());
+    }
+
+    @Override
     public void mousePressed(MouseEvent e) {
-        atZoom=!atZoom;
-        if (atZoom){
-            getVector().setTargetScale(0.5);
-            getVector().setX(5);
-        } else {
-            getVector().setTargetScale(0);
-            getVector().setX(-4);
-        }
     }
 }

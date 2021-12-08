@@ -18,6 +18,15 @@ public class Box extends ExtendedPosition {
         x=centerX-getWidth()/2;y=centerY-getHeight()/2;
     }
 
+    public int getByCenter(int num,int length){
+         return num-length/2;
+    }
+
+    @Override
+    public void setTargetPos(int targetX, int targetY) {
+        super.setTargetPos(targetX-getWidth()/2, targetY-getHeight()/2);
+    }
+
     public void setWidth(int width) {
         this.width = width;
     }

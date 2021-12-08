@@ -49,7 +49,8 @@ public class Vector2D {
     public void update(){
         if (x!=0) {x = update(x);}
         if (y!=0) {y = update(y);}
-        scale = update(scale,targetScale);
+        scale = update(scale,targetScale,2);
+        rotation = update(rotation,targetRotation,18);
         /*
         System.out.println("X : "+x+" Y : "+y);
         System.out.println("Scale : "+scale+" Rotation : "+rotation);
@@ -57,14 +58,14 @@ public class Vector2D {
 
          */
     }
-    private double update (double sr, double target){
+    private double update (double sr, double target, double speed){
         if (sr>target){
-            sr-=((target*resistance)+resistance)*(resistance*2);
+            sr-=((target*resistance)+resistance)*(resistance*speed);
             if (sr<target){
                 sr=target;
             }
         } else if (sr<target){
-            sr +=((target*resistance)+resistance)*(resistance*2);
+            sr +=((target*resistance)+resistance)*(resistance*speed);
             if (sr>target){
                 sr=target;
             }

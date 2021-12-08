@@ -12,7 +12,6 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 public class RenderableObject extends Box implements Renderable, Ticable {
-    protected Vector2D vector = new Vector2D();
     protected ExtendedPosition actualPosED = new ExtendedPosition();
     protected AffineTransform actualTransform = new AffineTransform();
     protected BufferedImage actualImage;
@@ -31,18 +30,6 @@ public class RenderableObject extends Box implements Renderable, Ticable {
         this.actualTransform = actualTransform;
     }
 
-
-    public Vector2D getVector() {
-        return vector;
-    }
-
-    @Override
-    public void tick() {
-        if (alive) {
-            vector.update();
-            multiplyPos(vector);
-        }
-    }
 
     @Override
     public int getWidth() {
@@ -71,6 +58,13 @@ public class RenderableObject extends Box implements Renderable, Ticable {
         alive = true;
         ticableSpawn();
         renderSpawn();
+    }
+
+    @Override
+    public void tick() {
+        if (alive) {
+            updatePos();
+        }
     }
 
     @Override
