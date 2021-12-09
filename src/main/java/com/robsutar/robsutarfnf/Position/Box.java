@@ -1,7 +1,12 @@
 package com.robsutar.robsutarfnf.Position;
 
-public class Box extends ExtendedPosition {
+import com.robsutar.robsutarfnf.Interfaces.MouseInteractive;
+
+import java.awt.event.MouseEvent;
+
+public class Box extends ExtendedPosition implements MouseInteractive {
     protected int width = 0,height=0;
+    private boolean clicked = false;
     public Box(int x,int y){
         super(x,y);
     }
@@ -41,5 +46,29 @@ public class Box extends ExtendedPosition {
 
     public void setHeight(int height) {
         this.height = height;
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        if (isInto(x,y,getWidth(),getHeight())){
+            onMousePressed();
+            clicked=true;
+        }
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        if (isInto(x,y,getWidth(),getHeight())){
+            if (clicked) {
+                onMouseReleased();
+            }
+            clicked = false;
+        }
+    }
+    protected void onMousePressed(){
+
+    }
+    protected void onMouseReleased(){
+
     }
 }

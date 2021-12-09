@@ -7,3 +7,6 @@ Json transform - Animated object
 Optimise jsonFiles
 ------
 Optimise lists
+-----
+Try : new FontMetrics.ascent
+-----

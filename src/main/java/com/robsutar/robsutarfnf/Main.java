@@ -1,11 +1,14 @@
 package com.robsutar.robsutarfnf;
 
+import com.robsutar.robsutarfnf.Assets.MenuAssets;
+import com.robsutar.robsutarfnf.Assets.StaticAssets;
 import com.robsutar.robsutarfnf.Files.XmlFiles;
 import com.robsutar.robsutarfnf.Frame.GameFrame;
+import com.robsutar.robsutarfnf.Graphics.StringManipulator;
 import com.robsutar.robsutarfnf.Handlers.MainHandler;
-import com.robsutar.robsutarfnf.Handlers.MainMenu;
 import com.robsutar.robsutarfnf.RenderableObjects.Menus.TitleScream;
 import com.robsutar.robsutarfnf.RenderableObjects.Player.Player;
+import com.robsutar.robsutarfnf.RenderableObjects.ShowMousePos;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -23,6 +26,8 @@ public class Main {
     public static int WIDTH=1280;
     public static int HEIGHT=720;
 
+    public static StaticAssets staticAssets = new StaticAssets();
+
     private static double timer = System.currentTimeMillis();
 
     public static byte state = 0;
@@ -34,7 +39,10 @@ public class Main {
 
     public static void main(String[] args){
         new GameFrame();
-        new MainMenu();
+
+        new TitleScream(new MenuAssets());
+
+        new ShowMousePos();
     }
     public static int getxMouse() {
         return xMouse;
@@ -51,10 +59,6 @@ public class Main {
     public static void renderer(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
         mainHandler.renderer(g2d);
-        if (showMousePos){
-            g2d.setColor(Color.yellow);
-            g2d.drawString(getxMouse()+" "+getyMouse(),getxMouse(),getyMouse());}
-
     }
 
     public static void bpmTick(){

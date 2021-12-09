@@ -1,17 +1,29 @@
 package com.robsutar.robsutarfnf.RenderableObjects.Menus;
 
 import com.robsutar.robsutarfnf.AnimationBuilder.AnimatedObject;
-import com.robsutar.robsutarfnf.Assets;
-import com.robsutar.robsutarfnf.Interfaces.MouseInteractive;
+import com.robsutar.robsutarfnf.AnimationBuilder.AtlasConfig;
+import com.robsutar.robsutarfnf.Assets.MenuAssets;
+import com.robsutar.robsutarfnf.Assets.StaticAssets;
+import com.robsutar.robsutarfnf.Graphics.StringManipulator;
 import com.robsutar.robsutarfnf.Main;
 
-import java.awt.event.MouseEvent;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class TitleScream extends AnimatedObject implements MouseInteractive {
+public class TitleScream extends AnimatedObject {
+
+    MenuAssets assets;
     private boolean atZoom=false;
-    public TitleScream(int x, int y) {
-        super(x, y, Assets.AssetsXml.GF_DANCE_TITLE);
-        moveByCenter(x,y);
+
+    private List<TitleScreamOption> options = new ArrayList<>();
+    public TitleScream(MenuAssets assets) {
+        super(0,0, assets.GF_DANCE_TITLE);
+        this.assets = assets;
+        moveByCenter(Main.WIDTH/2,Main.HEIGHT/2);
+        spawn();
+
+        options.add(new TitleScreamOption(Main.WIDTH-Main.WIDTH/3,Main.HEIGHT/2,assets.MENU_OPTION,this));
     }
 
     @Override
@@ -21,12 +33,17 @@ public class TitleScream extends AnimatedObject implements MouseInteractive {
     }
 
     @Override
-    public void tick() {
-        super.tick();
-        setTargetPos(Main.getxMouse(),Main.getyMouse());
+    public void onMousePressed() {
+        System.out.println("1");
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {
+    protected void onMouseReleased() {
+        System.out.println("2");
+    }
+
+    @Override
+    public void render(Graphics2D g2d) {
+        super.render(g2d);
     }
 }

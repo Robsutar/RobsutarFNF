@@ -1,10 +1,8 @@
 package com.robsutar.robsutarfnf.AnimationBuilder;
 
-import com.robsutar.robsutarfnf.Assets;
 import com.robsutar.robsutarfnf.Files.JsonFiles;
 import com.robsutar.robsutarfnf.ImageBuffer.ImageManager;
 import com.robsutar.robsutarfnf.Interfaces.BpmTicable;
-import com.robsutar.robsutarfnf.Main;
 import com.robsutar.robsutarfnf.Position.ExtendedPosition;
 import com.robsutar.robsutarfnf.RenderableObjects.RenderableObject;
 import org.json.simple.JSONObject;

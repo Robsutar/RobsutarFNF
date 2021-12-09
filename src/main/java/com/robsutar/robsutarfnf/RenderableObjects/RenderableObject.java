@@ -70,7 +70,7 @@ public class RenderableObject extends Box implements Renderable, Ticable {
     @Override
     public void render(Graphics2D g2d) {
         if (alive) {
-            if(actualImage != null && actualTransform != null) {
+            if(actualImage != null) {
                 AffineTransform at = new AffineTransform(actualTransform);
                 double scale = getScale();
                 double rotation = getRotation();

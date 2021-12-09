@@ -51,9 +51,12 @@ public class MainHandler {
         wasd.remove(object);
     }
 
-    public void renderer(Graphics2D g2d){
+    public void renderer(Graphics2D g){
         for (Renderable r:renderables){
-            r.render(g2d);
+            g.setColor(Color.white);
+            g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1));
+            g.setFont(Main.staticAssets.FONT);
+            r.render(g);
         }
     }
     public void bpmTick(){
