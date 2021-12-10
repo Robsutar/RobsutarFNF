@@ -9,6 +9,7 @@ import org.json.simple.JSONObject;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public abstract class AnimatedObject extends RenderableObject implements BpmTicable {
@@ -117,8 +118,9 @@ public abstract class AnimatedObject extends RenderableObject implements BpmTica
     @Override
     public void bpmTick() {
         if (animating&&alive){
-            setImageIndex(imageIndex+1);
-            setActualImage(animatedImages.get(animationIndex).get(imageIndex));
+
+            Collections.rotate(animatedImages.get(animationIndex),1);
+            setActualImage(animatedImages.get(animationIndex).get(0));
             setActualPosEP(posEps.get(animationIndex));
         }
     }
