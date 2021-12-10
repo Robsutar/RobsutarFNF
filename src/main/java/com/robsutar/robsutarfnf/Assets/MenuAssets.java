@@ -2,7 +2,7 @@ package com.robsutar.robsutarfnf.Assets;
 
 import com.robsutar.robsutarfnf.AnimationBuilder.AtlasConfig;
 import com.robsutar.robsutarfnf.Files.XmlFiles;
-import com.robsutar.robsutarfnf.ImageBuffer.ImageManager;
+import com.robsutar.robsutarfnf.Graphics.ImageManager;
 import com.robsutar.robsutarfnf.Main;
 
 import java.awt.image.BufferedImage;

@@ -7,6 +7,8 @@ import java.awt.event.MouseEvent;
 public class Box extends ExtendedPosition implements MouseInteractive {
     protected int width = 0,height=0;
     private boolean clicked = false;
+    protected boolean mouseInteractive = false;
+    public boolean alive = false;
     public Box(int x,int y){
         super(x,y);
     }
@@ -48,21 +50,37 @@ public class Box extends ExtendedPosition implements MouseInteractive {
         this.height = height;
     }
 
-    @Override
-    public void mousePressed(MouseEvent e) {
-        if (isInto(x,y,getWidth(),getHeight())){
-            onMousePressed();
-            clicked=true;
+    public void spawn(){
+        if (mouseInteractive) {
+            mouseISpawn();
+        }
+    }
+
+    public void kill(){
+        if (mouseInteractive) {
+            mouseIKill();
         }
     }
 
     @Override
-    public void mouseReleased(MouseEvent e) {
-        if (isInto(x,y,getWidth(),getHeight())){
-            if (clicked) {
-                onMouseReleased();
+    public void mousePressed() {
+        if(mouseInteractive&&alive) {
+            if(isInto(x, y, getWidth(), getHeight())) {
+                onMousePressed();
+                clicked = true;
             }
-            clicked = false;
+        }
+    }
+
+    @Override
+    public void mouseReleased() {
+        if (mouseInteractive&&alive) {
+            if(isInto(x, y, getWidth(), getHeight())) {
+                if(clicked) {
+                    onMouseReleased();
+                }
+                clicked = false;
+            }
         }
     }
     protected void onMousePressed(){

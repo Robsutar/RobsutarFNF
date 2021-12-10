@@ -15,7 +15,6 @@ public class RenderableObject extends Box implements Renderable, Ticable {
     protected ExtendedPosition actualPosED = new ExtendedPosition();
     protected AffineTransform actualTransform = new AffineTransform();
     protected BufferedImage actualImage;
-    protected boolean alive = false;
     public RenderableObject(int x, int y) {
         super(x, y);
     }
@@ -54,10 +53,20 @@ public class RenderableObject extends Box implements Renderable, Ticable {
         return super.getHeight();
     }
 
+    @Override
     public void spawn(){
+        super.spawn();
         alive = true;
         ticableSpawn();
         renderSpawn();
+    }
+
+    @Override
+    public void kill(){
+        super.kill();
+        alive = false;
+        ticableKill();
+        renderKill();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.robsutar.robsutarfnf.ImageBuffer;
+package com.robsutar.robsutarfnf.Graphics;
 import com.robsutar.robsutarfnf.Main;
 
 import javax.imageio.ImageIO;

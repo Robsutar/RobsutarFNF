@@ -1,7 +1,9 @@
 package com.robsutar.robsutarfnf;
 
+import java.text.DecimalFormat;
+
 public class Vector2D {
-    private double x=0,y=0,scale=0,rotation=0,resistance=0.1;
+    private double x=0.0,y=0.0,scale=0.0,rotation=0.0,resistance=1;
     private double targetScale=0,targetRotation=0;
     public Vector2D (){
     }

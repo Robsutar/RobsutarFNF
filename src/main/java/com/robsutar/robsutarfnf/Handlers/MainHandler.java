@@ -71,12 +71,12 @@ public class MainHandler {
     }
     public void mousePressed(MouseEvent e){
         for (MouseInteractive r:mouseInteractives){
-            r.mousePressed(e);
+            r.mousePressed();
         }
     }
     public void mouseReleased(MouseEvent e){
         for (MouseInteractive r:mouseInteractives){
-            r.mouseReleased(e);
+            r.mouseReleased();
         }
     }
     public void keyPressed(KeyEvent e){

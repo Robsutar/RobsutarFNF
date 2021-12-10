@@ -17,8 +17,8 @@ public interface MouseInteractive  {
     default boolean isInto(int x, int y, double width, double height){
         return getxMouse() >= x && getxMouse() <= width+ x && getyMouse() >=  y && getyMouse() <= height+  y;
     }
-    default void mousePressed(MouseEvent e){
+    default void mousePressed(){
     }
-    default void mouseReleased(MouseEvent e){
+    default void mouseReleased(){
     }
 }

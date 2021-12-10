@@ -31,7 +31,7 @@ public class Main {
     private static double timer = System.currentTimeMillis();
 
     public static byte state = 0;
-    private static float bpm = 120;
+    private static float bpm = 121;
 
     private static boolean showMousePos = true;
 
