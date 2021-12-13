@@ -4,6 +4,7 @@ import com.robsutar.robsutarfnf.Files.XmlFiles;
 import com.robsutar.robsutarfnf.Frame.WindowFrame;
 import com.robsutar.robsutarfnf.Graphics.ImageManager;
 import com.robsutar.robsutarfnf.RenderableObjects.Gameplay.Player;
+import com.robsutar.robsutarfnf.RenderableObjects.Init.MousePositionIndicator;
 import com.robsutar.robsutarfnf.RenderableObjects.RenderableObject;
 
 import java.awt.*;
@@ -19,10 +20,12 @@ public class Main {
 
     public static void main(String[] args){
         new WindowFrame();
+        new MousePositionIndicator();
 
         Player p = new Player(simulatedWIDTH/2,simulatedHEIGHT/2,XmlFiles.readTextureAtlasXml(Assets.assetsPath+"animatedObjects/gfDance/gfDance.xml"));
 
         RenderableObject ob =  new RenderableObject(simulatedWIDTH/2,simulatedHEIGHT/2,ImageManager.loadImage(Assets.assetsPath+"textures/menu/menuOption.png"));
+
         ob.spawn();
         p.spawn();
     }

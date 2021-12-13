@@ -11,9 +11,7 @@ public interface Renderable {
     default void killRender(){
         Main.handler.removeObject(this);
     }
-    default void renderer(Graphics2D g2d){
 
-    }
     default void renderer(Graphics2D g2d, byte priority){
 
     }

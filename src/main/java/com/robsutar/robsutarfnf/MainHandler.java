@@ -12,6 +12,8 @@ public class MainHandler implements DefaultGraphics {
 
     private long tim = System.currentTimeMillis();
 
+    public static byte maxRenderPriority = 3;
+
     private List<Ticable> ticables = new ArrayList<>();
     private List<Renderable> renderables = new ArrayList<>();
     private List<BpmTicable> bpmTicables = new ArrayList<>();
@@ -37,12 +39,11 @@ public class MainHandler implements DefaultGraphics {
         g2d.scale(scale,scale);
         g2d.rotate(rotation);
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,opacity));
-        for (Renderable o:renderables
-             ) {
-            o.renderer(g2d);
-            o.renderer(g2d, (byte) 1);
-            o.renderer(g2d, (byte) 2);
-            o.renderer(g2d, (byte) 3);
+        for (byte i = 0;i<=maxRenderPriority;i++) {
+            for (Renderable o : renderables
+            ) {
+                o.renderer(g2d,i);
+            }
         }
     }
     public void tick(){

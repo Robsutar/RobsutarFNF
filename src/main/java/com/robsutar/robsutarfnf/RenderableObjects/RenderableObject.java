@@ -3,6 +3,7 @@ package com.robsutar.robsutarfnf.RenderableObjects;
 import com.robsutar.robsutarfnf.ExtendedPosition;
 import com.robsutar.robsutarfnf.Interface.Renderable;
 import com.robsutar.robsutarfnf.Interface.Ticable;
+import com.robsutar.robsutarfnf.MainHandler;
 import com.robsutar.robsutarfnf.Vector2d;
 
 import java.awt.*;
@@ -11,7 +12,7 @@ import java.awt.image.BufferedImage;
 
 public class RenderableObject extends Box implements Renderable, Ticable {
 
-    private byte priority=3;
+    private byte priority= (byte) (MainHandler.maxRenderPriority-1);
 
     protected BufferedImage actualImage;
     protected AffineTransform actualTransform = new AffineTransform();
@@ -47,11 +48,14 @@ public class RenderableObject extends Box implements Renderable, Ticable {
     }
 
     public void setPriority(byte priority) {
-        if ((priority>0&&priority<4)){
+        if ((priority>0&&priority<= MainHandler.maxRenderPriority)){
             this.priority = priority;
         } else {
-            this.priority = 3;
+            this.priority = MainHandler.maxRenderPriority;
         }
+    }
+    public byte getPriority() {
+        return priority;
     }
 
     @Override
