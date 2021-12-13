@@ -46,7 +46,6 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
             if(mouseOnScreen) {
                 Point b = this.getMousePosition();
                 if (b!=null) {
-
                     Main.xMouse = (int)b.getX();
                     Main.yMouse = (int)b.getY();
                 }

@@ -11,7 +11,6 @@ import java.awt.*;
 
 public class Main {
     public static int WIDTH = 1620,HEIGHT = WIDTH*9/16;
-    public static int simulatedWIDTH = 1920,simulatedHEIGHT = simulatedWIDTH*9/16;
     public static int xMouse = WIDTH/2, yMouse = HEIGHT/2;
 
     public static float bpm = 120;
@@ -22,9 +21,9 @@ public class Main {
         new WindowFrame();
         new MousePositionIndicator();
 
-        Player p = new Player(simulatedWIDTH/2,simulatedHEIGHT/2,XmlFiles.readTextureAtlasXml(Assets.assetsPath+"animatedObjects/gfDance/gfDance.xml"));
+        Player p = new Player(WIDTH/2,HEIGHT/2,XmlFiles.readTextureAtlasXml(Assets.assetsPath+"animatedObjects/gfDance/gfDance.xml"));
 
-        RenderableObject ob =  new RenderableObject(simulatedWIDTH/2,simulatedHEIGHT/2,ImageManager.loadImage(Assets.assetsPath+"textures/menu/menuOption.png"));
+        RenderableObject ob =  new RenderableObject(WIDTH/2,HEIGHT/2,ImageManager.loadImage(Assets.assetsPath+"textures/menu/menuOption.png"));
 
         ob.spawn();
         p.spawn();

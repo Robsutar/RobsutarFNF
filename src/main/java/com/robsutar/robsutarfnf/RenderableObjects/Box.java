@@ -11,18 +11,15 @@ public class Box extends Rectangle {
     public double getScale() {
         return scale;
     }
-
     public double getRotation() {
         return rotation;
     }
 
-    public double getSimX(){
-        double multiplier =(double) Main.WIDTH/Main.simulatedWIDTH;
-        return (x*multiplier);
+    public void setWidth(int width){
+        this.setSize(width, (int) getHeight());
     }
-    public double getSimY(){
-        double multiplier =(double) Main.HEIGHT/Main.simulatedHEIGHT;
-        return (y*multiplier);
+    public void setHeight(int height){
+        this.setSize((int) getWidth(),height);
     }
 
     public void moveByCenter(AffineTransform at){

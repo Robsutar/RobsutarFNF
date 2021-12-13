@@ -1,11 +1,14 @@
 package com.robsutar.robsutarfnf;
 
+import com.robsutar.robsutarfnf.Graphics.StringManipulator;
 import com.robsutar.robsutarfnf.Interface.*;
+import com.robsutar.robsutarfnf.RenderableObjects.Init.TextInformation;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MainHandler implements DefaultGraphics {
@@ -39,17 +42,21 @@ public class MainHandler implements DefaultGraphics {
         g2d.scale(scale,scale);
         g2d.rotate(rotation);
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,opacity));
-        for (byte i = 0;i<=maxRenderPriority;i++) {
-            for (Renderable o : renderables
-            ) {
-                o.renderer(g2d,i);
+        if (!renderables.isEmpty()) {
+            for (byte i = 0; i <= maxRenderPriority; i++) {
+                for (int z = 0; z<renderables.toArray().length;z++){
+                    renderables.get(0).renderer(g2d, i);
+                    Collections.rotate(renderables,1);
+                }
             }
         }
     }
     public void tick(){
-        for (Ticable o:ticables
-        ) {
-            o.tick();
+        if (!ticables.isEmpty()) {
+            for (int z = 0; z<ticables.toArray().length;z++){
+                ticables.get(0).tick();
+                Collections.rotate(ticables,1);
+            }
         }
         while(System.currentTimeMillis() - tim > 1000.0/(Main.bpm/60.0)/15) {
             tim += 1000.0/(Main.bpm/60.0)/15;
@@ -57,23 +64,29 @@ public class MainHandler implements DefaultGraphics {
         }
     }
     public void bpmTick(){
-        for (BpmTicable o:bpmTicables
-        ) {
-            o.bpmTick();
+        if (!bpmTicables.isEmpty()) {
+            for (int z = 0; z<bpmTicables.toArray().length;z++){
+                bpmTicables.get(0).bpmTick();
+                Collections.rotate(bpmTicables,1);
+            }
         }
     }
 
     public void mousePressed(MouseEvent e){
-        for (MouseInteractive o:mouseInteractives
-        ) {
-            o.mousePressed();
+        if (!mouseInteractives.isEmpty()) {
+            for (int z = 0; z<mouseInteractives.toArray().length;z++){
+                mouseInteractives.get(0).mousePressed();
+                Collections.rotate(mouseInteractives,1);
+            }
         }
     }
 
     public void mouseReleased(MouseEvent e) {
-        for (MouseInteractive o:mouseInteractives
-        ) {
-            o.mouseReleased();
+        if (!mouseInteractives.isEmpty()) {
+            for (int z = 0; z<mouseInteractives.toArray().length;z++){
+                mouseInteractives.get(0).mouseReleased();
+                Collections.rotate(mouseInteractives,1);
+            }
         }
     }
 

@@ -13,12 +13,12 @@ import java.awt.image.BufferedImage;
 public class RenderableObject extends Box implements Renderable, Ticable {
 
     private byte priority= (byte) (MainHandler.maxRenderPriority-1);
+    private float opacity = 1;
 
     protected BufferedImage actualImage;
     protected AffineTransform actualTransform = new AffineTransform();
     private ExtendedPosition actualPosEp = new ExtendedPosition();
-
-    private Vector2d vector = new Vector2d();
+    public Vector2d vector = new Vector2d();
 
     public RenderableObject(int x, int y,BufferedImage img){
         setActualImage(img,true);
@@ -45,6 +45,9 @@ public class RenderableObject extends Box implements Renderable, Ticable {
     }
     public void setActualPosEP(ExtendedPosition extendedPosition) {
         this.actualPosEp=extendedPosition;
+    }
+    public void setOpacity(float opacity) {
+        this.opacity = opacity;
     }
 
     public void setPriority(byte priority) {
@@ -78,7 +81,7 @@ public class RenderableObject extends Box implements Renderable, Ticable {
     protected void onRenderer(Graphics2D g2d){
         if(actualImage != null) {
             AffineTransform at = new AffineTransform(actualTransform);
-            at.translate(getSimX(),getSimY());
+            at.translate(getX(),getY());
             moveByCenter(at);
             double scale = getScale();
             double rotation = getRotation();
@@ -89,6 +92,7 @@ public class RenderableObject extends Box implements Renderable, Ticable {
             at.scale(scale, scale);
             at.translate(-getWidth() / 2.0, -getHeight() / 2.0);
             at.rotate(Math.toRadians(rotation), getWidth() / 2.0, getHeight() / 2.0);
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,opacity));
             g2d.drawImage(actualImage, at, null);
         }
     }

@@ -1,5 +1,8 @@
 package com.robsutar.robsutarfnf;
 
+import com.robsutar.robsutarfnf.Graphics.ColorizedString;
+import com.robsutar.robsutarfnf.RenderableObjects.Init.TextInformation;
+
 import java.io.File;
 
 public class Assets {
@@ -14,7 +17,9 @@ public class Assets {
     private static final String BLUE_BOLD = "\033[1;34m";
 
     public static void loading(String string, String fileType){
-        System.out.println(BLUE_BOLD+"Loading "+CYAN+fileType+" :"+RESET+string);
+        System.out.println(BLUE_BOLD+"Loading "+CYAN+fileType+": "+RESET+string);
+        TextInformation text = new TextInformation("&1Loading &2"+fileType+": &7"+string);
+        text.spawn();
     }
     public static void failedLoad(String string){
         System.out.println(RED_BOLD+"Failed to load: "+RESET+string);
