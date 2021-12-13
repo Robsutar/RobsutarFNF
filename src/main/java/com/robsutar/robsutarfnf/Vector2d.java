@@ -5,6 +5,7 @@ public class Vector2d {
     private double y;
 
     public void setX(double x) {
+
         this.x = x;
     }
     public void setY(double y) {

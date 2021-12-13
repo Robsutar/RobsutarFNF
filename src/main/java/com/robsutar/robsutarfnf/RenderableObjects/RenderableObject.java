@@ -1,5 +1,6 @@
 package com.robsutar.robsutarfnf.RenderableObjects;
 
+import com.robsutar.robsutarfnf.ExtendedPosition;
 import com.robsutar.robsutarfnf.Interface.Renderable;
 import com.robsutar.robsutarfnf.Interface.Ticable;
 import com.robsutar.robsutarfnf.Vector2d;
@@ -8,18 +9,19 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
-public class RenderableObject extends Rectangle implements Renderable, Ticable {
+public class RenderableObject extends Box implements Renderable, Ticable {
 
     private byte priority=3;
 
     protected BufferedImage actualImage;
     protected AffineTransform actualTransform = new AffineTransform();
+    private ExtendedPosition actualPosEp = new ExtendedPosition();
 
     private Vector2d vector = new Vector2d();
 
-    public RenderableObject(int x, int y){
+    public RenderableObject(int x, int y,BufferedImage img){
+        setActualImage(img,true);
         setLocation(x,y);
-        moveByCenter();
     }
 
     public void spawn(){
@@ -27,22 +29,21 @@ public class RenderableObject extends Rectangle implements Renderable, Ticable {
         spawnRender();
     }
 
-    public void moveByCenter(){
-        translate((int)(-getWidth()/2), (int) (-getHeight()/2));
-    }
-
     public void setActualImage(BufferedImage actualImage) {
         this.actualImage = actualImage;
     }
     public void setActualImage(BufferedImage actualImage,boolean setBounds) {
         this.actualImage = actualImage;
-        if (setBounds){
+        if (setBounds&&actualImage!=null){
             this.width=actualImage.getWidth();
             this.height=actualImage.getHeight();
         }
     }
     public void setActualTransform(AffineTransform actualTransform) {
         this.actualTransform = actualTransform;
+    }
+    public void setActualPosEP(ExtendedPosition extendedPosition) {
+        this.actualPosEp=extendedPosition;
     }
 
     public void setPriority(byte priority) {
@@ -55,17 +56,36 @@ public class RenderableObject extends Rectangle implements Renderable, Ticable {
 
     @Override
     public void tick() {
-        x+=vector.getX();y+=vector.getY();
+        setLocation((int)(getX()+vector.getX()),(int)(getY()+vector.getY()));
+        onTick();
     }
-
     @Override
     public void renderer(Graphics2D g2d,byte priority) {
         if (this.priority==priority) {
-            if(actualImage != null) {
-                AffineTransform at = new AffineTransform(actualTransform);
-                at.translate(getX(), getY());
-                g2d.drawImage(actualImage, at, null);
-            }
+            onRenderer(g2d);
+        }
+    }
+
+
+    protected void onTick(){
+
+    }
+
+    protected void onRenderer(Graphics2D g2d){
+        if(actualImage != null) {
+            AffineTransform at = new AffineTransform(actualTransform);
+            at.translate(getSimX(),getSimY());
+            moveByCenter(at);
+            double scale = getScale();
+            double rotation = getRotation();
+            scale *= actualPosEp.getScale();
+            rotation += actualPosEp.getRotation();
+            at.translate(actualPosEp.getX(), actualPosEp.getY());
+            at.translate(getWidth() / 2.0, getHeight() / 2.0);
+            at.scale(scale, scale);
+            at.translate(-getWidth() / 2.0, -getHeight() / 2.0);
+            at.rotate(Math.toRadians(rotation), getWidth() / 2.0, getHeight() / 2.0);
+            g2d.drawImage(actualImage, at, null);
         }
     }
 }
