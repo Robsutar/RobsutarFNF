@@ -40,9 +40,9 @@ public class MainHandler implements DefaultGraphics {
         for (Renderable o:renderables
              ) {
             o.renderer(g2d);
-            o.renderer(g2d, (byte) 0);
             o.renderer(g2d, (byte) 1);
             o.renderer(g2d, (byte) 2);
+            o.renderer(g2d, (byte) 3);
         }
     }
     public void tick(){
