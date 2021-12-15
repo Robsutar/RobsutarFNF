@@ -53,7 +53,7 @@ public class RenderableObject extends Box implements Renderable, Ticable {
     }
 
     public void setPriority(byte priority) {
-        if ((priority>0&&priority<= MainHandler.maxRenderPriority)){
+        if ((priority>=0&&priority<= MainHandler.maxRenderPriority)){
             this.priority = priority;
         } else {
             this.priority = MainHandler.maxRenderPriority;
@@ -72,6 +72,7 @@ public class RenderableObject extends Box implements Renderable, Ticable {
     public float getOpacity() {
         return opacity;
     }
+
 
     @Override
     public void tick() {

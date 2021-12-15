@@ -26,4 +26,7 @@ public class Box extends Rectangle {
         at.translate(-getWidth()/2,-getHeight()/2);
     }
 
+    public void setScale(double scale) {
+        this.scale = scale;
+    }
 }

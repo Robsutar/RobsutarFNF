@@ -1,7 +1,6 @@
 package com.robsutar.robsutarfnf;
 
 import com.robsutar.robsutarfnf.Interface.*;
-import com.robsutar.robsutarfnf.RenderableObjects.Init.TextInformation;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;

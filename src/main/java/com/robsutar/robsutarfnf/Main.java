@@ -5,7 +5,6 @@ import com.robsutar.robsutarfnf.Frame.WindowFrame;
 import com.robsutar.robsutarfnf.Graphics.ImageManager;
 import com.robsutar.robsutarfnf.RenderableObjects.Gameplay.Player;
 import com.robsutar.robsutarfnf.RenderableObjects.Init.MousePositionIndicator;
-import com.robsutar.robsutarfnf.RenderableObjects.Init.TextInformation;
 import com.robsutar.robsutarfnf.RenderableObjects.RenderableObject;
 
 import java.awt.image.BufferedImage;
@@ -22,15 +21,15 @@ public class Main {
         new WindowFrame();
         new MousePositionIndicator();
 
-        BufferedImage menuOption = ImageManager.loadImage(Assets.assetsPath+"textures/menu/menuOption.png");
+        BufferedImage wallpaper = ImageManager.loadImage(Assets.assetsPath+"textures/wallpaper.jpg");
 
         Player p = new Player(WIDTH/2,HEIGHT/2,XmlFiles.readTextureAtlasXml(Assets.assetsPath+"animatedObjects/gfDance/gfDance.xml"));
 
-        RenderableObject ob =  new RenderableObject(WIDTH/2,HEIGHT/2,menuOption);
+        RenderableObject background =  new RenderableObject(WIDTH/2,HEIGHT/2,wallpaper);
+        background.setPriority((byte) 0);
+        background.setScale(0.63);
 
-        //TextInformation text = new TextInformation("&1Loading &2"+"lov"+": &7"+"path",menuOption);
-        TextInformation text = new TextInformation(new String[]{"&1Loading ","&2"+"fileTpezinDoi"+": ","&7"+"user/robsutar/gfdance"},null);
         p.spawn();
-        text.spawn();
+        background.spawn();
     }
 }
