@@ -18,8 +18,8 @@ public class Assets {
 
     public static void loading(String string, String fileType){
         System.out.println(BLUE_BOLD+"Loading "+CYAN+fileType+": "+RESET+string);
-        TextInformation text = new TextInformation("&1Loading &2"+fileType+": &7"+string);
-        text.spawn();
+        TextInformation text = new TextInformation(new String[]{"&1Loading &2"+fileType+": ","&7"+string},null);
+        //text.spawn();
     }
     public static void failedLoad(String string){
         System.out.println(RED_BOLD+"Failed to load: "+RESET+string);

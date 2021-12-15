@@ -1,12 +1,13 @@
 package com.robsutar.robsutarfnf;
 
-import com.robsutar.robsutarfnf.Graphics.StringManipulator;
 import com.robsutar.robsutarfnf.Interface.*;
 import com.robsutar.robsutarfnf.RenderableObjects.Init.TextInformation;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -17,13 +18,20 @@ public class MainHandler implements DefaultGraphics {
 
     public static byte maxRenderPriority = 3;
 
+    private Font font;
+
     private List<Ticable> ticables = new ArrayList<>();
     private List<Renderable> renderables = new ArrayList<>();
     private List<BpmTicable> bpmTicables = new ArrayList<>();
     private List<MouseInteractive> mouseInteractives = new ArrayList<>();
 
     public MainHandler(){
-        
+        String path = Assets.assetsPath+"font.ttf";
+        try {
+            this.font = Font.createFont(Font.TRUETYPE_FONT, new File(path)).deriveFont(54f);
+        } catch (IOException |FontFormatException e) {
+            Assets.failedLoad(path);
+        }
     }
 
     public void addObject(Ticable o){ticables.add(o);}
@@ -42,6 +50,7 @@ public class MainHandler implements DefaultGraphics {
         g2d.scale(scale,scale);
         g2d.rotate(rotation);
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,opacity));
+        g2d.setFont(font);
         if (!renderables.isEmpty()) {
             for (byte i = 0; i <= maxRenderPriority; i++) {
                 for (int z = 0; z<renderables.toArray().length;z++){

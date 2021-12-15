@@ -47,7 +47,9 @@ public class RenderableObject extends Box implements Renderable, Ticable {
         this.actualPosEp=extendedPosition;
     }
     public void setOpacity(float opacity) {
-        this.opacity = opacity;
+        if (opacity>=0) {
+            this.opacity = opacity;
+        }
     }
 
     public void setPriority(byte priority) {
@@ -59,6 +61,16 @@ public class RenderableObject extends Box implements Renderable, Ticable {
     }
     public byte getPriority() {
         return priority;
+    }
+
+    public int getVisualX(){
+        return (int) (x-getWidth()/2);
+    }
+    public int getVisualY(){
+        return (int) (y-getHeight()/2);
+    }
+    public float getOpacity() {
+        return opacity;
     }
 
     @Override
@@ -79,20 +91,20 @@ public class RenderableObject extends Box implements Renderable, Ticable {
     }
 
     protected void onRenderer(Graphics2D g2d){
+        AffineTransform at = new AffineTransform(actualTransform);
+        at.translate(getX(),getY());
+        moveByCenter(at);
+        double scale = getScale();
+        double rotation = getRotation();
+        scale *= actualPosEp.getScale();
+        rotation += actualPosEp.getRotation();
+        at.translate(actualPosEp.getX(), actualPosEp.getY());
+        at.translate(getWidth() / 2.0, getHeight() / 2.0);
+        at.scale(scale, scale);
+        at.translate(-getWidth() / 2.0, -getHeight() / 2.0);
+        at.rotate(Math.toRadians(rotation), getWidth() / 2.0, getHeight() / 2.0);
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,opacity));
         if(actualImage != null) {
-            AffineTransform at = new AffineTransform(actualTransform);
-            at.translate(getX(),getY());
-            moveByCenter(at);
-            double scale = getScale();
-            double rotation = getRotation();
-            scale *= actualPosEp.getScale();
-            rotation += actualPosEp.getRotation();
-            at.translate(actualPosEp.getX(), actualPosEp.getY());
-            at.translate(getWidth() / 2.0, getHeight() / 2.0);
-            at.scale(scale, scale);
-            at.translate(-getWidth() / 2.0, -getHeight() / 2.0);
-            at.rotate(Math.toRadians(rotation), getWidth() / 2.0, getHeight() / 2.0);
-            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,opacity));
             g2d.drawImage(actualImage, at, null);
         }
     }
