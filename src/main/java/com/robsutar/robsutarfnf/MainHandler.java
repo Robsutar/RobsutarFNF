@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static com.robsutar.robsutarfnf.Main.mainAssets;
+
 public class MainHandler implements DefaultGraphics {
 
     private long tim = System.currentTimeMillis();
@@ -27,7 +29,7 @@ public class MainHandler implements DefaultGraphics {
     private List<MouseInteractive> mouseInteractives = new ArrayList<>();
 
     public MainHandler(){
-        String path = Assets.assetsPath+"font.ttf";
+        String path = mainAssets.assetsPath+"font.ttf";
         try {
             this.font = Font.createFont(Font.TRUETYPE_FONT, new File(path)).deriveFont(fontSize);
         } catch (IOException |FontFormatException e) {

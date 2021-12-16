@@ -9,6 +9,7 @@ import com.robsutar.robsutarfnf.RenderableObjects.RenderableObject;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 
 public class Main {
     public static int WIDTH = 1620,HEIGHT = WIDTH*9/16;
@@ -16,24 +17,25 @@ public class Main {
 
     public static float bpm = 120;
 
-    public static MainHandler handler = new MainHandler();
+    public static Assets mainAssets;
+
+    public static MainHandler handler = new MainHandler();;
 
     public static void main(String[] args){
         new WindowFrame();
+        mainAssets = new Assets();
+
         //new MousePositionIndicator();
 
-        BufferedImage wallpaper = ImageManager.loadImage(Assets.assetsPath+"textures/wallpaper.jpg");
+        BufferedImage wallpaper = mainAssets.WALLPAPER;
 
-        Player p = new Player(WIDTH/2,HEIGHT/2,XmlFiles.readTextureAtlasXml(Assets.assetsPath+"animatedObjects/gfDance/gfDance.xml"));
+        Player p = new Player(WIDTH/2,HEIGHT/2,mainAssets.GF_DANCE_TITLE);
 
         RenderableObject background =  new RenderableObject(WIDTH/2,HEIGHT/2,wallpaper);
         background.setPriority((byte) 0);
         background.setScale(0.63);
 
-        TextBox box = new TextBox(450,111,"Loading","assets", Color.blue);
-
         p.spawn();
         background.spawn();
-        box.spawn();
     }
 }
