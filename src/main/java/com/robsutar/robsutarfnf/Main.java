@@ -3,10 +3,11 @@ package com.robsutar.robsutarfnf;
 import com.robsutar.robsutarfnf.Files.XmlFiles;
 import com.robsutar.robsutarfnf.Frame.WindowFrame;
 import com.robsutar.robsutarfnf.Graphics.ImageManager;
+import com.robsutar.robsutarfnf.RenderableObjects.TextBox;
 import com.robsutar.robsutarfnf.RenderableObjects.Gameplay.Player;
-import com.robsutar.robsutarfnf.RenderableObjects.Init.MousePositionIndicator;
 import com.robsutar.robsutarfnf.RenderableObjects.RenderableObject;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Main {
@@ -19,7 +20,7 @@ public class Main {
 
     public static void main(String[] args){
         new WindowFrame();
-        new MousePositionIndicator();
+        //new MousePositionIndicator();
 
         BufferedImage wallpaper = ImageManager.loadImage(Assets.assetsPath+"textures/wallpaper.jpg");
 
@@ -29,7 +30,10 @@ public class Main {
         background.setPriority((byte) 0);
         background.setScale(0.63);
 
+        TextBox box = new TextBox(450,111,"Loading","assets", Color.blue);
+
         p.spawn();
         background.spawn();
+        box.spawn();
     }
 }

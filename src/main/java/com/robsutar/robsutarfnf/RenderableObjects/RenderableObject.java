@@ -29,6 +29,10 @@ public class RenderableObject extends Box implements Renderable, Ticable {
         spawnTick();
         spawnRender();
     }
+    public void kill(){
+        killTick();
+        killRender();
+    }
 
     public void setActualImage(BufferedImage actualImage) {
         this.actualImage = actualImage;
@@ -47,7 +51,7 @@ public class RenderableObject extends Box implements Renderable, Ticable {
         this.actualPosEp=extendedPosition;
     }
     public void setOpacity(float opacity) {
-        if (opacity>=0) {
+        if (opacity>=0&&opacity<=1) {
             this.opacity = opacity;
         }
     }
@@ -93,8 +97,7 @@ public class RenderableObject extends Box implements Renderable, Ticable {
 
     protected void onRenderer(Graphics2D g2d){
         AffineTransform at = new AffineTransform(actualTransform);
-        at.translate(getX(),getY());
-        moveByCenter(at);
+        at.translate(getVisualX(),getVisualY());
         double scale = getScale();
         double rotation = getRotation();
         scale *= actualPosEp.getScale();

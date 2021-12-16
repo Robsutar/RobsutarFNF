@@ -17,6 +17,8 @@ public class MainHandler implements DefaultGraphics {
 
     public static byte maxRenderPriority = 3;
 
+    public static float fontSize = 54;
+
     private Font font;
 
     private List<Ticable> ticables = new ArrayList<>();
@@ -27,7 +29,7 @@ public class MainHandler implements DefaultGraphics {
     public MainHandler(){
         String path = Assets.assetsPath+"font.ttf";
         try {
-            this.font = Font.createFont(Font.TRUETYPE_FONT, new File(path)).deriveFont(54f);
+            this.font = Font.createFont(Font.TRUETYPE_FONT, new File(path)).deriveFont(fontSize);
         } catch (IOException |FontFormatException e) {
             Assets.failedLoad(path);
         }
@@ -45,14 +47,14 @@ public class MainHandler implements DefaultGraphics {
 
     public void renderer(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setColor(color);
-        g2d.scale(scale,scale);
-        g2d.rotate(rotation);
-        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,opacity));
         g2d.setFont(font);
         if (!renderables.isEmpty()) {
             for (byte i = 0; i <= maxRenderPriority; i++) {
                 for (int z = 0; z<renderables.toArray().length;z++){
+                    g2d.setColor(color);
+                    g2d.scale(scale,scale);
+                    g2d.rotate(Math.toRadians(rotation));
+                    g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,opacity));
                     renderables.get(0).renderer(g2d, i);
                     Collections.rotate(renderables,1);
                 }
