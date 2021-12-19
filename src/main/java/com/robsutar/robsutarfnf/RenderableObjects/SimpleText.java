@@ -1,9 +1,12 @@
 package com.robsutar.robsutarfnf.RenderableObjects;
 
 import com.robsutar.robsutarfnf.Graphics.StringDesigner;
+import com.robsutar.robsutarfnf.Main;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.util.Collections;
 
 public class SimpleText extends RenderableObject implements StringDesigner {
     protected String text;
@@ -33,7 +36,6 @@ public class SimpleText extends RenderableObject implements StringDesigner {
     @Override
     public void renderer(Graphics2D g2d, byte priority) {
         FontMetrics metrics = g2d.getFontMetrics();
-        g2d.setFont(g2d.getFont().deriveFont(112f));
         setWidth(metrics.stringWidth(formatText(text)));
         setHeight((metrics.getHeight()/2-metrics.getAscent())*2);
         super.renderer(g2d, priority);

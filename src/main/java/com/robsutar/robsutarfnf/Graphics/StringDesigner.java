@@ -33,7 +33,8 @@ public interface StringDesigner {
 
         boolean checkColor = false;
 
-        for (char c :chars){
+        for (int i = 0; i < chars.length;i++){
+            char c =chars[i];
             if (c=='&'){
                 checkColor=true;
             } else {
@@ -51,7 +52,7 @@ public interface StringDesigner {
                         case '8':g2d.setColor(Color.pink);continue;
                         case '9':g2d.setColor(Color.black);continue;
                         case '#':
-                            g2d.setColor(RainbowColor.rainbowColor());
+                            g2d.setColor(RainbowColor.rainbowColor(i*10));
                             continue;
                     }
                 }

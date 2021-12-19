@@ -3,6 +3,7 @@ package com.robsutar.robsutarfnf;
 import com.robsutar.robsutarfnf.Files.XmlFiles;
 import com.robsutar.robsutarfnf.Frame.WindowFrame;
 import com.robsutar.robsutarfnf.Graphics.ImageManager;
+import com.robsutar.robsutarfnf.RenderableObjects.SimpleText;
 import com.robsutar.robsutarfnf.RenderableObjects.TextBox;
 import com.robsutar.robsutarfnf.RenderableObjects.Gameplay.Player;
 import com.robsutar.robsutarfnf.RenderableObjects.RenderableObject;
@@ -10,6 +11,7 @@ import com.robsutar.robsutarfnf.RenderableObjects.RenderableObject;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.List;
 
 public class Main {
     public static int WIDTH = 1620,HEIGHT = WIDTH*9/16;
@@ -25,17 +27,23 @@ public class Main {
         new WindowFrame();
         mainAssets = new Assets();
 
+        //new GameIntroduction();
+
         //new MousePositionIndicator();
 
-        BufferedImage wallpaper = mainAssets.WALLPAPER;
+
+        SimpleText text = new SimpleText(WIDTH/2,HEIGHT/2,"&#R&#o&#b&#s&#u&#t&#a&#r");
 
         Player p = new Player(WIDTH/2,HEIGHT/2,mainAssets.GF_DANCE_TITLE);
 
-        RenderableObject background =  new RenderableObject(WIDTH/2,HEIGHT/2,wallpaper);
+        RenderableObject background =  new RenderableObject(WIDTH/2,HEIGHT/2,mainAssets.WALLPAPER);
         background.setPriority((byte) 0);
         background.setScale(0.63);
 
-        p.spawn();
-        background.spawn();
+        text.spawn();
+        //p.spawn();
+        //background.spawn();
+
+
     }
 }

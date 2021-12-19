@@ -29,9 +29,9 @@ public class MainHandler implements DefaultGraphics {
     private List<MouseInteractive> mouseInteractives = new ArrayList<>();
 
     public MainHandler(){
-        String path = mainAssets.assetsPath+"font.ttf";
+        String path = Assets.assetsPath +"font.ttf";
         try {
-            this.font = Font.createFont(Font.TRUETYPE_FONT, new File(path)).deriveFont(fontSize);
+            this.font = Font.createFont(Font.TRUETYPE_FONT, new File(path));
         } catch (IOException |FontFormatException e) {
             Assets.failedLoad(path);
         }
@@ -49,7 +49,7 @@ public class MainHandler implements DefaultGraphics {
 
     public void renderer(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setFont(font);
+        g2d.setFont(font.deriveFont(fontSize));
         if (!renderables.isEmpty()) {
             for (byte i = 0; i <= maxRenderPriority; i++) {
                 for (int z = 0; z<renderables.toArray().length;z++){

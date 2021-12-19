@@ -3,12 +3,13 @@ package com.robsutar.robsutarfnf.Graphics;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class RainbowColor {
 
     public static List<Color> rainbowColors = rainbowArray();
 
-    public static int slowness = 3;
+    public static int slowness = 10;
 
     private static List<Color> rainbowArray(){
         List<Color> colors = new ArrayList<>();
@@ -22,9 +23,12 @@ public class RainbowColor {
         return colors;
     }
 
-    public static Color rainbowColor(){
-        int index =(int)(System.currentTimeMillis()/slowness);
+    public static Color rainbowColor(int seed){
+        int index =(int)((System.currentTimeMillis())/(slowness+1))+seed;
         index =index-(rainbowColors.toArray().length-1)*((index/(rainbowColors.toArray().length-1)));
+        if (index<0){
+            index = (rainbowColors.toArray().length-1)+index;
+        }
         return rainbowColors.get(index);
     }
 }
