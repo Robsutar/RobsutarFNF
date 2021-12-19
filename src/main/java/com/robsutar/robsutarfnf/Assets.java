@@ -28,8 +28,9 @@ public class Assets {
         TextBox box = new TextBox(450,111,"Loading","assets", Color.blue);
         box.spawn();
 
+        box.setSubtitle("animations");
         GF_DANCE_TITLE = XmlFiles.readTextureAtlasXml(assetsPath+"animatedObjects/gfDance/gfDance.xml");
-
+        box.setSubtitle("images");
         WALLPAPER = ImageManager.loadImage(assetsPath+"textures/wallpaper.jpg");
 
         box.kill();

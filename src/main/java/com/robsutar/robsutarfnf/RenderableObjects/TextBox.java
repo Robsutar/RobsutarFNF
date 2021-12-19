@@ -9,10 +9,10 @@ import java.awt.*;
 import java.util.Random;
 
 public class TextBox extends RenderableObject {
-    private final Color color;
-    private final Color wordColor;
-    private final String word;
-    private final String subtitle;
+    private Color color;
+    private Color wordColor;
+    private String word;
+    private String subtitle;
 
     private int count;
     private boolean direction = false;
@@ -25,6 +25,22 @@ public class TextBox extends RenderableObject {
         this.word=word;
         this.subtitle=subtitle;
         this.wordColor = new Color(color.getRed()/5,color.getGreen()/5,color.getBlue()/5);
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public void setWordColor(Color wordColor) {
+        this.wordColor = wordColor;
+    }
+
+    public void setWord(String word) {
+        this.word = word;
+    }
+
+    public void setSubtitle(String subtitle) {
+        this.subtitle = subtitle;
     }
 
     @Override

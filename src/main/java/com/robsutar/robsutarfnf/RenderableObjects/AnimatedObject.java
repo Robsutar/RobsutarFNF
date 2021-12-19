@@ -26,9 +26,9 @@ public abstract class AnimatedObject extends RenderableObject implements BpmTica
         super(x, y,null);
 
         AtlasConfig atlas = atlasXml;
-        BufferedImage img = ImageManager.loadImage(atlas.getFolderPath() + atlas.getImageName());
+        BufferedImage img = atlas.getImage();
         List<List<String>> animationsName = new ArrayList<>();
-        JSONObject testPosJson = JsonFiles.readJsonObject(atlas.getFolderPath() + (atlas.getImageName().replace("png", "json")));
+        JSONObject testPosJson = atlas.getTestPosJson();
         if(testPosJson != null) {
             this.posEps = JsonFiles.readBaseTransform(testPosJson);
         }
