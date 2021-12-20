@@ -46,7 +46,7 @@ public class Main {
 
         text.spawn();
         bpmVisualizer.spawnBpm();
-        //p.spawn();
+        p.spawn();
         //background.spawn();
 
 

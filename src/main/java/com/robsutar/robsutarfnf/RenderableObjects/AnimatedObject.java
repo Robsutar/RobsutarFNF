@@ -104,9 +104,9 @@ public abstract class AnimatedObject extends RenderableObject implements Animati
     @Override
     public void animationTick() {
         if(animating&&!animatedImages.isEmpty()) {
-            Collections.rotate(animatedImages.get(animationIndex), 1);
             setActualImage(animatedImages.get(animationIndex).get(0),true);
             setActualPosEP(posEps.get(animationIndex));
+            Collections.rotate(animatedImages.get(animationIndex), 1);
         }
     }
 }

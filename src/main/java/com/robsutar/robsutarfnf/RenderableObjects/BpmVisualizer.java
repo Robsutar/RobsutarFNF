@@ -22,6 +22,7 @@ public class BpmVisualizer implements BpmTicable {
         age++;
         if (age%16==0){
             index++;
+            System.out.println(age/16);
             if (index>3){
                 index=0;
             }
@@ -41,11 +42,7 @@ public class BpmVisualizer implements BpmTicable {
 
         @Override
         public void bpmTick() {
-            opacity -=0.02;
-            if (opacity<0){
-                killBpm();
-                killRender();
-            }
+            opacity -=0.05;
         }
 
         @Override
@@ -55,6 +52,11 @@ public class BpmVisualizer implements BpmTicable {
             }
         }
         public void onRenderer(Graphics2D g2d){
+            if (opacity<0){
+                killBpm();
+                killRender();
+                return;
+            }
             g2d.setStroke(new BasicStroke(3));
             g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,opacity));
 

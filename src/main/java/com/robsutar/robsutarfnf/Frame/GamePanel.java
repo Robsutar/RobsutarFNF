@@ -33,10 +33,6 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
     @Override
     public void paintComponent(Graphics g ){
         super.paintComponent(g);
-        while(System.currentTimeMillis() - tim > 10) { //10 = 100 ticks per second ** 1 = 1000 ticks per second
-            tim += 10;
-            Main.handler.tick();
-        }
         Main.handler.renderer(g);
     }
 

@@ -11,12 +11,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class MainHandler implements DefaultGraphics {
 
     private long tim = System.currentTimeMillis();
-
-    private long bpmTim = tim;
 
     public static byte maxRenderPriority = 3;
 
@@ -24,7 +25,7 @@ public class MainHandler implements DefaultGraphics {
 
     private static Music actualMusic;
 
-    public static float bpm = 60;
+    public static double bpm = 150;
 
     private Font font;
 
@@ -34,6 +35,10 @@ public class MainHandler implements DefaultGraphics {
     private final List<MouseInteractive> mouseInteractives = new ArrayList<>();
     private final List<BpmTicable> bpmTicables = new ArrayList<>();
 
+    private ScheduledExecutorService bpmRunnable;
+    private ScheduledExecutorService tickRunnable;
+    private ScheduledExecutorService animationTickRunnable;
+
     public MainHandler(){
         String path = Assets.assetsPath +"font.ttf";
         try {
@@ -41,6 +46,9 @@ public class MainHandler implements DefaultGraphics {
         } catch (IOException |FontFormatException e) {
             Assets.failedLoad(path);
         }
+        startTick();
+        startBpm();
+        startAnimationTick();
     }
 
     public void addObject(Ticable o){ticables.add(o);}
@@ -55,10 +63,38 @@ public class MainHandler implements DefaultGraphics {
     public void removeObject(BpmTicable o) {bpmTicables.remove(o);}
     public void removeObject(MouseInteractive o) {mouseInteractives.remove(o);}
 
+    public void startTick(){
+        this.tickRunnable=Executors.newSingleThreadScheduledExecutor();
+        this.tickRunnable.scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                tick();
+            }
+        }, 0, 100, TimeUnit.MILLISECONDS);
+    }
+    public void startBpm(){
+        this.bpmRunnable=Executors.newSingleThreadScheduledExecutor();
+        this.bpmRunnable.scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                bpmTick();
+            }
+        }, 0, (long) ((1000000000*60d)/(bpm*16)), TimeUnit.NANOSECONDS);
+    }
+    public void startAnimationTick(){
+        this.animationTickRunnable=Executors.newSingleThreadScheduledExecutor();
+        this.animationTickRunnable.scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                animationTick();
+            }
+        }, 0, (long) ((1000000000*60d)/(bpm*15)), TimeUnit.NANOSECONDS);
+    }
+
     public void setActualMusic(Music music){
         actualMusic=music;
         bpm = actualMusic.getBpm();
-        bpmTim = System.currentTimeMillis();
+        startBpm();
         music.start();
     }
 
@@ -89,11 +125,7 @@ public class MainHandler implements DefaultGraphics {
         }
         while(System.currentTimeMillis() - tim > 1000.0/(bpm/60.0)/15) {
             tim += 1000.0/(bpm/60.0)/15;
-            animationTick();
-        }
-        while(System.currentTimeMillis() - bpmTim > 1000.0/(bpm/60.0)/16) {
-            bpmTim += 1000.0/(bpm/60.0)/16;
-            bpmTick();
+            //animationTick();
         }
     }
     public void animationTick(){
