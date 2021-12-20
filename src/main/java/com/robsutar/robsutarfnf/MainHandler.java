@@ -1,5 +1,6 @@
 package com.robsutar.robsutarfnf;
 
+import com.robsutar.robsutarfnf.Audio.Music;
 import com.robsutar.robsutarfnf.Interface.*;
 
 import java.awt.*;
@@ -11,22 +12,27 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static com.robsutar.robsutarfnf.Main.mainAssets;
-
 public class MainHandler implements DefaultGraphics {
 
     private long tim = System.currentTimeMillis();
+
+    private long bpmTim = tim;
 
     public static byte maxRenderPriority = 3;
 
     public static float fontSize = 54;
 
+    private static Music actualMusic;
+
+    public static float bpm = 60;
+
     private Font font;
 
-    private List<Ticable> ticables = new ArrayList<>();
-    private List<Renderable> renderables = new ArrayList<>();
-    private List<BpmTicable> bpmTicables = new ArrayList<>();
-    private List<MouseInteractive> mouseInteractives = new ArrayList<>();
+    private final List<Ticable> ticables = new ArrayList<>();
+    private final List<Renderable> renderables = new ArrayList<>();
+    private final List<AnimationTicable> animationTicables = new ArrayList<>();
+    private final List<MouseInteractive> mouseInteractives = new ArrayList<>();
+    private final List<BpmTicable> bpmTicables = new ArrayList<>();
 
     public MainHandler(){
         String path = Assets.assetsPath +"font.ttf";
@@ -39,17 +45,27 @@ public class MainHandler implements DefaultGraphics {
 
     public void addObject(Ticable o){ticables.add(o);}
     public void addObject(Renderable o){renderables.add(o);}
+    public void addObject(AnimationTicable o){animationTicables.add(o);}
     public void addObject(BpmTicable o){bpmTicables.add(o);}
     public void addObject(MouseInteractive o){mouseInteractives.add(o);}
 
     public void removeObject(Ticable o) {ticables.remove(o);}
     public void removeObject(Renderable o) {renderables.remove(o);}
+    public void removeObject(AnimationTicable o) {animationTicables.remove(o);}
     public void removeObject(BpmTicable o) {bpmTicables.remove(o);}
     public void removeObject(MouseInteractive o) {mouseInteractives.remove(o);}
+
+    public void setActualMusic(Music music){
+        actualMusic=music;
+        bpm = actualMusic.getBpm();
+        bpmTim = System.currentTimeMillis();
+        music.start();
+    }
 
     public void renderer(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
         g2d.setFont(font.deriveFont(fontSize));
+
         if (!renderables.isEmpty()) {
             for (byte i = 0; i <= maxRenderPriority; i++) {
                 for (int z = 0; z<renderables.toArray().length;z++){
@@ -57,6 +73,7 @@ public class MainHandler implements DefaultGraphics {
                     g2d.scale(scale,scale);
                     g2d.rotate(Math.toRadians(rotation));
                     g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,opacity));
+                    g2d.setStroke(new BasicStroke(2));
                     renderables.get(0).renderer(g2d, i);
                     Collections.rotate(renderables,1);
                 }
@@ -70,14 +87,27 @@ public class MainHandler implements DefaultGraphics {
                 Collections.rotate(ticables,1);
             }
         }
-        while(System.currentTimeMillis() - tim > 1000.0/(Main.bpm/60.0)/15) {
-            tim += 1000.0/(Main.bpm/60.0)/15;
+        while(System.currentTimeMillis() - tim > 1000.0/(bpm/60.0)/15) {
+            tim += 1000.0/(bpm/60.0)/15;
+            animationTick();
+        }
+        while(System.currentTimeMillis() - bpmTim > 1000.0/(bpm/60.0)/16) {
+            bpmTim += 1000.0/(bpm/60.0)/16;
             bpmTick();
         }
     }
+    public void animationTick(){
+        if (!animationTicables.isEmpty()) {
+            for (int z = 0; z< animationTicables.toArray().length; z++){
+                animationTicables.get(0).animationTick();
+                Collections.rotate(animationTicables,1);
+            }
+        }
+    }
+
     public void bpmTick(){
-        if (!bpmTicables.isEmpty()) {
-            for (int z = 0; z<bpmTicables.toArray().length;z++){
+        if (!bpmTicables.isEmpty()){
+            for (int z = 0; z< bpmTicables.toArray().length; z++){
                 bpmTicables.get(0).bpmTick();
                 Collections.rotate(bpmTicables,1);
             }
@@ -103,6 +133,5 @@ public class MainHandler implements DefaultGraphics {
     }
 
     public void keyPressed(KeyEvent e) {
-
     }
 }

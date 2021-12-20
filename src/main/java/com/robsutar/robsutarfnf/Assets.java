@@ -2,6 +2,9 @@ package com.robsutar.robsutarfnf;
 
 
 import com.robsutar.robsutarfnf.AnimationBuilder.AtlasConfig;
+import com.robsutar.robsutarfnf.Audio.AudioManager;
+import com.robsutar.robsutarfnf.Audio.Music;
+import com.robsutar.robsutarfnf.Files.WavFiles;
 import com.robsutar.robsutarfnf.Files.XmlFiles;
 import com.robsutar.robsutarfnf.Graphics.ImageManager;
 import com.robsutar.robsutarfnf.RenderableObjects.TextBox;
@@ -19,10 +22,14 @@ public class Assets {
     public static String resourcesPath = new File("").getAbsolutePath()+"/resources/";
     public static String assetsPath = resourcesPath+"assets/";
     public static String phasesPath = resourcesPath+"phases/";
+    public static String soundsPath = assetsPath+"sounds/";
+    public static String texturesPath = assetsPath+"textures/";
 
-    public AtlasConfig GF_DANCE_TITLE;
+    public final AtlasConfig GF_DANCE_TITLE;
 
-    public BufferedImage WALLPAPER;
+    public final BufferedImage WALLPAPER;
+
+    public final Music INTRODUCTION_MUSIC;
 
     public Assets(){
         TextBox box = new TextBox(450,111,"Loading","assets", Color.blue);
@@ -31,7 +38,9 @@ public class Assets {
         box.setSubtitle("animations");
         GF_DANCE_TITLE = XmlFiles.readTextureAtlasXml(assetsPath+"animatedObjects/gfDance/gfDance.xml");
         box.setSubtitle("images");
-        WALLPAPER = ImageManager.loadImage(assetsPath+"textures/wallpaper.jpg");
+        WALLPAPER = ImageManager.loadImage(texturesPath+"wallpaper.jpg");
+        box.setSubtitle("sounds");
+        INTRODUCTION_MUSIC = new Music(WavFiles.loadWav(soundsPath+"introduction.wav"),126);
 
         box.kill();
     }

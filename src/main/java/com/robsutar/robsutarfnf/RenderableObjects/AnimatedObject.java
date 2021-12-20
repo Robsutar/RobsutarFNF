@@ -4,7 +4,7 @@ import com.robsutar.robsutarfnf.AnimationBuilder.AtlasConfig;
 import com.robsutar.robsutarfnf.ExtendedPosition;
 import com.robsutar.robsutarfnf.Files.JsonFiles;
 import com.robsutar.robsutarfnf.Graphics.ImageManager;
-import com.robsutar.robsutarfnf.Interface.BpmTicable;
+import com.robsutar.robsutarfnf.Interface.AnimationTicable;
 import org.json.simple.JSONObject;
 
 import java.awt.image.BufferedImage;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class AnimatedObject extends RenderableObject implements BpmTicable {
+public abstract class AnimatedObject extends RenderableObject implements AnimationTicable {
 
     private List<List<BufferedImage>> animatedImages = new ArrayList<>();
 
@@ -91,12 +91,18 @@ public abstract class AnimatedObject extends RenderableObject implements BpmTica
 
     @Override
     public void spawn() {
-        spawnBpm();
+        spawnAnimationTick();
         super.spawn();
     }
 
     @Override
-    public void bpmTick() {
+    public void kill() {
+        killAnimationTick();
+        super.kill();
+    }
+
+    @Override
+    public void animationTick() {
         if(animating&&!animatedImages.isEmpty()) {
             Collections.rotate(animatedImages.get(animationIndex), 1);
             setActualImage(animatedImages.get(animationIndex).get(0),true);

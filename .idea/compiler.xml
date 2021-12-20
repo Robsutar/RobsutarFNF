@@ -12,7 +12,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="RobsutarFNF" options="--add-exports java.desktop/com.sun.imageio.plugins.common=ALL-UNNAMED --add-exports java.desktop/com.sun.imageio.plugins.gif=ALL-UNNAMED" />
+      <module name="RobsutarFNF" options="" />
     </option>
   </component>
 </project>
