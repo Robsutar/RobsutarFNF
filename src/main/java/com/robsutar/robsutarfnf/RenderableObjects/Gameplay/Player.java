@@ -6,6 +6,12 @@ import com.robsutar.robsutarfnf.RenderableObjects.AnimatedObject;
 public class Player extends AnimatedObject {
     public Player(int x, int y, AtlasConfig atlas) {
         super(x,y,atlas);
-        setPriority((byte) 1);
+        priority=2;
+    }
+
+    @Override
+    protected void onTick() {
+        super.onTick();
+        setScale(getScale()+0.01);
     }
 }

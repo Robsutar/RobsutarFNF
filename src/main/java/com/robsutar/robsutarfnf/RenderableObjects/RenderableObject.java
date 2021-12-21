@@ -3,18 +3,13 @@ package com.robsutar.robsutarfnf.RenderableObjects;
 import com.robsutar.robsutarfnf.ExtendedPosition;
 import com.robsutar.robsutarfnf.Interface.Renderable;
 import com.robsutar.robsutarfnf.Interface.Ticable;
-import com.robsutar.robsutarfnf.MainHandler;
 import com.robsutar.robsutarfnf.Vector2d;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
-public class RenderableObject extends Box implements Renderable, Ticable {
-
-    private byte priority= (byte) (MainHandler.maxRenderPriority-1);
-    private float opacity = 1;
-
+public class RenderableObject extends SimpleRenderable implements Ticable {
     protected BufferedImage actualImage;
     protected AffineTransform actualTransform = new AffineTransform();
     private ExtendedPosition actualPosEp = new ExtendedPosition();
@@ -25,13 +20,15 @@ public class RenderableObject extends Box implements Renderable, Ticable {
         setLocation(x,y);
     }
 
+    @Override
     public void spawn(){
+        super.spawn();
         spawnTick();
-        spawnRender();
     }
+    @Override
     public void kill(){
+        super.kill();
         killTick();
-        killRender();
     }
 
     public void setActualImage(BufferedImage actualImage) {
@@ -50,44 +47,20 @@ public class RenderableObject extends Box implements Renderable, Ticable {
     public void setActualPosEP(ExtendedPosition extendedPosition) {
         this.actualPosEp=extendedPosition;
     }
-    public void setOpacity(float opacity) {
-        if (opacity>=0&&opacity<=1) {
-            this.opacity = opacity;
-        }
-    }
 
-    public void setPriority(byte priority) {
-        if ((priority>=0&&priority<= MainHandler.maxRenderPriority)){
-            this.priority = priority;
-        } else {
-            this.priority = MainHandler.maxRenderPriority;
-        }
-    }
-    public byte getPriority() {
-        return priority;
-    }
-
-    public int getVisualX(){
-        return (int) (x-getWidth()/2);
-    }
-    public int getVisualY(){
-        return (int) (y-getHeight()/2);
-    }
-    public float getOpacity() {
-        return opacity;
-    }
 
 
     @Override
     public void tick() {
         setLocation((int)(getX()+vector.getX()),(int)(getY()+vector.getY()));
+        setOpacity(getOpacity()+vector.getOpacity());
+        setScale(getScale()+vector.getScale());
         onTick();
     }
     @Override
-    public void renderer(Graphics2D g2d,byte priority) {
-        if (this.priority==priority) {
-            onRenderer(g2d);
-        }
+    public void renderer(Graphics2D g2d) {
+        super.renderer(g2d);
+        onRenderer(g2d);
     }
 
 
@@ -95,19 +68,26 @@ public class RenderableObject extends Box implements Renderable, Ticable {
 
     }
 
+    @Override
+    public void rendererScale(Graphics2D g2d) {
+        double scale = getScale();
+        scale *= actualPosEp.getScale();
+        g2d.translate(getScaledWidth()/2.0,getScaledHeight()/2.0);
+        g2d.scale(scale,scale);
+        g2d.translate(-getScaledWidth()/2.0,-getScaledHeight()/2.0);
+    }
+
+    @Override
+    public void rendererRotate(Graphics2D g2d) {
+        double rotation = getRotation();
+        rotation += actualPosEp.getRotation();
+        g2d.rotate(Math.toRadians(rotation),getWidth()/2.0,getHeight()/2.0);
+    }
+
     protected void onRenderer(Graphics2D g2d){
         AffineTransform at = new AffineTransform(actualTransform);
         at.translate(getVisualX(),getVisualY());
-        double scale = getScale();
-        double rotation = getRotation();
-        scale *= actualPosEp.getScale();
-        rotation += actualPosEp.getRotation();
-        at.translate(actualPosEp.getX(), actualPosEp.getY());
-        at.translate(getWidth() / 2.0, getHeight() / 2.0);
-        at.scale(scale, scale);
-        at.translate(-getWidth() / 2.0, -getHeight() / 2.0);
-        at.rotate(Math.toRadians(rotation), getWidth() / 2.0, getHeight() / 2.0);
-        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,opacity));
+        //at.translate(actualPosEp.getX(), actualPosEp.getY());
         if(actualImage != null) {
             g2d.drawImage(actualImage, at, null);
         }

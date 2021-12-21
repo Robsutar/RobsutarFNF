@@ -12,7 +12,9 @@ public interface Renderable {
         Main.handler.removeObject(this);
     }
 
-    default void renderer(Graphics2D g2d, byte priority){
+    int getPriority();
+
+    default void renderer(Graphics2D g2d){
 
     }
 }

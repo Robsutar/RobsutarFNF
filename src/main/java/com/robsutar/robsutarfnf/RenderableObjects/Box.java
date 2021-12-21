@@ -15,9 +15,17 @@ public class Box extends Rectangle {
         return rotation;
     }
 
+    public void setScale(double scale) {
+        this.scale = scale;
+    }
+
+    public void setRotation(double rotation) {
+        this.rotation = rotation;
+    }
     public void setWidth(int width){
         this.setSize(width, (int) getHeight());
     }
+
     public void setHeight(int height){
         this.setSize((int) getWidth(),height);
     }
@@ -26,7 +34,17 @@ public class Box extends Rectangle {
         at.translate(-getWidth()/2,-getHeight()/2);
     }
 
-    public void setScale(double scale) {
-        this.scale = scale;
+    public int getVisualX(){
+        return (int) (x*getScale()-getScaledWidth()/2);
+    }
+    public int getVisualY(){
+        return (int) (y*getScale()-getScaledHeight()/2);
+    }
+
+    public double getScaledWidth(){
+        return this.getWidth()*scale;
+    }
+    public double getScaledHeight(){
+        return this.getHeight()*scale;
     }
 }

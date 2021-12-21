@@ -1,6 +1,7 @@
 package com.robsutar.robsutarfnf;
 
 import com.robsutar.robsutarfnf.Audio.Music;
+import com.robsutar.robsutarfnf.Comparators.RenderableComparator;
 import com.robsutar.robsutarfnf.Interface.*;
 
 import java.awt.*;
@@ -19,7 +20,7 @@ public class MainHandler implements DefaultGraphics {
 
     private long tim = System.currentTimeMillis();
 
-    public static byte maxRenderPriority = 3;
+    public static int maxRenderPriority = 3;
 
     public static float fontSize = 54;
 
@@ -34,6 +35,8 @@ public class MainHandler implements DefaultGraphics {
     private final List<AnimationTicable> animationTicables = new ArrayList<>();
     private final List<MouseInteractive> mouseInteractives = new ArrayList<>();
     private final List<BpmTicable> bpmTicables = new ArrayList<>();
+
+    RenderableComparator comparator = new RenderableComparator();
 
     private ScheduledExecutorService bpmRunnable;
     private ScheduledExecutorService tickRunnable;
@@ -64,15 +67,22 @@ public class MainHandler implements DefaultGraphics {
     public void removeObject(MouseInteractive o) {mouseInteractives.remove(o);}
 
     public void startTick(){
+        if (tickRunnable!=null){
+            this.tickRunnable.shutdown();
+        }
         this.tickRunnable=Executors.newSingleThreadScheduledExecutor();
         this.tickRunnable.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {
                 tick();
             }
-        }, 0, 100, TimeUnit.MILLISECONDS);
+        }, 0, 20, TimeUnit.MILLISECONDS);
     }
     public void startBpm(){
+        if (bpmRunnable!=null){
+            this.bpmRunnable.shutdown();
+        }
+
         this.bpmRunnable=Executors.newSingleThreadScheduledExecutor();
         this.bpmRunnable.scheduleAtFixedRate(new Runnable() {
             @Override
@@ -82,6 +92,9 @@ public class MainHandler implements DefaultGraphics {
         }, 0, (long) ((1000000000*60d)/(bpm*16)), TimeUnit.NANOSECONDS);
     }
     public void startAnimationTick(){
+        if (animationTickRunnable!=null){
+            this.animationTickRunnable.shutdown();
+        }
         this.animationTickRunnable=Executors.newSingleThreadScheduledExecutor();
         this.animationTickRunnable.scheduleAtFixedRate(new Runnable() {
             @Override
@@ -95,6 +108,7 @@ public class MainHandler implements DefaultGraphics {
         actualMusic=music;
         bpm = actualMusic.getBpm();
         startBpm();
+        startAnimationTick();
         music.start();
     }
 
@@ -102,17 +116,17 @@ public class MainHandler implements DefaultGraphics {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setFont(font.deriveFont(fontSize));
 
-        if (!renderables.isEmpty()) {
-            for (byte i = 0; i <= maxRenderPriority; i++) {
-                for (int z = 0; z<renderables.toArray().length;z++){
-                    g2d.setColor(color);
-                    g2d.scale(scale,scale);
-                    g2d.rotate(Math.toRadians(rotation));
-                    g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,opacity));
-                    g2d.setStroke(new BasicStroke(2));
-                    renderables.get(0).renderer(g2d, i);
-                    Collections.rotate(renderables,1);
-                }
+        List<Renderable> renderables = new ArrayList<>(this.renderables);
+        renderables.sort(comparator);
+        for (int z = 0; z<renderables.toArray().length;z++){
+            if (!renderables.isEmpty()) {
+                Collections.rotate(renderables, 1);
+                g2d.setColor(color);
+                g2d.scale(scale, scale);
+                g2d.rotate(Math.toRadians(rotation));
+                g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
+                g2d.setStroke(new BasicStroke(2));
+                renderables.get(0).renderer(g2d);
             }
         }
     }
@@ -122,10 +136,6 @@ public class MainHandler implements DefaultGraphics {
                 ticables.get(0).tick();
                 Collections.rotate(ticables,1);
             }
-        }
-        while(System.currentTimeMillis() - tim > 1000.0/(bpm/60.0)/15) {
-            tim += 1000.0/(bpm/60.0)/15;
-            //animationTick();
         }
     }
     public void animationTick(){

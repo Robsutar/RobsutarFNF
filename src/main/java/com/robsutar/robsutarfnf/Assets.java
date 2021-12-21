@@ -40,7 +40,7 @@ public class Assets {
         box.setSubtitle("images");
         WALLPAPER = ImageManager.loadImage(texturesPath+"wallpaper.jpg");
         box.setSubtitle("sounds");
-        INTRODUCTION_MUSIC = new Music(WavFiles.loadWav(soundsPath+"introduction.wav"),126);
+        INTRODUCTION_MUSIC = new Music(WavFiles.loadWav(soundsPath+"introduction.wav"),102);
 
         box.kill();
     }

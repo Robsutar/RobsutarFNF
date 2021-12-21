@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 public class MousePositionIndicator extends RenderableObject {
     public MousePositionIndicator() {
         super(Main.xMouse,Main.yMouse,null);
-        setPriority(MainHandler.maxRenderPriority);
+        priority = 10;
         spawn();
     }
 
@@ -20,9 +20,7 @@ public class MousePositionIndicator extends RenderableObject {
     }
 
     @Override
-    public void renderer(Graphics2D g2d, byte priority) {
-        if (priority==getPriority()){
-            g2d.drawString(Main.xMouse+" "+Main.yMouse,Main.xMouse,Main.yMouse);
-        }
+    public void renderer(Graphics2D g2d) {
+        g2d.drawString(Main.xMouse+" "+Main.yMouse,Main.xMouse,Main.yMouse);
     }
 }

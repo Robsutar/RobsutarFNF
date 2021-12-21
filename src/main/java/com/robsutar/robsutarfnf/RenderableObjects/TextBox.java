@@ -2,8 +2,6 @@ package com.robsutar.robsutarfnf.RenderableObjects;
 
 import com.robsutar.robsutarfnf.Main;
 import com.robsutar.robsutarfnf.MainHandler;
-import com.robsutar.robsutarfnf.RenderableObjects.Particles.Particle;
-import com.robsutar.robsutarfnf.RenderableObjects.RenderableObject;
 
 import java.awt.*;
 import java.util.Random;
