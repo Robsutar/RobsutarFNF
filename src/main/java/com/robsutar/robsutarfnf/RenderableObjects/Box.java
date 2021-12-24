@@ -14,37 +14,25 @@ public class Box extends Rectangle {
     public double getRotation() {
         return rotation;
     }
-
     public void setScale(double scale) {
         this.scale = scale;
     }
-
     public void setRotation(double rotation) {
         this.rotation = rotation;
     }
     public void setWidth(int width){
         this.setSize(width, (int) getHeight());
     }
-
     public void setHeight(int height){
         this.setSize((int) getWidth(),height);
     }
+    public void setX(int x){this.x=x;}
+    public void setY(int y){this.y=y;}
 
-    public void moveByCenter(AffineTransform at){
-        at.translate(-getWidth()/2,-getHeight()/2);
-    }
-
-    public int getVisualX(){
-        return (int) (x*getScale()-getScaledWidth()/2);
-    }
-    public int getVisualY(){
-        return (int) (y*getScale()-getScaledHeight()/2);
-    }
-
-    public double getScaledWidth(){
-        return this.getWidth()*scale;
-    }
-    public double getScaledHeight(){
-        return this.getHeight()*scale;
+    @Override
+    public double getCenterX() {return x-getWidth()/2.0;}
+    @Override
+    public double getCenterY() {
+        return y-getHeight()/2.0;
     }
 }

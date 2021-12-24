@@ -1,6 +1,7 @@
 package com.robsutar.robsutarfnf.Files;
 
-import com.robsutar.robsutarfnf.ExtendedPosition;
+import com.robsutar.robsutarfnf.Assets;
+import com.robsutar.robsutarfnf.RenderableObjects.Box;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -13,13 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JsonFiles {
-    public static void writeBaseTransform(List<ExtendedPosition> streams, String path){
+    public static void writeBaseTransform(List<Box> streams, String path){
         writeJsonObject(jsonConfigAnimation(streams),path);
     }
-    public static List<ExtendedPosition> readBaseTransform(String path){
+    public static List<Box> readBaseTransform(String path){
         JSONObject obj = readJsonObject(path);
         if (obj==null){
-            List<ExtendedPosition> pos = new ArrayList<>();
+            List<Box> pos = new ArrayList<>();
             return pos;
         }
         return readBaseTransform(obj);
@@ -35,7 +36,7 @@ public class JsonFiles {
         }
     }
 
-    public static JSONObject jsonConfigAnimation(List<ExtendedPosition> streams){
+    public static JSONObject jsonConfigAnimation(List<Box> streams){
         JSONArray frameModifier = new JSONArray();
         for (int i = 0; i < streams.toArray().length;i++) {
             JSONObject configs  = new JSONObject();
@@ -56,22 +57,24 @@ public class JsonFiles {
         JSONParser parser = new JSONParser();
         JSONObject jObject;
 
+        Assets.loading(path,"JSON");
         try(FileReader reader = new FileReader(path)) {
             Object obj = parser.parse(reader);
             jObject = (JSONObject) obj;
         } catch (IOException | ParseException e) {
+            Assets.failedLoad(path);
             e.printStackTrace();
             return null;
         }
         return jObject;
     }
 
-    public static List<ExtendedPosition> readBaseTransform(JSONObject object){
-        List<ExtendedPosition> positionList = new ArrayList<>();
+    public static List<Box> readBaseTransform(JSONObject object){
+        List<Box> positionList = new ArrayList<>();
         try {
             JSONArray array = (JSONArray) object.get("frameModifiers");
             for (int i = 0; i < array.toArray().length; i++) {
-                ExtendedPosition pos = new ExtendedPosition();
+                Box pos = new Box();
                 JSONObject obj = (JSONObject) array.get(i);
                 JSONObject frame = (JSONObject) obj.get(String.valueOf(i));
                 pos.setX(Integer.parseInt(frame.get("frameX").toString()));

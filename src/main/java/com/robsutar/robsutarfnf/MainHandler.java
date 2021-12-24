@@ -35,6 +35,7 @@ public class MainHandler implements DefaultGraphics {
     private final List<AnimationTicable> animationTicables = new ArrayList<>();
     private final List<MouseInteractive> mouseInteractives = new ArrayList<>();
     private final List<BpmTicable> bpmTicables = new ArrayList<>();
+    private final List<KeyboardInteractive> keyboardInteractives = new ArrayList<>();
 
     RenderableComparator comparator = new RenderableComparator();
 
@@ -59,12 +60,14 @@ public class MainHandler implements DefaultGraphics {
     public void addObject(AnimationTicable o){animationTicables.add(o);}
     public void addObject(BpmTicable o){bpmTicables.add(o);}
     public void addObject(MouseInteractive o){mouseInteractives.add(o);}
+    public void addObject(KeyboardInteractive o){keyboardInteractives.add(o);}
 
     public void removeObject(Ticable o) {ticables.remove(o);}
     public void removeObject(Renderable o) {renderables.remove(o);}
     public void removeObject(AnimationTicable o) {animationTicables.remove(o);}
     public void removeObject(BpmTicable o) {bpmTicables.remove(o);}
     public void removeObject(MouseInteractive o) {mouseInteractives.remove(o);}
+    public void removeObject(KeyboardInteractive o){keyboardInteractives.remove(o);}
 
     public void startTick(){
         if (tickRunnable!=null){
@@ -131,49 +134,56 @@ public class MainHandler implements DefaultGraphics {
         }
     }
     public void tick(){
-        if (!ticables.isEmpty()) {
-            for (int z = 0; z<ticables.toArray().length;z++){
+        for (int z = 0; z<ticables.toArray().length;z++){
+            if (!ticables.isEmpty()) {
                 ticables.get(0).tick();
-                Collections.rotate(ticables,1);
+                Collections.rotate(ticables, 1);
             }
         }
     }
     public void animationTick(){
-        if (!animationTicables.isEmpty()) {
-            for (int z = 0; z< animationTicables.toArray().length; z++){
+
+        for (int z = 0; z<animationTicables.toArray().length;z++){
+            if (!animationTicables.isEmpty()) {
                 animationTicables.get(0).animationTick();
-                Collections.rotate(animationTicables,1);
+                Collections.rotate(animationTicables, 1);
             }
         }
     }
 
     public void bpmTick(){
-        if (!bpmTicables.isEmpty()){
-            for (int z = 0; z< bpmTicables.toArray().length; z++){
+        for (int z = 0; z<bpmTicables.toArray().length;z++){
+            if (!bpmTicables.isEmpty()) {
                 bpmTicables.get(0).bpmTick();
-                Collections.rotate(bpmTicables,1);
+                Collections.rotate(bpmTicables, 1);
             }
         }
     }
 
     public void mousePressed(MouseEvent e){
-        if (!mouseInteractives.isEmpty()) {
-            for (int z = 0; z<mouseInteractives.toArray().length;z++){
+        for (int z = 0; z<mouseInteractives.toArray().length;z++){
+            if (!mouseInteractives.isEmpty()) {
                 mouseInteractives.get(0).mousePressed();
-                Collections.rotate(mouseInteractives,1);
+                Collections.rotate(mouseInteractives, 1);
             }
         }
     }
 
     public void mouseReleased(MouseEvent e) {
-        if (!mouseInteractives.isEmpty()) {
-            for (int z = 0; z<mouseInteractives.toArray().length;z++){
+        for (int z = 0; z<mouseInteractives.toArray().length;z++){
+            if (!mouseInteractives.isEmpty()) {
                 mouseInteractives.get(0).mouseReleased();
-                Collections.rotate(mouseInteractives,1);
+                Collections.rotate(mouseInteractives, 1);
             }
         }
     }
 
     public void keyPressed(KeyEvent e) {
+        for (int z = 0; z<keyboardInteractives.toArray().length;z++){
+            if (!keyboardInteractives.isEmpty()) {
+                keyboardInteractives.get(0).keyPressed(e);
+                Collections.rotate(keyboardInteractives, 1);
+            }
+        }
     }
 }

@@ -2,11 +2,11 @@ package com.robsutar.robsutarfnf.RenderableObjects;
 
 import com.robsutar.robsutarfnf.Main;
 import com.robsutar.robsutarfnf.MainHandler;
+import com.robsutar.robsutarfnf.Types.PriorityTypes;
 
 import java.awt.*;
-import java.util.Random;
 
-public class TextBox extends RenderableObject {
+public class TextBox extends GameObject {
     private Color color;
     private Color wordColor;
     private String word;
@@ -16,13 +16,14 @@ public class TextBox extends RenderableObject {
     private boolean direction = false;
 
     public TextBox(int width,int height,String word,String subtitle,Color color) {
-        super(Main.WIDTH/2, Main.HEIGHT-height, null);
+        super(Main.WIDTH/2, Main.HEIGHT-height);
         this.width=width;
         this.height=height;
         this.color=color;
         this.word=word;
         this.subtitle=subtitle;
         this.wordColor = new Color(color.getRed()/5,color.getGreen()/5,color.getBlue()/5);
+        this.priority= PriorityTypes.TEXT_BOX;
     }
 
     public void setColor(Color color) {
@@ -42,8 +43,7 @@ public class TextBox extends RenderableObject {
     }
 
     @Override
-    protected void onTick() {
-        super.onTick();
+    public void tick() {
 
         if (count>=100){
             direction=true;
@@ -61,17 +61,19 @@ public class TextBox extends RenderableObject {
     }
 
     @Override
-    protected void onRenderer(Graphics2D g2d) {
+    public void renderer(Graphics2D g2d) {
+        super.renderer(g2d);
+
         FontMetrics metrics = g2d.getFontMetrics();
         int thickness=5;
 
         g2d.setColor(color);
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,getOpacity()));
-        g2d.fillRoundRect(getVisualX(),getVisualY(),width,height,height,height);
+        g2d.fillRoundRect((int)getCenterX(),(int)getCenterY(),width,height,height,height);
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,1f));
         g2d.setColor(wordColor);
         g2d.setStroke(new BasicStroke(thickness));
-        g2d.drawRoundRect(getVisualX(),getVisualY(),width,height,height,height);
+        g2d.drawRoundRect((int)getCenterX(),(int)getCenterY(),width,height,height,height);
         int x = (int)getX()-metrics.stringWidth(word)/2;
         int y = (int)getY()-metrics.getHeight()/2+metrics.getAscent();
         if (subtitle!=null){

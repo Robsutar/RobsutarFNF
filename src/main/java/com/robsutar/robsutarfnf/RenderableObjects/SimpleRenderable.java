@@ -1,11 +1,12 @@
 package com.robsutar.robsutarfnf.RenderableObjects;
 
 import com.robsutar.robsutarfnf.Interface.Renderable;
+import com.robsutar.robsutarfnf.Types.PriorityTypes;
 
 import java.awt.*;
 
 public class SimpleRenderable extends Box implements Renderable {
-    protected int priority=0;
+    protected int priority= PriorityTypes.RANDOM_OBJECT;
     private float opacity = 1f;
 
     public void setPriority(int priority){this.priority=priority;}
@@ -35,15 +36,13 @@ public class SimpleRenderable extends Box implements Renderable {
     public void rendererOpacity(Graphics2D g2d){
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,opacity));
     }
-
     public void rendererRotate(Graphics2D g2d){
-        g2d.rotate(Math.toRadians(getRotation()),getWidth()/2.0,getHeight()/2.0);
+        g2d.rotate(Math.toRadians(getRotation()),x,y);
     }
-
     public void rendererScale(Graphics2D g2d){
-        g2d.translate(getScaledWidth()/2.0,getScaledHeight()/2.0);
+        g2d.translate(x,y);
         g2d.scale(getScale(),getScale());
-        g2d.translate(-getScaledWidth()/2.0,-getScaledHeight()/2.0);
+        g2d.translate(-x,-y);
     }
 
     @Override

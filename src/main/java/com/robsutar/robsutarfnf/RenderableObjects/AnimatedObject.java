@@ -1,112 +1,100 @@
 package com.robsutar.robsutarfnf.RenderableObjects;
 
 import com.robsutar.robsutarfnf.AnimationBuilder.AtlasConfig;
-import com.robsutar.robsutarfnf.ExtendedPosition;
-import com.robsutar.robsutarfnf.Files.JsonFiles;
+import com.robsutar.robsutarfnf.Graphics.AnimationFrames;
 import com.robsutar.robsutarfnf.Graphics.ImageManager;
 import com.robsutar.robsutarfnf.Interface.AnimationTicable;
-import org.json.simple.JSONObject;
 
+import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public abstract class AnimatedObject extends RenderableObject implements AnimationTicable {
+public abstract class AnimatedObject extends GameObject implements AnimationTicable {
 
-    private List<List<BufferedImage>> animatedImages = new ArrayList<>();
+    private List<AnimationFrames> images = new ArrayList<>();
 
-    private List<Integer> widths = new ArrayList<>();
-    private List<Integer> heights = new ArrayList<>();
-    private List<ExtendedPosition> posEps = new ArrayList<>();
-    private int animationIndex = 0, imageIndex = 0;
-    private boolean animating = true;
+    private List<Box> readJustPos;
 
-    public AnimatedObject(int x, int y, AtlasConfig atlasXml) {
-        super(x, y,null);
+    private int animationIndex = 0;
 
-        AtlasConfig atlas = atlasXml;
-        BufferedImage img = atlas.getImage();
-        List<List<String>> animationsName = new ArrayList<>();
-        JSONObject testPosJson = atlas.getTestPosJson();
-        if(testPosJson != null) {
-            this.posEps = JsonFiles.readBaseTransform(testPosJson);
-        }
+    public AnimatedObject(int x, int y, AtlasConfig atlas) {
+        super(x, y);
 
-        for (int i = 0; i < atlas.getName().toArray().length; i++) {
-            String name = atlas.getName(i).substring(0, atlas.getName(i).length() - 4);
+        BufferedImage fullImage = atlas.getImage();
 
-            List<String> innerAnimationsName = new ArrayList<>();
-            List<BufferedImage> innerImages = new ArrayList<>();
 
-            int widt = 0, heigt = 0;
+        for (int i =0; i<atlas.getName().toArray().length;i++){
+            List<BufferedImage> imgs = new ArrayList<>();
+            List<Integer> fX = new ArrayList<>();
+            List<Integer> fY = new ArrayList<>();
+            String animationName = atlas.getName(i).substring(0, atlas.getName(i).length() - 4);
 
-            if(this.posEps.toArray().length <= i) {
-                this.posEps.add(new ExtendedPosition());
+            int maxWidth = 0;
+            int maxHeight = 0;
+
+            while (atlas.getName(i).contains(animationName)){
+
+                int frameX = atlas.getFrameX(i);
+                int frameY = atlas.getFrameY(i);
+                int width = atlas.getWidth(i);
+                int height = atlas.getHeight(i);
+
+                BufferedImage im = ImageManager.cropImage(fullImage,atlas.getX(i),atlas.getY(i),width,height);
+
+                if (maxWidth<width){maxWidth=width;} if (maxHeight<height){maxHeight=height;}
+
+                imgs.add(im);
+                fX.add(frameX);
+                fY.add(frameY);
+
+                i++;
             }
-
-            while (atlas.getName(i).contains(name)) {
-                name = atlas.getName(i).substring(0, atlas.getName(i).length() - 4);
-                innerAnimationsName.add(atlas.getName(i));
-
-                BufferedImage tempI = ImageManager.cropImage(img, atlas.getX(i), atlas.getY(i), atlas.getWidth(i), atlas.getHeight(i));
-                tempI = ImageManager.moveImage(tempI, -atlas.getFrameX(i), -atlas.getFrameY(i));
-                innerImages.add(tempI);
-
-                widt += tempI.getWidth();
-                heigt += tempI.getHeight();
-
-                i += 1;
-            }
-            i -= 1;
-
-            widt /= innerImages.toArray().length;
-            heigt /= innerImages.toArray().length;
-            animationsName.add(innerAnimationsName);
-            widths.add(widt);
-            heights.add(heigt);
-            animatedImages.add(innerImages);
+            i--;
+            images.add(new AnimationFrames(imgs,fX,fY,maxWidth,maxHeight,animationName));
         }
-        if(testPosJson == null) {
-            JsonFiles.writeBaseTransform(posEps, (atlas.getFolderPath()) + (atlas.getImageName().replace("png", "json")));
-        }
-    }
 
-    public void setIndex(int index) {
-        setImageIndex(0);
-        if(index < 0) {
-            this.animationIndex = animatedImages.toArray().length - 1;
-        } else if(animatedImages.toArray().length - 1 < index) {
-            this.animationIndex = 0;
-        } else this.animationIndex = index;
-    }
+        readJustPos = atlas.getReadjustPos();
 
-    public void setImageIndex(int index) {
-        if(animatedImages.get(animationIndex).toArray().length - 1 < index) {
-            this.imageIndex = 0;
-        } else {
-            this.imageIndex = index;
+        while (readJustPos.toArray().length<images.toArray().length) {
+            readJustPos.add(new Box());
         }
+
+        updateAnimation();
     }
 
     @Override
     public void spawn() {
-        spawnAnimationTick();
         super.spawn();
+        spawnAnimationTick();
     }
 
+    public void setAnimationIndex(int index){
+        if (index<0){this.animationIndex=images.toArray().length-1;}
+        else if (index>=images.toArray().length){this.animationIndex=0;}
+        else{this.animationIndex=index;}
+        updateAnimation();
+    }
+
+    public void updateAnimation(){
+        this.width=images.get(animationIndex).getWidth();
+        this.height=images.get(animationIndex).getHeight();
+    }
+
+    public int getAnimationIndex(){return animationIndex;}
+
     @Override
-    public void kill() {
-        killAnimationTick();
-        super.kill();
+    public void rendererDrawImage(Graphics2D g2d) {
+        AffineTransform at = images.get(animationIndex).getActualFrame();
+        //g2d.translate(at.getTranslateX(),at.getTranslateY());
+        //g2d.translate(readJustPos.get(animationIndex).getX(),readJustPos.get(animationIndex).getY());
+        g2d.drawImage(image,(int)(getCenterX()+at.getTranslateX()),(int) (getCenterY()+at.getTranslateY()),null);
     }
 
     @Override
     public void animationTick() {
-        if(animating&&!animatedImages.isEmpty()) {
-            setActualImage(animatedImages.get(animationIndex).get(0),true);
-            setActualPosEP(posEps.get(animationIndex));
-            Collections.rotate(animatedImages.get(animationIndex), 1);
-        }
+        images.get(animationIndex).rotate(1);
+        setImage(images.get(animationIndex).getActualImage(),false);
     }
 }
