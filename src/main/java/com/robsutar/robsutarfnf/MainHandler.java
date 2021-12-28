@@ -1,12 +1,13 @@
 package com.robsutar.robsutarfnf;
 
 import com.robsutar.robsutarfnf.Audio.Music;
-import com.robsutar.robsutarfnf.Comparators.RenderableComparator;
 import com.robsutar.robsutarfnf.Interface.*;
+import com.robsutar.robsutarfnf.Types.PriorityTypes;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.geom.AffineTransform;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,14 +31,13 @@ public class MainHandler implements DefaultGraphics {
 
     private Font font;
 
+    private final ArrayList<ArrayList<Renderable>> renderables;
+
     private final List<Ticable> ticables = new ArrayList<>();
-    private final List<Renderable> renderables = new ArrayList<>();
     private final List<AnimationTicable> animationTicables = new ArrayList<>();
     private final List<MouseInteractive> mouseInteractives = new ArrayList<>();
     private final List<BpmTicable> bpmTicables = new ArrayList<>();
     private final List<KeyboardInteractive> keyboardInteractives = new ArrayList<>();
-
-    RenderableComparator comparator = new RenderableComparator();
 
     private ScheduledExecutorService bpmRunnable;
     private ScheduledExecutorService tickRunnable;
@@ -53,17 +53,25 @@ public class MainHandler implements DefaultGraphics {
         startTick();
         startBpm();
         startAnimationTick();
+
+        ArrayList<ArrayList<Renderable>> rndrList = new ArrayList<>();
+        int i = 0;
+        while (i<=PriorityTypes.MAX){
+            rndrList.add(new ArrayList<>());
+            i++;
+        }
+        renderables = rndrList;
     }
 
     public void addObject(Ticable o){ticables.add(o);}
-    public void addObject(Renderable o){renderables.add(o);}
+    public void addObject(Renderable o){renderables.get(o.getPriority()).add(o);}
     public void addObject(AnimationTicable o){animationTicables.add(o);}
     public void addObject(BpmTicable o){bpmTicables.add(o);}
     public void addObject(MouseInteractive o){mouseInteractives.add(o);}
     public void addObject(KeyboardInteractive o){keyboardInteractives.add(o);}
 
     public void removeObject(Ticable o) {ticables.remove(o);}
-    public void removeObject(Renderable o) {renderables.remove(o);}
+    public void removeObject(Renderable o) {renderables.get(o.getPriority()).remove(o);}
     public void removeObject(AnimationTicable o) {animationTicables.remove(o);}
     public void removeObject(BpmTicable o) {bpmTicables.remove(o);}
     public void removeObject(MouseInteractive o) {mouseInteractives.remove(o);}
@@ -117,21 +125,43 @@ public class MainHandler implements DefaultGraphics {
 
     public void renderer(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
+
+        AffineTransform at = g2d.getTransform();
+
         g2d.setFont(font.deriveFont(fontSize));
 
-        List<Renderable> renderables = new ArrayList<>(this.renderables);
+        ArrayList<ArrayList<Renderable>> renderables = new ArrayList<>(this.renderables);
+
+        for (int x = 0; x<renderables.toArray().length;x++){
+            for (int y = 0; y<renderables.get(x).toArray().length;y++){
+                renderables.get(x).get(y).renderer(g2d);
+
+                g2d.setColor(color);
+                g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
+                g2d.setStroke(new BasicStroke(2));
+
+                g2d.setTransform(at);
+            }
+        }
+
+        /*
         renderables.sort(comparator);
         for (int z = 0; z<renderables.toArray().length;z++){
             if (!renderables.isEmpty()) {
+
+                renderables.get(0).renderer(g2d);
+
                 Collections.rotate(renderables, 1);
+
                 g2d.setColor(color);
-                g2d.scale(scale, scale);
-                g2d.rotate(Math.toRadians(rotation));
                 g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
                 g2d.setStroke(new BasicStroke(2));
-                renderables.get(0).renderer(g2d);
+
+                g2d.setTransform(at);
             }
         }
+
+         */
     }
     public void tick(){
         for (int z = 0; z<ticables.toArray().length;z++){
@@ -173,6 +203,15 @@ public class MainHandler implements DefaultGraphics {
         for (int z = 0; z<mouseInteractives.toArray().length;z++){
             if (!mouseInteractives.isEmpty()) {
                 mouseInteractives.get(0).mouseReleased();
+                Collections.rotate(mouseInteractives, 1);
+            }
+        }
+    }
+
+    public void mouseDragged(MouseEvent e, int xDistance , int yDistance) {
+        for (int z = 0; z<mouseInteractives.toArray().length;z++){
+            if (!mouseInteractives.isEmpty()) {
+                mouseInteractives.get(0).mouseDragged(xDistance,yDistance);
                 Collections.rotate(mouseInteractives, 1);
             }
         }

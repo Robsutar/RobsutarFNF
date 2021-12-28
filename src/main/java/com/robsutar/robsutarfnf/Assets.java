@@ -2,13 +2,13 @@ package com.robsutar.robsutarfnf;
 
 
 import com.robsutar.robsutarfnf.AnimationBuilder.AtlasConfig;
-import com.robsutar.robsutarfnf.Audio.AudioManager;
 import com.robsutar.robsutarfnf.Audio.Music;
 import com.robsutar.robsutarfnf.Files.WavFiles;
 import com.robsutar.robsutarfnf.Files.XmlFiles;
 import com.robsutar.robsutarfnf.Graphics.ImageManager;
 import com.robsutar.robsutarfnf.RenderableObjects.TextBox;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -29,7 +29,10 @@ public class Assets {
 
     public final BufferedImage WALLPAPER;
 
+    public final BufferedImage MENU_OPTION;
+
     public final Music INTRODUCTION_MUSIC;
+
 
     public Assets(){
         TextBox box = new TextBox(450,111,"Loading","assets", Color.blue);
@@ -38,6 +41,7 @@ public class Assets {
         box.setSubtitle("animations");
         GF_DANCE_TITLE = XmlFiles.readTextureAtlasXml(assetsPath+"animatedObjects/gfDance/gfDance.xml");
         box.setSubtitle("images");
+        MENU_OPTION = ImageManager.loadImage(texturesPath+"menu/menuOption.png");
         WALLPAPER = ImageManager.loadImage(texturesPath+"wallpaper.jpg");
         box.setSubtitle("sounds");
         INTRODUCTION_MUSIC = new Music(WavFiles.loadWav(soundsPath+"introduction.wav"),102);
@@ -50,5 +54,12 @@ public class Assets {
     }
     public static void failedLoad(String string){
         System.out.println(RED_BOLD+"Failed to load: "+RESET+string);
+    }
+
+    public static void writing(String string, String fileType){
+        System.out.println(CYAN+"Writing "+BLUE_BOLD+fileType+": "+RESET+string);
+    }
+    public static void failedWrite(String string){
+        System.out.println(RED_BOLD+"Failed to write: "+RESET+string);
     }
 }

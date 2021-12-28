@@ -29,6 +29,7 @@ public class JsonFiles {
     public static void writeJsonObject(JSONObject object,String path){
         try (FileWriter file = new FileWriter(path)) {
             file.write(object.toJSONString());
+            Assets.writing(path,"json");
             file.flush();
 
         } catch (IOException e) {
@@ -41,8 +42,8 @@ public class JsonFiles {
         for (int i = 0; i < streams.toArray().length;i++) {
             JSONObject configs  = new JSONObject();
             JSONObject transform = new JSONObject();
-            transform.put("frameX",streams.get(i).getX());
-            transform.put("frameY",streams.get(i).getY());
+            transform.put("frameX",(int)streams.get(i).getX());
+            transform.put("frameY",(int)streams.get(i).getY());
             transform.put("scale",streams.get(i).getScale());
             transform.put("rotation",streams.get(i).getRotation());
             configs.put(i,transform);
@@ -57,7 +58,7 @@ public class JsonFiles {
         JSONParser parser = new JSONParser();
         JSONObject jObject;
 
-        Assets.loading(path,"JSON");
+        Assets.loading(path,"json");
         try(FileReader reader = new FileReader(path)) {
             Object obj = parser.parse(reader);
             jObject = (JSONObject) obj;

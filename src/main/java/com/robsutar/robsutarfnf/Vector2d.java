@@ -1,5 +1,7 @@
 package com.robsutar.robsutarfnf;
 
+import javax.swing.*;
+
 public class Vector2d {
     private double x;
     private double y;

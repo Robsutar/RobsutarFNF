@@ -10,6 +10,8 @@ import java.awt.image.BufferedImage;
 
 public class GameObject extends SimpleRenderable implements Renderable, Ticable {
     protected BufferedImage image;
+    public double maxScale=8;
+    public double minScale=-8;
 
     public Vector2d vector= new Vector2d();
 
@@ -30,6 +32,27 @@ public class GameObject extends SimpleRenderable implements Renderable, Ticable 
             at.translate(getCenterX(),getCenterY());
             g2d.drawImage(image,at,null);
         }
+    }
+
+    public void addVector () {
+        setLocation((int) (getX() + vector.getX()), (int) (getY() + vector.getY()));
+        setOpacity(getOpacity() + vector.getOpacity());
+
+        double addVc = getScale() + vector.getScale();
+        if(addVc > maxScale|| addVc < minScale) {
+            if (addVc >maxScale) {
+                setScale(maxScale);
+            } else {
+                setScale(minScale);
+            }
+        } else {
+            setScale(getScale()+vector.getScale());
+        }
+    }
+
+    @Override
+    public void tick() {
+        addVector();
     }
 
     @Override
