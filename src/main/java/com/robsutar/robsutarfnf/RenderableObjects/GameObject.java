@@ -53,6 +53,7 @@ public class GameObject extends SimpleRenderable implements Renderable, Ticable 
     @Override
     public void tick() {
         addVector();
+        animation.tick();
     }
 
     @Override

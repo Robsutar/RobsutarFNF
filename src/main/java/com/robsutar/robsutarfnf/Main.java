@@ -1,8 +1,6 @@
 package com.robsutar.robsutarfnf;
 
 import com.robsutar.robsutarfnf.Frame.WindowFrame;
-import com.robsutar.robsutarfnf.Menu.MainMenu.TitleMenu;
-import com.robsutar.robsutarfnf.Menu.WindowCuboids;
 
 import java.awt.*;
 
@@ -17,7 +15,5 @@ public class Main {
     public static void main(String[] args){
         new WindowFrame();
         mainAssets = new Assets();
-
-        new TitleMenu();
     }
 }

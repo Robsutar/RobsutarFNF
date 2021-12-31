@@ -7,7 +7,6 @@ import java.awt.*;
 
 public class SimpleRenderable extends Box implements Renderable {
     protected int priority= PriorityTypes.RANDOM_OBJECT;
-    private float opacity = 1f;
     public boolean disappear = false;
 
     public void setPriority(int priority){this.priority=priority;}
@@ -19,25 +18,13 @@ public class SimpleRenderable extends Box implements Renderable {
         killRender();
     }
 
-    public void setOpacity(float opacity) {
-        this.opacity=opacity;
-        if (this.opacity<0f){
-            this.opacity=0f;
-        } else if (this.opacity>1f){
-            this.opacity=1f;
-        }
-    }
-    public float getOpacity() {
-        return opacity;
-    }
-
     @Override
     public int getPriority() {
         return this.priority;
     }
 
     public void rendererOpacity(Graphics2D g2d){
-        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,opacity));
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,getOpacity()));
     }
     public void rendererRotate(Graphics2D g2d){
         g2d.rotate(Math.toRadians(getRotation()),x,y);
