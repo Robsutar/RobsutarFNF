@@ -30,4 +30,8 @@ public class KeyFrame{
     public void reset() {
         age=0;
     }
+
+    public KeyFrame reverse(){
+        return new KeyFrame(tickLength,-finalScale,-finalOpacity,-finalX,-finalY);
+    }
 }

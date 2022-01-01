@@ -39,6 +39,7 @@ public class SimpleRenderable extends Box implements Renderable {
     public void renderer(Graphics2D g2d) {
         if (disappear&&getOpacity()<=0){
             kill();
+            return;
         }
         rendererOpacity(g2d);
         rendererRotate(g2d);

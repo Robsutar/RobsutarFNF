@@ -1,6 +1,7 @@
 package com.robsutar.robsutarfnf;
 
 import com.robsutar.robsutarfnf.Audio.Music;
+import com.robsutar.robsutarfnf.Graphics.Camera;
 import com.robsutar.robsutarfnf.Interface.*;
 import com.robsutar.robsutarfnf.Types.PriorityTypes;
 
@@ -17,7 +18,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class MainHandler implements DefaultGraphics {
+public class MainHandler {
 
     private long tim = System.currentTimeMillis();
 
@@ -31,17 +32,19 @@ public class MainHandler implements DefaultGraphics {
 
     private Font font;
 
-    private final ArrayList<ArrayList<Renderable>> renderables;
+    private static final ArrayList<ArrayList<Renderable>> renderables=startRenderables();
 
-    private final List<Ticable> ticables = new ArrayList<>();
-    private final List<AnimationTicable> animationTicables = new ArrayList<>();
-    private final List<MouseInteractive> mouseInteractives = new ArrayList<>();
-    private final List<BpmTicable> bpmTicables = new ArrayList<>();
-    private final List<KeyboardInteractive> keyboardInteractives = new ArrayList<>();
+    private static final List<Ticable> ticables = new ArrayList<>();
+    private static final List<AnimationTicable> animationTicables = new ArrayList<>();
+    private static final List<MouseInteractive> mouseInteractives = new ArrayList<>();
+    private static final List<BpmTicable> bpmTicables = new ArrayList<>();
+    private static final List<KeyboardInteractive> keyboardInteractives = new ArrayList<>();
 
     private ScheduledExecutorService bpmRunnable;
     private ScheduledExecutorService tickRunnable;
     private ScheduledExecutorService animationTickRunnable;
+
+    public static Camera camera = new Camera();
 
     public MainHandler(){
         String path = Assets.assetsPath +"font.ttf";
@@ -53,29 +56,21 @@ public class MainHandler implements DefaultGraphics {
         startTick();
         startBpm();
         startAnimationTick();
-
-        ArrayList<ArrayList<Renderable>> rndrList = new ArrayList<>();
-        int i = 0;
-        while (i<=PriorityTypes.MAX){
-            rndrList.add(new ArrayList<>());
-            i++;
-        }
-        renderables = rndrList;
     }
 
-    public void addObject(Ticable o){ticables.add(o);}
-    public void addObject(Renderable o){renderables.get(o.getPriority()).add(o);}
-    public void addObject(AnimationTicable o){animationTicables.add(o);}
-    public void addObject(BpmTicable o){bpmTicables.add(o);}
-    public void addObject(MouseInteractive o){mouseInteractives.add(o);}
-    public void addObject(KeyboardInteractive o){keyboardInteractives.add(o);}
+    public static void addObject(Ticable o){ticables.add(o);}
+    public static void addObject(Renderable o){renderables.get(o.getPriority()).add(o);}
+    public static void addObject(AnimationTicable o){animationTicables.add(o);}
+    public static void addObject(BpmTicable o){bpmTicables.add(o);}
+    public static void addObject(MouseInteractive o){mouseInteractives.add(o);}
+    public static void addObject(KeyboardInteractive o){keyboardInteractives.add(o);}
 
-    public void removeObject(Ticable o) {ticables.remove(o);}
-    public void removeObject(Renderable o) {renderables.get(o.getPriority()).remove(o);}
-    public void removeObject(AnimationTicable o) {animationTicables.remove(o);}
-    public void removeObject(BpmTicable o) {bpmTicables.remove(o);}
-    public void removeObject(MouseInteractive o) {mouseInteractives.remove(o);}
-    public void removeObject(KeyboardInteractive o){keyboardInteractives.remove(o);}
+    public static void removeObject(Ticable o) {ticables.remove(o);}
+    public static void removeObject(Renderable o) {renderables.get(o.getPriority()).remove(o);}
+    public static void removeObject(AnimationTicable o) {animationTicables.remove(o);}
+    public static void removeObject(BpmTicable o) {bpmTicables.remove(o);}
+    public static void removeObject(MouseInteractive o) {mouseInteractives.remove(o);}
+    public static void removeObject(KeyboardInteractive o){keyboardInteractives.remove(o);}
 
     public void startTick(){
         if (tickRunnable!=null){
@@ -123,47 +118,35 @@ public class MainHandler implements DefaultGraphics {
         music.start();
     }
 
+    public static ArrayList<ArrayList<Renderable>> startRenderables(){
+        ArrayList<ArrayList<Renderable>> rndrList = new ArrayList<>();
+        int i = 0;
+        while (i<=PriorityTypes.MAX){
+            rndrList.add(new ArrayList<>());
+            i++;
+        }
+        return rndrList;
+    }
+
     public void renderer(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
 
-        AffineTransform at = g2d.getTransform();
+        AffineTransform at = new AffineTransform();
+        ArrayList<ArrayList<Renderable>> renderables = new ArrayList<>(this.renderables);
 
         g2d.setFont(font.deriveFont(fontSize));
 
-        ArrayList<ArrayList<Renderable>> renderables = new ArrayList<>(this.renderables);
-
         for (int x = 0; x<renderables.toArray().length;x++){
             for (int y = 0; y<renderables.get(x).toArray().length;y++){
+                g2d.setTransform(at);
+                camera.renderer(g2d);
+
                 renderables.get(x).get(y).renderer(g2d);
-
-                g2d.setColor(color);
-                g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
-                g2d.setStroke(new BasicStroke(2));
-
-                g2d.setTransform(at);
             }
         }
-
-        /*
-        renderables.sort(comparator);
-        for (int z = 0; z<renderables.toArray().length;z++){
-            if (!renderables.isEmpty()) {
-
-                renderables.get(0).renderer(g2d);
-
-                Collections.rotate(renderables, 1);
-
-                g2d.setColor(color);
-                g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
-                g2d.setStroke(new BasicStroke(2));
-
-                g2d.setTransform(at);
-            }
-        }
-
-         */
     }
     public void tick(){
+        camera.tick();
         for (int z = 0; z<ticables.toArray().length;z++){
             if (!ticables.isEmpty()) {
                 ticables.get(0).tick();

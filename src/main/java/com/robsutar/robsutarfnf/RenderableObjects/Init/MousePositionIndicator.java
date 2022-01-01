@@ -9,7 +9,7 @@ import java.awt.*;
 
 public class MousePositionIndicator implements Renderable {
     public MousePositionIndicator() {
-
+        spawnRender();
     }
 
     @Override

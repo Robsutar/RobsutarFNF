@@ -1,6 +1,7 @@
 package com.robsutar.robsutarfnf.Frame;
 
 import com.robsutar.robsutarfnf.Main;
+import com.robsutar.robsutarfnf.MainHandler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -46,8 +47,8 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
             if(mouseOnScreen) {
                 Point b = this.getMousePosition();
                 if (b!=null) {
-                    Main.xMouse = (int)b.getX();
-                    Main.yMouse = (int)b.getY();
+                    Main.xMouse = (int)((b.getX()*MainHandler.camera.getScale()));
+                    Main.yMouse = (int)b.getY()+ MainHandler.camera.y;
                 }
             }
             repaint();

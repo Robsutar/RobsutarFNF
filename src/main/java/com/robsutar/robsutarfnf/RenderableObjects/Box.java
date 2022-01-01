@@ -9,7 +9,7 @@ public class Box extends Rectangle {
     private double scale = 1,rotation;
     private float opacity = 1f;
 
-    protected Animation animation = new Animation(this);
+    public Animation animation = new Animation(this);
 
     public double getScale() {
         return scale;

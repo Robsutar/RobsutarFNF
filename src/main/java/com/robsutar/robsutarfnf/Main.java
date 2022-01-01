@@ -1,8 +1,9 @@
 package com.robsutar.robsutarfnf;
 
 import com.robsutar.robsutarfnf.Frame.WindowFrame;
+import com.robsutar.robsutarfnf.Menu.TitleMenu.TitleMenu;
+import com.robsutar.robsutarfnf.RenderableObjects.Init.MousePositionIndicator;
 
-import java.awt.*;
 
 public class Main {
     public static int WIDTH = 1620,HEIGHT = WIDTH*9/16;
@@ -15,5 +16,10 @@ public class Main {
     public static void main(String[] args){
         new WindowFrame();
         mainAssets = new Assets();
+
+        TitleMenu titleMenu = new TitleMenu();
+        titleMenu.spawn();
+
+        new MousePositionIndicator();
     }
 }
