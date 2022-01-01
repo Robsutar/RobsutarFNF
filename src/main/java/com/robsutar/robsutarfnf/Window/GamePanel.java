@@ -1,25 +1,25 @@
 package com.robsutar.robsutarfnf.Window;
 
+import com.robsutar.robsutarfnf.Handler;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class GamePanel extends JPanel implements ActionListener {
+public class GamePanel extends JPanel implements KeyListener {
 
     int tempx = 0;
-
     private int fps = 60;
-
     private float bpm = 90;
 
     public GamePanel() {
 
-        this.setPreferredSize(Window.windowDim);
-        this.setBackground(Color.BLACK);
         this.setFocusable(true);
 
         Thread renderer = new Thread(new Runnable() {
@@ -49,7 +49,7 @@ public class GamePanel extends JPanel implements ActionListener {
         tick.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {
-                tick();
+                Handler.tick();
             }
         }, 0, 10, TimeUnit.MILLISECONDS);
 
@@ -57,21 +57,18 @@ public class GamePanel extends JPanel implements ActionListener {
         bpmTick.scheduleAtFixedRate(new Runnable() {
                 @Override
                 public void run() {
-                    bpmTick();
+                    Handler.bpmTick();
                 }
             }, 0, (long) ((1000000000*60d)/(bpm*16)), TimeUnit.NANOSECONDS);
-    }
 
-    public void tick(){
-        tempx++;
-    }
-
-    private void bpmTick() {
+        addKeyListener(this);
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+
+        Handler.render(g);
 
         Graphics2D g2d = (Graphics2D) g;
 
@@ -81,7 +78,22 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void keyTyped(KeyEvent e) {
 
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        if (e.isAltDown() && e.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (Window.isFullscreen()){
+                Window.frame.bigScreen();
+            } else {
+                Window.frame.fullScreen();
+            }
+        }
     }
 }

@@ -4,6 +4,6 @@ import com.robsutar.robsutarfnf.Window.Window;
 
 public class Main {
     public static void main(String[] args){
-        new Window();
+        Window.frame =new Window();
     }
 }
