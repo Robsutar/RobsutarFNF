@@ -67,14 +67,7 @@ public class GamePanel extends JPanel implements KeyListener {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
         Handler.render(g);
-
-        Graphics2D g2d = (Graphics2D) g;
-
-        g2d.rotate(Math.toRadians(tempx),Window.width/2.0,Window.height/2.0);
-
-        g2d.fillRect(Window.width/2,Window.height/2,50,50);
     }
 
     @Override

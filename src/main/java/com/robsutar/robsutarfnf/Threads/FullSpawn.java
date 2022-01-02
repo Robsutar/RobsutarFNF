@@ -5,24 +5,24 @@ import com.robsutar.robsutarfnf.Handler;
 public interface FullSpawn {
     default void spawnAll(){
         if (this instanceof Renderable){
-            Handler.addObject((Renderable) this);
+            Renderable o = (Renderable) this;o.spawnRender();
         }
         if (this instanceof Ticable) {
-            Handler.addObject((Ticable) this);
+            Ticable o = (Ticable) this;o.spawnTick();
         }
         if (this instanceof BpmTicable) {
-            Handler.addObject((BpmTicable) this);
+            BpmTicable o = (BpmTicable) this;o.spawnBpmTick();
         }
     }
     default void killAll(){
         if (this instanceof Renderable){
-            Handler.removeObject((Renderable) this);
+            Renderable o = (Renderable) this;o.killRender();
         }
         if (this instanceof Ticable) {
-            Handler.removeObject((Ticable) this);
+            Ticable o = (Ticable) this;o.killTick();
         }
         if (this instanceof BpmTicable) {
-            Handler.removeObject((BpmTicable) this);
+            BpmTicable o = (BpmTicable) this;o.killBpmTick();
         }
     }
 }
