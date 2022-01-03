@@ -14,8 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 public class GamePanel extends JPanel implements KeyListener {
 
-    int tempx = 0;
-    private int fps = 60;
+    public int fps = 60;
     private float bpm = 90;
 
     public GamePanel() {

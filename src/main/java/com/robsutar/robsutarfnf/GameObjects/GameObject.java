@@ -24,4 +24,12 @@ public class GameObject extends SimpleRenderable implements Ticable {
     public void tick() {
         animation.tick();
     }
+
+    @Override
+    public void render(Graphics2D g2d) {
+        super.render(g2d);
+        if (image!=null){
+            g2d.drawImage(image,x,y,null);
+        }
+    }
 }

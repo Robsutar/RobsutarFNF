@@ -12,6 +12,5 @@ public class MegaDrive extends GameObject {
     @Override
     public void render(Graphics2D g2d) {
         super.render(g2d);
-        g2d.fillRect(x,y,width,height);
     }
 }

@@ -7,9 +7,6 @@ import java.awt.*;
 
 public class Camera extends SimpleRenderable {
 
-    public Camera(){
-    }
-
     public void tick(){
         animation.tick();
     }

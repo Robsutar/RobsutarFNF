@@ -4,11 +4,9 @@ import com.robsutar.robsutarfnf.Graphics.Camera;
 import com.robsutar.robsutarfnf.Threads.BpmTicable;
 import com.robsutar.robsutarfnf.Threads.Renderable;
 import com.robsutar.robsutarfnf.Threads.Ticable;
-import com.robsutar.robsutarfnf.Window.Window;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
