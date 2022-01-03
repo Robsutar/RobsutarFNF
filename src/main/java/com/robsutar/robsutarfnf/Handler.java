@@ -74,5 +74,6 @@ public class Handler {
         for (BpmTicable o:bpmTicables){
             o.bpmTick();
         }
+
     }
 }

@@ -14,9 +14,10 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
-public class FileReader {
+public class FileManager {
 
     public static final String resourcesPath = new File("").getAbsolutePath()+"/resources/";
     public static final String mainAssetsPath = resourcesPath+"assets/";
@@ -26,6 +27,8 @@ public class FileReader {
 
     private static final String loading = "\033[1;32m"+"Loading file: "+"\033[0;32m";
     private static final String failedToLoad = "\033[1;31m"+"failed to load file: "+"\033[0;31m";
+    private static final String writing = "\033[1;35m"+"Writing file: "+"\033[0;32m";
+    private static final String failedToWrite = "\033[1;31m"+"failed to write file: "+"\033[0;31m";
 
     private static final String standard = "\033[1;37m"+"ORIGINAL - ";
     private static final String resourcePack = "\033[1;33m"+"TEXTURE - ";
@@ -56,8 +59,13 @@ public class FileReader {
             img= ImageIO.read(file);
         } catch (IOException e) {
             System.out.println(failedToLoad+file.getPath()+IMAGE);
+            e.printStackTrace();
         }
         return img;
+    }
+
+    public static File loadFile(String absoluteFilePath){
+        return new File(absoluteFilePath);
     }
 
     public static JSONObject loadJson(File file){
@@ -69,6 +77,7 @@ public class FileReader {
             jObject = (JSONObject) obj;
         } catch (Exception e) {
             System.out.println(failedToLoad+file.getPath()+JSON);
+            e.printStackTrace();
         }
         return jObject;
     }
@@ -83,6 +92,7 @@ public class FileReader {
             doc.getDocumentElement().normalize();
         }catch (Exception e){
             System.out.println(failedToLoad+file.getPath()+XML);
+            e.printStackTrace();
         }
         return doc;
     }
@@ -93,9 +103,22 @@ public class FileReader {
             AudioInputStream stream = AudioSystem.getAudioInputStream(file);
             clip = AudioSystem.getClip();
             clip.open(stream);
-        }catch (Exception ex){
+        }catch (Exception e){
             System.out.println(failedToLoad+file.getPath()+WAV);
+            e.printStackTrace();
         }
         return clip;
+    }
+
+    public static void writeJson(String path,JSONObject json){
+        System.out.println(writing+path+JSON);
+        try (FileWriter file = new FileWriter(path)) {
+            file.write(json.toJSONString());
+            file.flush();
+
+        } catch (IOException e) {
+            System.out.println(failedToLoad+path+JSON);
+            e.printStackTrace();
+        }
     }
 }
