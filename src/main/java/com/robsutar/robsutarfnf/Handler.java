@@ -4,6 +4,7 @@ import com.robsutar.robsutarfnf.Graphics.Camera;
 import com.robsutar.robsutarfnf.Threads.BpmTicable;
 import com.robsutar.robsutarfnf.Threads.Renderable;
 import com.robsutar.robsutarfnf.Threads.Ticable;
+import com.robsutar.robsutarfnf.Window.GamePanel;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -35,6 +36,8 @@ public class Handler {
         return rnds;
     }
 
+    public static Point mousePosition = GamePanel.mouse;
+
     public static void render(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
 
@@ -45,8 +48,22 @@ public class Handler {
 
         ArrayList<ArrayList<Renderable>> renderables = new ArrayList<>(Handler.renderables);
 
+        mousePosition=GamePanel.mouse;
+
+        Point dim = mousePosition;
+
+        int xDist = Camera.getCamera().width/2-dim.x;
+        int yDist = Camera.getCamera().height/2-dim.y;
+
+        xDist/=Camera.getCamera().getScale();
+        yDist/=Camera.getCamera().getScale();
+
+        mousePosition.x+=xDist* (camera.getScale()-1);
+        mousePosition.y+=yDist* (camera.getScale()-1);
+
         for (ArrayList<Renderable> rList:renderables){
             for (Renderable r:rList){
+
                 g2d.setTransform(at);
                 g2d.setColor(color);
                 g2d.setComposite(comp);
@@ -54,6 +71,7 @@ public class Handler {
 
                 if (r.affectedByCamera()){
                     camera.render(g2d);
+                    g2d.fillRect(mousePosition.x-25,mousePosition.y-25,50,50);
                 }
 
                 r.render(g2d);

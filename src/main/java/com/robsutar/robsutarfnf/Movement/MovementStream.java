@@ -10,6 +10,7 @@ public class MovementStream {
     private final Box object;
 
     private boolean paused = false;
+    private boolean boomerang = false;
 
     public MovementStream(Box object){
         this.object=object;
@@ -37,6 +38,9 @@ public class MovementStream {
                 KeyFrame f = frames.get(0);
                 if(!f.tick(object)) {
                     frames.remove(f);
+                    if (boomerang) {
+                        frames.add(f.reverse());
+                    }
                 }
             }
         }
@@ -69,5 +73,9 @@ public class MovementStream {
     }
     public void start (){
         this.paused=false;
+    }
+
+    public void setBoomerang(boolean boomerang) {
+        this.boomerang = boomerang;
     }
 }

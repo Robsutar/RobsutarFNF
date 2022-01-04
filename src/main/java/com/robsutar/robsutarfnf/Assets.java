@@ -17,6 +17,6 @@ public class Assets {
         }
         BACKGROUND = FileManager.loadImage(FileManager.loadFile("textures/wallpaper.jpg",assetsTextureFolder));
 
-        GF_TITLE = new Atlas(FileManager.loadFile("phases/qt/robot.xml",assetsTextureFolder));
+        GF_TITLE = new Atlas(FileManager.loadFile("animatedObjects/gfDance/gfDance.xml",assetsTextureFolder));
     }
 }

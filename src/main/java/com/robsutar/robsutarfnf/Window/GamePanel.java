@@ -4,8 +4,6 @@ import com.robsutar.robsutarfnf.Handler;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.concurrent.Executors;
@@ -16,6 +14,8 @@ public class GamePanel extends JPanel implements KeyListener {
 
     public int fps = 60;
     private float bpm = 90;
+
+    public static Point mouse = new Point(Window.wdt()/2,Window.hgt()/2);
 
     public GamePanel() {
 
@@ -66,6 +66,10 @@ public class GamePanel extends JPanel implements KeyListener {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        if (getMousePosition()!=null){
+            mouse=getMousePosition();
+        }
+
         Handler.render(g);
     }
 

@@ -64,6 +64,9 @@ public class Box extends Rectangle {
         this.height=height;
     }
 
+    public double getScaledWidth(){return this.width*this.scale;}
+    public double getScaledHeight(){return this.height*this.scale;}
+
     public void setDimension(Dimension dimension){
         this.setWidth(dimension.width);setHeight(dimension.height);
     }
