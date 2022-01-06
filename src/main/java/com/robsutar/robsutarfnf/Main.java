@@ -10,7 +10,7 @@ public class Main {
         Window.frame =new Window();
         new Assets(null);
 
-        Camera.getCamera().animation.addFrame(new KeyFrame(100,0,0,0.3,0,0));
+        Camera.getCamera().animation.addFrame(new KeyFrame(100,500,0,0.3,0,0));
         Camera.getCamera().animation.setBoomerang(true);
 
         MegaDrive d = new MegaDrive(Window.wdt()/2,Window.hgt()/2,Assets.GF_TITLE);

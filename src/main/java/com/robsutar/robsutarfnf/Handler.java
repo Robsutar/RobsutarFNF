@@ -49,7 +49,8 @@ public class Handler {
         ArrayList<ArrayList<Renderable>> renderables = new ArrayList<>(Handler.renderables);
 
         mousePosition=GamePanel.mouse;
-
+        mousePosition.x-=Camera.getCamera().getX();
+        mousePosition.y-=Camera.getCamera().getY();
         mousePosition=Camera.getCamera().getScaledPoint(mousePosition);
 
 
