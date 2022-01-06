@@ -10,12 +10,12 @@ public class Main {
         Window.frame =new Window();
         new Assets(null);
 
-        Camera.getCamera().animation.addFrame(new KeyFrame(200,100,50,0.3,45,0));
+        Camera.getCamera().animation.addFrame(new KeyFrame(100,0,0,0.3,0,0));
         Camera.getCamera().animation.setBoomerang(true);
 
         MegaDrive d = new MegaDrive(Window.wdt()/2,Window.hgt()/2,Assets.GF_TITLE);
         GameObject o = new GameObject(Window.wdt()/2,Window.hgt()/2);
-        d.animation.addFrame(new KeyFrame(1000,0,0,-0.3,180,-0.3f));
+        d.animation.addFrame(new KeyFrame(1000,0,0,0,0,-0.3f));
         d.animation.setBoomerang(true);
         o.setImage(Assets.BACKGROUND,true);
         o.spawnAll();

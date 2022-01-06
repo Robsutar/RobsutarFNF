@@ -11,4 +11,14 @@ public class MegaDrive extends AnimatedObject {
     public MegaDrive(int centerX, int centerY, Atlas atlas) {
         super(centerX, centerY,atlas);
     }
+
+    @Override
+    public void render(Graphics2D g2d) {
+        super.render(g2d);
+        if (isInto(Handler.mousePosition)){
+            setScale(1.3f);
+        } else {
+            setScale(1f);
+        }
+    }
 }
