@@ -50,16 +50,8 @@ public class Handler {
 
         mousePosition=GamePanel.mouse;
 
-        Point dim = mousePosition;
+        mousePosition=Camera.getCamera().getScaledPoint(mousePosition);
 
-        int xDist = Camera.getCamera().width/2-dim.x;
-        int yDist = Camera.getCamera().height/2-dim.y;
-
-        xDist/=Camera.getCamera().getScale();
-        yDist/=Camera.getCamera().getScale();
-
-        mousePosition.x+=xDist* (camera.getScale()-1);
-        mousePosition.y+=yDist* (camera.getScale()-1);
 
         for (ArrayList<Renderable> rList:renderables){
             for (Renderable r:rList){
@@ -71,7 +63,6 @@ public class Handler {
 
                 if (r.affectedByCamera()){
                     camera.render(g2d);
-                    g2d.fillRect(mousePosition.x-25,mousePosition.y-25,50,50);
                 }
 
                 r.render(g2d);

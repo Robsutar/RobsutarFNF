@@ -8,7 +8,6 @@ import java.awt.*;
 public abstract class SimpleRenderable extends Box implements Renderable {
 
     public SimpleRenderable(){
-
     }
 
     public SimpleRenderable(int x, int y){
@@ -33,11 +32,16 @@ public abstract class SimpleRenderable extends Box implements Renderable {
         g2d.translate(-getWidth()/2,-getHeight()/2);
     }
 
+    public void renderTranslateXY(Graphics2D g2d){
+        g2d.translate(x,y);
+    }
+
     @Override
     public void render(Graphics2D g2d) {
         renderOpacity(g2d);
+        renderTranslateXY(g2d);
+        renderTranslateMiddle(g2d);
         renderRotate(g2d);
         renderScale(g2d);
-        renderTranslateMiddle(g2d);
     }
 }

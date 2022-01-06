@@ -1,5 +1,7 @@
 package com.robsutar.robsutarfnf.Window;
 
+import com.robsutar.robsutarfnf.Graphics.Camera;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -43,6 +45,7 @@ public class Window extends JFrame {
             int yBorder = windowDim.height-contentPanel.height;
             this.setSize(new Dimension(windowDim.width+wBorder, windowDim.height+yBorder));
         }
+        Camera.getCamera().setDimension(Window.windowDim);
     }
 
     public void setWindowDim(Dimension dim){windowDim = dim;}

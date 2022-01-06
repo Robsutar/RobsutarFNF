@@ -1,5 +1,6 @@
 package com.robsutar.robsutarfnf;
 
+import com.robsutar.robsutarfnf.Graphics.Camera;
 import com.robsutar.robsutarfnf.Movement.MovementStream;
 
 import java.awt.*;
@@ -67,7 +68,38 @@ public class Box extends Rectangle {
     public double getScaledWidth(){return this.width*this.scale;}
     public double getScaledHeight(){return this.height*this.scale;}
 
+    public double getScaledX(){return this.x*this.scale;}
+    public double getScaledY(){return this.y*this.scale;}
+
     public void setDimension(Dimension dimension){
         this.setWidth(dimension.width);setHeight(dimension.height);
+    }
+
+    public Point getScaledPoint(Point point){
+        Point dim = new Point(point);
+
+        int xDist = width/2-dim.x;
+        int yDist = height/2-dim.y;
+
+        xDist/=getScale();
+        yDist/=getScale();
+
+        dim.x+=xDist* (getScale()-1);
+        dim.y+=yDist* (getScale()-1);
+        return dim;
+    }
+
+    public Point getAbsolutePosition(){
+        return new Point((int)(x-getScaledWidth()/2),(int)(y-getScaledHeight()/2));
+    }
+
+    public boolean isInto(Point point){
+        Point absolutePos = getAbsolutePosition();
+        if (point.x>=absolutePos.x&&point.x<=getScaledWidth()+getAbsolutePosition().x){
+            if (point.y>=absolutePos.y&&point.y<=getScaledHeight()+getAbsolutePosition().y){
+                return true;
+            }
+        }
+        return false;
     }
 }

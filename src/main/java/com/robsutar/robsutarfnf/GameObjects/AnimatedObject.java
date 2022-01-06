@@ -1,6 +1,7 @@
 package com.robsutar.robsutarfnf.GameObjects;
 
 import com.robsutar.robsutarfnf.AnimationBuilder.Atlas;
+import com.robsutar.robsutarfnf.Handler;
 import com.robsutar.robsutarfnf.Threads.BpmTicable;
 import com.robsutar.robsutarfnf.Window.GamePanel;
 

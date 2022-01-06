@@ -3,6 +3,7 @@ package com.robsutar.robsutarfnf.GameObjects;
 import com.robsutar.robsutarfnf.Threads.Ticable;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 public class GameObject extends SimpleRenderable implements Ticable {
@@ -31,7 +32,7 @@ public class GameObject extends SimpleRenderable implements Ticable {
 
     public void renderDrawImage(Graphics2D g2d){
         if (image!=null){
-            g2d.drawImage(image,x,y,null);
+            g2d.drawImage(image,0,0,null);
         }
     }
 

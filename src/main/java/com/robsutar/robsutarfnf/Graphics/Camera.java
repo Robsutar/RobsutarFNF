@@ -14,12 +14,10 @@ public class Camera extends SimpleRenderable {
 
     @Override
     public void renderTranslateMiddle(Graphics2D g2d) {
-        g2d.translate(x,y);
     }
 
     @Override
     public void render(Graphics2D g2d) {
-        setDimension(Window.windowDim);
         super.render(g2d);
     }
 
