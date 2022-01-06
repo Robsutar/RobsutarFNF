@@ -3,6 +3,7 @@ package com.robsutar.robsutarfnf.Movement;
 import com.robsutar.robsutarfnf.Box;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MovementStream {
@@ -16,7 +17,9 @@ public class MovementStream {
         this.object=object;
     }
 
-    public void addFrame(KeyFrame k){this.frames.add(k);}
+    public void addFrame(KeyFrame k){
+        this.frames.add(k);
+    }
 
     public void playNow(KeyFrame k){
         replaceAnimation(k);

@@ -1,21 +1,16 @@
 package com.robsutar.robsutarfnf.GameObjects;
 
 import com.robsutar.robsutarfnf.Threads.Ticable;
+import com.robsutar.robsutarfnf.Window.WindowPositions.Anchor;
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 public class GameObject extends SimpleRenderable implements Ticable {
     protected BufferedImage image;
 
-    public GameObject(int centerX, int centerY){
-        super(centerX,centerY);
-    }
-
-    public GameObject(int centerX, int centerY, int width, int height){
-        super(centerX,centerY);
-        setDimension(new Dimension(width,height));
+    public GameObject(Anchor anchor){
+        super(anchor);
     }
 
     public void setImage(BufferedImage image, boolean bounds){

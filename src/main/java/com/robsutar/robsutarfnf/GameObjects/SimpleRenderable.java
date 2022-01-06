@@ -2,16 +2,17 @@ package com.robsutar.robsutarfnf.GameObjects;
 
 import com.robsutar.robsutarfnf.Box;
 import com.robsutar.robsutarfnf.Threads.Renderable;
+import com.robsutar.robsutarfnf.Window.WindowPositions.Anchor;
+import com.robsutar.robsutarfnf.Window.WindowPositions.AnchorTypes;
 
 import java.awt.*;
 
 public abstract class SimpleRenderable extends Box implements Renderable {
-
     public SimpleRenderable(){
     }
 
-    public SimpleRenderable(int x, int y){
-        super(x,y);
+    public SimpleRenderable(Anchor anchor){
+        this.anchor=anchor;
     }
 
     protected void renderOpacity(Graphics2D g2d){
@@ -36,9 +37,12 @@ public abstract class SimpleRenderable extends Box implements Renderable {
         g2d.translate(x,y);
     }
 
+    public void renderAnchor(Graphics2D g2d){g2d.translate(anchor.getX(), anchor.getY());}
+
     @Override
     public void render(Graphics2D g2d) {
         renderOpacity(g2d);
+        renderAnchor(g2d);
         renderTranslateXY(g2d);
         renderTranslateMiddle(g2d);
         renderRotate(g2d);

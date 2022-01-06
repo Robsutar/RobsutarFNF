@@ -6,11 +6,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class GamePanel extends JPanel implements KeyListener {
+public class GamePanel extends JPanel implements KeyListener, MouseListener {
 
     public int fps = 60;
     private float bpm = 90;
@@ -61,6 +63,7 @@ public class GamePanel extends JPanel implements KeyListener {
             }, 0, (long) ((1000000000*60d)/(bpm*16)), TimeUnit.NANOSECONDS);
 
         addKeyListener(this);
+        addMouseListener(this);
     }
 
     @Override
@@ -91,5 +94,19 @@ public class GamePanel extends JPanel implements KeyListener {
                 Window.frame.fullScreen();
             }
         }
+    }
+
+    public void mouseEntered(MouseEvent e) {
+    }
+    public void mouseExited(MouseEvent e) {
+    }
+    public void mouseClicked(MouseEvent e) {
+        Handler.mouseClicked(e);
+    }
+    public void mousePressed(MouseEvent e) {
+        Handler.mousePressed(e);
+    }
+    public void mouseReleased(MouseEvent e) {
+        Handler.mouseReleased(e);
     }
 }

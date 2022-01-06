@@ -2,6 +2,8 @@ package com.robsutar.robsutarfnf;
 
 import com.robsutar.robsutarfnf.Graphics.Camera;
 import com.robsutar.robsutarfnf.Movement.MovementStream;
+import com.robsutar.robsutarfnf.Window.WindowPositions.Anchor;
+import com.robsutar.robsutarfnf.Window.WindowPositions.AnchorTypes;
 
 import java.awt.*;
 
@@ -9,6 +11,8 @@ public class Box extends Rectangle {
     private double rotation;
     private double scale = 1;
     private float opacity = 1f;
+
+    protected Anchor anchor = AnchorTypes.ANCHOR_NONE;
 
     public MovementStream animation = new MovementStream(this);
 
@@ -90,13 +94,18 @@ public class Box extends Rectangle {
     }
 
     public Point getAbsolutePosition(){
-        return new Point((int)(x-getScaledWidth()/2),(int)(y-getScaledHeight()/2));
+        return new Point((int)(getFullX()-getScaledWidth()/2),(int)(getFullY()-getScaledHeight()/2));
     }
+
+    public int getFullX(){return x+ anchor.getX();}
+    public int getFullY(){return y+ anchor.getY();}
 
     public boolean isInto(Point point){
         Point absolutePos = getAbsolutePosition();
-        if (point.x>=absolutePos.x&&point.x<=getScaledWidth()+getAbsolutePosition().x){
-            if (point.y>=absolutePos.y&&point.y<=getScaledHeight()+getAbsolutePosition().y){
+        int x = point.x;
+        int y = point.y;
+        if (x>=absolutePos.x&&x<=getScaledWidth()+getAbsolutePosition().x){
+            if (y>=absolutePos.y&&y<=getScaledHeight()+getAbsolutePosition().y){
                 return true;
             }
         }

@@ -1,17 +1,16 @@
 package com.robsutar.robsutarfnf.GameObjects;
 
 import com.robsutar.robsutarfnf.AnimationBuilder.Atlas;
-import com.robsutar.robsutarfnf.Handler;
 import com.robsutar.robsutarfnf.Threads.BpmTicable;
-import com.robsutar.robsutarfnf.Window.GamePanel;
+import com.robsutar.robsutarfnf.Window.WindowPositions.Anchor;
 
 import java.awt.*;
 public class AnimatedObject extends GameObject implements BpmTicable {
     private final Atlas atlas;
     private int animationIndex = 0;
 
-    public AnimatedObject(int centerX, int centerY, Atlas atlas) {
-        super(centerX, centerY);
+    public AnimatedObject(Anchor anchor, Atlas atlas) {
+        super(anchor);
         this.atlas=atlas;
 
         setImage(atlas.getImage(animationIndex),false);
