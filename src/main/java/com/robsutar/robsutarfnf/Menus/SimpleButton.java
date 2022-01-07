@@ -3,7 +3,7 @@ package com.robsutar.robsutarfnf.Menus;
 import com.robsutar.robsutarfnf.GameObjects.GameObject;
 import com.robsutar.robsutarfnf.Handler;
 import com.robsutar.robsutarfnf.Threads.MouseInteractive;
-import com.robsutar.robsutarfnf.Window.WindowPositions.Anchor;
+import com.robsutar.robsutarfnf.Window.Anchor.Anchor;
 
 import java.awt.image.BufferedImage;
 

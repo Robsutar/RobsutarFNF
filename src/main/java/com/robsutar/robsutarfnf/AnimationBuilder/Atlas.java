@@ -30,10 +30,14 @@ public class Atlas {
         }
     }
 
-    public void rotate(int animationIndex){
+    public void rotate(int animationIndex, int range){
         Collections.rotate(semiAtlas.images.get(animationIndex),1);
         Collections.rotate(semiAtlas.framesX.get(animationIndex),1);
         Collections.rotate(semiAtlas.framesY.get(animationIndex),1);
+    }
+
+    public void rotate(int animationIndex){
+        rotate(animationIndex,1);
     }
 
     public int getFrameX(int animationIndex){

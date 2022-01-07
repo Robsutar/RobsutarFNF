@@ -1,16 +1,22 @@
 package com.robsutar.robsutarfnf.GameObjects;
 
 import com.robsutar.robsutarfnf.Threads.Ticable;
-import com.robsutar.robsutarfnf.Window.WindowPositions.Anchor;
+import com.robsutar.robsutarfnf.Window.Anchor.Anchor;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class GameObject extends SimpleRenderable implements Ticable {
     protected BufferedImage image;
+    protected int priority;
 
     public GameObject(Anchor anchor){
         super(anchor);
+    }
+
+    @Override
+    public int getPriority() {
+        return priority;
     }
 
     public void setImage(BufferedImage image, boolean bounds){

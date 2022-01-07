@@ -1,18 +1,18 @@
 package com.robsutar.robsutarfnf.GameObjects;
 
 import com.robsutar.robsutarfnf.AnimationBuilder.Atlas;
+import com.robsutar.robsutarfnf.Threads.AnimationTicable;
 import com.robsutar.robsutarfnf.Threads.BpmTicable;
-import com.robsutar.robsutarfnf.Window.WindowPositions.Anchor;
+import com.robsutar.robsutarfnf.Window.Anchor.Anchor;
 
 import java.awt.*;
-public class AnimatedObject extends GameObject implements BpmTicable {
+public class AnimatedObject extends GameObject implements AnimationTicable {
     private final Atlas atlas;
     private int animationIndex = 0;
 
     public AnimatedObject(Anchor anchor, Atlas atlas) {
         super(anchor);
         this.atlas=atlas;
-
         setImage(atlas.getImage(animationIndex),false);
         onAnimationIndexUpdate(animationIndex);
     }
@@ -34,7 +34,7 @@ public class AnimatedObject extends GameObject implements BpmTicable {
     }
 
     @Override
-    public void bpmTick() {
+    public void animationTick() {
         atlas.rotate(animationIndex);
         setImage(atlas.getImage(animationIndex),false);
     }

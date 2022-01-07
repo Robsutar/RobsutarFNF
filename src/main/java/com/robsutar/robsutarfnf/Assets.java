@@ -9,6 +9,8 @@ public class Assets {
 
     public static BufferedImage BACKGROUND;
 
+    public static BufferedImage MENU_OPTION;
+
     public static Atlas GF_TITLE;
 
     public Assets(String assetsTextureFolder){
@@ -16,6 +18,8 @@ public class Assets {
             assetsTextureFolder = FileManager.texturesPath+assetsTextureFolder+"/";
         }
         BACKGROUND = FileManager.loadImage(FileManager.loadFile("textures/wallpaper.jpg",assetsTextureFolder));
+
+        MENU_OPTION = FileManager.loadImage(FileManager.loadFile("textures/menuOption.png",assetsTextureFolder));
 
         GF_TITLE = new Atlas(FileManager.loadFile("animatedObjects/gfDance/gfDance.xml",assetsTextureFolder));
     }

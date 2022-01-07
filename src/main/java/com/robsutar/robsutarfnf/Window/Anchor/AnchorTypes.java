@@ -1,4 +1,4 @@
-package com.robsutar.robsutarfnf.Window.WindowPositions;
+package com.robsutar.robsutarfnf.Window.Anchor;
 
 public class AnchorTypes {
     public static Anchor ANCHOR_NONE = new Anchor();

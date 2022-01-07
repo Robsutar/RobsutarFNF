@@ -1,9 +1,8 @@
 package com.robsutar.robsutarfnf;
 
-import com.robsutar.robsutarfnf.Graphics.Camera;
 import com.robsutar.robsutarfnf.Movement.MovementStream;
-import com.robsutar.robsutarfnf.Window.WindowPositions.Anchor;
-import com.robsutar.robsutarfnf.Window.WindowPositions.AnchorTypes;
+import com.robsutar.robsutarfnf.Window.Anchor.Anchor;
+import com.robsutar.robsutarfnf.Window.Anchor.AnchorTypes;
 
 import java.awt.*;
 
@@ -75,6 +74,11 @@ public class Box extends Rectangle {
     public double getScaledX(){return this.x*this.scale;}
     public double getScaledY(){return this.y*this.scale;}
 
+    public double getValidScale(){
+        if (scale<0){return 0;}
+        return scale;
+    }
+
     public void setDimension(Dimension dimension){
         this.setWidth(dimension.width);setHeight(dimension.height);
     }
@@ -101,6 +105,7 @@ public class Box extends Rectangle {
     public int getFullY(){return y+ anchor.getY();}
 
     public boolean isInto(Point point){
+        if (getScale()<0.1||getOpacity()<0.1f){return false;}
         Point absolutePos = getAbsolutePosition();
         int x = point.x;
         int y = point.y;

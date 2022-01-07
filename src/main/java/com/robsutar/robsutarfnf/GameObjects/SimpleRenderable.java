@@ -2,8 +2,7 @@ package com.robsutar.robsutarfnf.GameObjects;
 
 import com.robsutar.robsutarfnf.Box;
 import com.robsutar.robsutarfnf.Threads.Renderable;
-import com.robsutar.robsutarfnf.Window.WindowPositions.Anchor;
-import com.robsutar.robsutarfnf.Window.WindowPositions.AnchorTypes;
+import com.robsutar.robsutarfnf.Window.Anchor.Anchor;
 
 import java.awt.*;
 
@@ -25,7 +24,7 @@ public abstract class SimpleRenderable extends Box implements Renderable {
 
     public void renderScale(Graphics2D g2d){
         g2d.translate(getWidth()/2,getHeight()/2);
-        g2d.scale(getScale(),getScale());
+        g2d.scale(getValidScale(),getValidScale());
         g2d.translate(-getWidth()/2,-getHeight()/2);
     }
 

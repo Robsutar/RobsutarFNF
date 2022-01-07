@@ -13,6 +13,9 @@ public interface FullSpawn {
         if (this instanceof BpmTicable) {
             BpmTicable o = (BpmTicable) this;o.spawnBpmTick();
         }
+        if (this instanceof AnimationTicable) {
+            AnimationTicable o = (AnimationTicable) this;o.spawnAnimationTick();
+        }
         if (this instanceof MouseInteractive) {
             MouseInteractive o = (MouseInteractive) this;o.spawnMouseInteractive();
         }
@@ -26,6 +29,9 @@ public interface FullSpawn {
         }
         if (this instanceof BpmTicable) {
             BpmTicable o = (BpmTicable) this;o.killBpmTick();
+        }
+        if (this instanceof AnimationTicable) {
+            AnimationTicable o = (AnimationTicable) this;o.killAnimationTick();
         }
         if (this instanceof MouseInteractive) {
             MouseInteractive o = (MouseInteractive) this;o.killMouseInteractive();

@@ -8,7 +8,7 @@ public interface BpmTicable extends FullSpawn{
         Handler.removeObject(this);
     }
 
-    default void bpmTick(){
+    default void bpmTick(int age){
 
     }
 }

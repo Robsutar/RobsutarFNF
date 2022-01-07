@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 public class GamePanel extends JPanel implements KeyListener, MouseListener {
 
     public int fps = 60;
-    private float bpm = 90;
+    private float bpm = 100;
 
     public static Point mouse = new Point(Window.wdt()/2,Window.hgt()/2);
 
@@ -56,11 +56,19 @@ public class GamePanel extends JPanel implements KeyListener, MouseListener {
 
         ScheduledExecutorService bpmTick = Executors.newSingleThreadScheduledExecutor();
         bpmTick.scheduleAtFixedRate(new Runnable() {
-                @Override
-                public void run() {
-                    Handler.bpmTick();
-                }
-            }, 0, (long) ((1000000000*60d)/(bpm*16)), TimeUnit.NANOSECONDS);
+            @Override
+            public void run() {
+                Handler.bpmTick();
+            }
+        }, 0, (long) ((1000000000*60d)/(bpm*16)), TimeUnit.NANOSECONDS);
+
+        ScheduledExecutorService animationTick = Executors.newSingleThreadScheduledExecutor();
+        bpmTick.scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                Handler.animationTick();
+            }
+        }, 0, (long) ((1000000000*60d)/(bpm*15)), TimeUnit.NANOSECONDS);
 
         addKeyListener(this);
         addMouseListener(this);

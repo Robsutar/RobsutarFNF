@@ -1,4 +1,4 @@
-package com.robsutar.robsutarfnf.Window.WindowPositions;
+package com.robsutar.robsutarfnf.Window.Anchor;
 
 import com.robsutar.robsutarfnf.Window.Window;
 

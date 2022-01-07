@@ -1,10 +1,7 @@
 package com.robsutar.robsutarfnf;
 
 import com.robsutar.robsutarfnf.Graphics.Camera;
-import com.robsutar.robsutarfnf.Threads.BpmTicable;
-import com.robsutar.robsutarfnf.Threads.MouseInteractive;
-import com.robsutar.robsutarfnf.Threads.Renderable;
-import com.robsutar.robsutarfnf.Threads.Ticable;
+import com.robsutar.robsutarfnf.Threads.*;
 import com.robsutar.robsutarfnf.Window.GamePanel;
 
 import java.awt.*;
@@ -18,22 +15,25 @@ public class Handler {
     private static final ArrayList<ArrayList<Renderable>> renderables = fillList();
     private static final List<Ticable> ticables = new ArrayList<>();
     private static final List<BpmTicable> bpmTicables = new ArrayList<>();
+    private static final List<AnimationTicable> animationTicables = new ArrayList<>();
     private static final List<MouseInteractive> mouseInteractives = new ArrayList<>();
 
     public static final Camera camera = new Camera();
-
     public static void addObject(Renderable object) {renderables.get(object.getPriority()).add(object);}
+
     public static void removeObject(Renderable object) {renderables.get(object.getPriority()).remove(object);}
-
     public static void addObject(Ticable object) {ticables.add(object);}
+
     public static void removeObject(Ticable object) {ticables.remove(object);}
-
     public static void addObject(BpmTicable object) {bpmTicables.add(object);}
+
     public static void removeObject(BpmTicable object) {bpmTicables.remove(object);}
+    public static void addObject(AnimationTicable object) {animationTicables.add(object);}
 
+    public static void removeObject(AnimationTicable object) {animationTicables.remove(object);}
     public static void addObject(MouseInteractive object) {mouseInteractives.add(object);}
-    public static void removeObject(MouseInteractive object) {mouseInteractives.remove(object);}
 
+    public static void removeObject(MouseInteractive object) {mouseInteractives.remove(object);}
     private static ArrayList<ArrayList<Renderable>> fillList(){
         ArrayList<ArrayList<Renderable>> rnds = new ArrayList<>();
         for (int i = 0;i<=Renderable.MAX_PRIORITY;i++){
@@ -42,7 +42,11 @@ public class Handler {
         return rnds;
     }
 
+
     public static Point mousePosition = GamePanel.mouse;
+
+    private static int bpmAge = 0;
+    private static int animationAge = 0;
 
     public static void render(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
@@ -93,8 +97,18 @@ public class Handler {
     }
     public static void bpmTick(){
         List<BpmTicable> bpmTicables = new ArrayList<>(Handler.bpmTicables);
+        if (bpmAge>=16){
+            bpmAge=0;
+        }
         for (BpmTicable o:bpmTicables){
-            o.bpmTick();
+            o.bpmTick(bpmAge);
+        }
+        bpmAge++;
+    }
+    public static void animationTick() {
+        List<AnimationTicable> animationTicables = new ArrayList<>(Handler.animationTicables);
+        for (AnimationTicable o:animationTicables){
+            o.animationTick();
         }
     }
     public static void mouseClicked(MouseEvent e) {
@@ -109,6 +123,7 @@ public class Handler {
             o.mousePressed();
         }
     }
+
     public static void mouseReleased(MouseEvent e) {
         List<MouseInteractive> mouseInteractives = new ArrayList<>(Handler.mouseInteractives);
         for (MouseInteractive o:mouseInteractives){
