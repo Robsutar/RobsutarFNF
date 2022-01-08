@@ -12,11 +12,11 @@ import java.util.List;
 
 public class Handler {
 
-    private static final ArrayList<ArrayList<Renderable>> renderables = fillList();
-    private static final List<Ticable> ticables = new ArrayList<>();
-    private static final List<BpmTicable> bpmTicables = new ArrayList<>();
-    private static final List<AnimationTicable> animationTicables = new ArrayList<>();
-    private static final List<MouseInteractive> mouseInteractives = new ArrayList<>();
+    private static ArrayList<ArrayList<Renderable>> renderables = fillList();
+    private static List<Ticable> ticables = new ArrayList<>();
+    private static List<BpmTicable> bpmTicables = new ArrayList<>();
+    private static List<AnimationTicable> animationTicables = new ArrayList<>();
+    private static List<MouseInteractive> mouseInteractives = new ArrayList<>();
 
     public static final Camera camera = new Camera();
     public static void addObject(Renderable object) {renderables.get(object.getPriority()).add(object);}
@@ -51,10 +51,13 @@ public class Handler {
     public static void render(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
 
-        RenderingHints rh = new RenderingHints(
-                RenderingHints.KEY_INTERPOLATION,
-                RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        g2d.setRenderingHints(rh);
+        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED);
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
+        g2d.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_OFF);
+        g2d.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_SPEED);
+        g2d.setRenderingHint(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_DISABLE);
 
         AffineTransform at = new AffineTransform();
         Composite comp = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,1f);
@@ -129,5 +132,13 @@ public class Handler {
         for (MouseInteractive o:mouseInteractives){
             o.mouseReleased();
         }
+    }
+
+    public static void killEveryObject(){
+        renderables= new ArrayList<>();
+        ticables= new ArrayList<>();
+        bpmTicables= new ArrayList<>();
+        animationTicables= new ArrayList<>();
+        mouseInteractives= new ArrayList<>();
     }
 }

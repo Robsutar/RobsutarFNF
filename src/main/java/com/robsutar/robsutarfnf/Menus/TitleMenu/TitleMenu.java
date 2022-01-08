@@ -2,6 +2,7 @@ package com.robsutar.robsutarfnf.Menus.TitleMenu;
 
 import com.robsutar.robsutarfnf.Graphics.Camera;
 import com.robsutar.robsutarfnf.Handler;
+import com.robsutar.robsutarfnf.Menus.TitleMenu.TitleOptions.TitleOptions;
 import com.robsutar.robsutarfnf.Movement.KeyFrame;
 import com.robsutar.robsutarfnf.Threads.MouseInteractive;
 import com.robsutar.robsutarfnf.Threads.Ticable;

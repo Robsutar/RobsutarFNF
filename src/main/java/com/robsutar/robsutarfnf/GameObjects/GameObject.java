@@ -19,6 +19,10 @@ public class GameObject extends SimpleRenderable implements Ticable {
         return priority;
     }
 
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
     public void setImage(BufferedImage image, boolean bounds){
         this.image = image;
         if (bounds){

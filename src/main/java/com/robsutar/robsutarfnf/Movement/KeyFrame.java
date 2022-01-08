@@ -1,7 +1,6 @@
 package com.robsutar.robsutarfnf.Movement;
 
 import com.robsutar.robsutarfnf.Box;
-import com.robsutar.robsutarfnf.Menus.TitleMenu.TitleOptions;
 
 public class KeyFrame {
     private int age = 0;

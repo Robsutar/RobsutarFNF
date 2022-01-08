@@ -17,15 +17,15 @@ public class Atlas {
 
     public Atlas(File xmlPath){
         semiAtlas=new XmlImageStream(xmlPath);
-        String jsonPath = semiAtlas.folderPath+(
-                semiAtlas.getImageName().replace(".png",".json"));
-        readjust = new JsonReadjust(FileManager.loadFile(jsonPath));
+        String folder = semiAtlas.folderPath;
+        String jsonPath = (semiAtlas.getImageName().replace(".png",".json"));
+        readjust = new JsonReadjust(FileManager.loadFile(folder+jsonPath));
         if (readjust.getReadjusts()==null) {
             List<Box> rdj = new ArrayList<>();
             for (int i = 0; i < semiAtlas.getNames().toArray().length; i++) {
                 rdj.add(new Box());
             }
-            FileManager.writeJson(jsonPath, JsonReadjust.writeAnimationReadjust(rdj));
+            FileManager.writeJson(folder,jsonPath, JsonReadjust.writeAnimationReadjust(rdj));
             readjust.setReadjusts(rdj);
         }
     }

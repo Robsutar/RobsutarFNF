@@ -22,6 +22,7 @@ public class FileManager {
     public static final String resourcesPath = new File("").getAbsolutePath()+"/resources/";
     public static final String mainAssetsPath = resourcesPath+"assets/";
     public static final String texturesPath=resourcesPath+"resourcepacks/";
+    public static final String phasesPath=mainAssetsPath+"phases/";
 
     private static final String resetColor = "\033[0m";
 
@@ -110,14 +111,18 @@ public class FileManager {
         return clip;
     }
 
-    public static void writeJson(String path,JSONObject json){
-        System.out.println(writing+path+JSON);
-        try (FileWriter file = new FileWriter(path)) {
+    public static void writeJson(String folder,String name,JSONObject json){
+        File fileFolder = new File(folder);
+        if (!fileFolder.exists()){
+            fileFolder.mkdirs();
+        }
+        System.out.println(writing+name+JSON);
+        try (FileWriter file = new FileWriter(folder+name)) {
             file.write(json.toJSONString());
             file.flush();
 
         } catch (IOException e) {
-            System.out.println(failedToLoad+path+JSON);
+            System.out.println(failedToLoad+name+JSON);
             e.printStackTrace();
         }
     }
