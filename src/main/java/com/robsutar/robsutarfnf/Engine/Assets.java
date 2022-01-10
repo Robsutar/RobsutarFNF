@@ -1,0 +1,35 @@
+package com.robsutar.robsutarfnf.Engine;
+
+import com.robsutar.robsutarfnf.Fnf.AnimationBuilder.Atlas;
+import com.robsutar.robsutarfnf.Engine.Files.FileManager;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
+
+public class Assets {
+
+    public static BufferedImage BACKGROUND;
+
+    public static BufferedImage MENU_OPTION;
+
+    public static Atlas GF_TITLE;
+
+    public static Font HEAVY_FONT;
+
+    public static Font LIGHT_FONT;
+
+    public Assets(String assetsTextureFolder){
+        if (assetsTextureFolder!=null){
+            assetsTextureFolder = FileManager.texturesPath+assetsTextureFolder+"/";
+        }
+        BACKGROUND = FileManager.loadImage(FileManager.loadFile("textures/wallpaper.jpg",assetsTextureFolder));
+
+        MENU_OPTION = FileManager.loadImage(FileManager.loadFile("textures/menuOption.png",assetsTextureFolder));
+
+        GF_TITLE = new Atlas(FileManager.loadFile("animatedObjects/gfDance/gfDance.xml",assetsTextureFolder));
+
+        HEAVY_FONT = FileManager.loadFont(FileManager.loadFile("cocoSharp-heavy.ttf",assetsTextureFolder));
+
+        LIGHT_FONT = FileManager.loadFont(FileManager.loadFile("cocoSharp-light.ttf",assetsTextureFolder));
+    }
+}
