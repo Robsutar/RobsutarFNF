@@ -1,16 +1,29 @@
 package com.robsutar.robsutarfnf.Engine;
 
-import com.robsutar.robsutarfnf.Engine.Window.Anchor.AnchorTypes;
-import com.robsutar.robsutarfnf.Fnf.Menus.TitleMenu.TitleMenu;
-import com.robsutar.robsutarfnf.Engine.Window.Window;
-import com.robsutar.robsutarfnf.Fnf.Menus.TitleMenu.TitleOptions.TitleOptions;
+import com.robsutar.robsutarfnf.Engine.Window.WindowGame;
+import com.robsutar.robsutarfnf.Fnf.Phase.PhaseCreator.Menus.PhaseConfigs;
+import com.robsutar.robsutarfnf.Fnf.Phase.PhaseHandler;
+
+import javax.swing.*;
+
 
 public class Main {
     public static void main(String[] args){
-        new Assets(null);
-        Window.frame =new Window();
+        startGame();
 
-        TitleMenu titleMenu = new TitleMenu();
-        titleMenu.spawnAll();
+        new PhaseHandler();
+
+        WindowGame.resize(WindowGame.windowDim,false);
+    }
+    public static void startGame(){
+        //lookAndFeel visual
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        }
+
+        new Assets(null);
+        WindowGame.frame=new WindowGame();
     }
 }

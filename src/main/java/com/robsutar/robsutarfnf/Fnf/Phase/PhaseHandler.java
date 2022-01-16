@@ -1,26 +1,24 @@
 package com.robsutar.robsutarfnf.Fnf.Phase;
 
-import com.robsutar.robsutarfnf.Engine.Handler;
-import com.robsutar.robsutarfnf.Fnf.Phase.PhaseCreator.PhaseJson;
-import com.robsutar.robsutarfnf.Engine.Threads.BpmTicable;
+import com.robsutar.robsutarfnf.Engine.Audio.Music;
+import com.robsutar.robsutarfnf.Fnf.GameObjects.AnimatedObject;
+import com.robsutar.robsutarfnf.Fnf.GameObjects.Player;
+import com.robsutar.robsutarfnf.Fnf.Phase.PhaseCreator.Menus.TapBpm;
 
-public class PhaseHandler implements BpmTicable {
-    private final PhaseJson phase;
+import java.util.ArrayList;
+import java.util.List;
 
-    public PhaseHandler(PhaseJson phase){
-        this.phase=phase;
-    }
+public class PhaseHandler {
+    public String mapTitle;
+    public String mapAuthor;
+    public float approximatingRate;
+    public Music music;
+    public List<AnimatedObject> animatedObjects = new ArrayList<>();
+    public Player player1;
+    public Player player2;
 
-    public void start(){
-        Handler.setBpm(phase.music.getBpm());
-        spawnBpmTick();
-        phase.music.initialize();
-        phase.music.start();
-
-    }
-
-    @Override
-    public void bpmTick(int age) {
-
+    public PhaseHandler(){
+        TapBpm tp=new TapBpm(this);
+        tp.open();
     }
 }

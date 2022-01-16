@@ -17,6 +17,9 @@ public interface FullSpawn {
         if (this instanceof MouseInteractive) {
             MouseInteractive o = (MouseInteractive) this;o.spawnMouseInteractive();
         }
+        if (this instanceof KeyboardInteractive){
+            KeyboardInteractive o = (KeyboardInteractive) this;o.spawnKeyboardInteractive();
+        }
     }
     default void killAll(){
         if (this instanceof Renderable){
@@ -33,6 +36,9 @@ public interface FullSpawn {
         }
         if (this instanceof MouseInteractive) {
             MouseInteractive o = (MouseInteractive) this;o.killMouseInteractive();
+        }
+        if (this instanceof KeyboardInteractive){
+            KeyboardInteractive o = (KeyboardInteractive) this;o.killKeyboardInteractive();
         }
     }
 }

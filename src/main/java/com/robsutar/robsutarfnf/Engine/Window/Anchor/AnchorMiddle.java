@@ -1,15 +1,15 @@
 package com.robsutar.robsutarfnf.Engine.Window.Anchor;
 
-import com.robsutar.robsutarfnf.Engine.Window.Window;
+import com.robsutar.robsutarfnf.Engine.Window.WindowGame;
 
 public class AnchorMiddle extends Anchor {
     @Override
     public int getX() {
-        return Window.wdt()/2;
+        return WindowGame.wdt()/2;
     }
 
     @Override
     public int getY() {
-        return Window.hgt()/2;
+        return WindowGame.hgt()/2;
     }
 }

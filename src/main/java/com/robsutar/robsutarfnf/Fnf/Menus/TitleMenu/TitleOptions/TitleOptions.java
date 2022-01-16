@@ -3,7 +3,6 @@ package com.robsutar.robsutarfnf.Fnf.Menus.TitleMenu.TitleOptions;
 import com.robsutar.robsutarfnf.Engine.Assets;
 import com.robsutar.robsutarfnf.Engine.Handler;
 import com.robsutar.robsutarfnf.Engine.Menus.SimpleButton;
-import com.robsutar.robsutarfnf.Engine.Menus.TextBox;
 import com.robsutar.robsutarfnf.Engine.Movement.KeyFrame;
 import com.robsutar.robsutarfnf.Engine.Window.Anchor.Anchor;
 
@@ -11,12 +10,10 @@ import java.awt.*;
 
 public class TitleOptions extends SimpleButton {
     protected boolean mouseAt = true;
-    protected TextBox textBox;
 
     public TitleOptions(Anchor anchor) {
         super(anchor, Assets.MENU_OPTION);
         setPriority(PLAYER_PRIORITY);
-        this.textBox = new TextBox(this,"ROBSON",Color.red);
     }
 
     @Override
@@ -47,6 +44,5 @@ public class TitleOptions extends SimpleButton {
     @Override
     public void render(Graphics2D g2d) {
         super.render(g2d);
-        textBox.render(g2d);
     }
 }

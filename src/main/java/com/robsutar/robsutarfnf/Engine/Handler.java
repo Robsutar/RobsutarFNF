@@ -4,9 +4,11 @@ import com.robsutar.robsutarfnf.Engine.Renderable.init.VolumeViewer;
 import com.robsutar.robsutarfnf.Engine.Graphics.Camera;
 import com.robsutar.robsutarfnf.Engine.Threads.*;
 import com.robsutar.robsutarfnf.Engine.Window.GamePanel;
+import com.robsutar.robsutarfnf.Engine.Window.WindowGame;
 
 import javax.sound.sampled.FloatControl;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.io.File;
@@ -21,6 +23,7 @@ public class Handler {
     private static List<BpmTicable> bpmTicables = new ArrayList<>();
     private static List<AnimationTicable> animationTicables = new ArrayList<>();
     private static List<MouseInteractive> mouseInteractives = new ArrayList<>();
+    private static List<KeyboardInteractive> keyboardInteractives = new ArrayList<>();
     private static List<FloatControl> audios = new ArrayList<>();
 
     public static final Camera camera = new Camera();
@@ -28,6 +31,7 @@ public class Handler {
     public static Point mousePosition = GamePanel.mouse;
 
     public static Font font = Assets.HEAVY_FONT;
+    public static FontMetrics metrics;
 
     private static int bpmAge = 0;
     public static float volume=40;
@@ -44,12 +48,22 @@ public class Handler {
 
     public static void addObject(AnimationTicable object) {animationTicables.add(object);}
     public static void removeObject(AnimationTicable object) {animationTicables.remove(object);}
+
     public static void addObject(MouseInteractive object) {mouseInteractives.add(object);}
-
     public static void removeObject(MouseInteractive object) {mouseInteractives.remove(object);}
-    public static void addObject(FloatControl object) {audios.add(object);}
 
+    public static void addObject(KeyboardInteractive object) {keyboardInteractives.add(object);}
+    public static void removeObject(KeyboardInteractive object) {keyboardInteractives.remove(object);}
+
+    public static void addObject(FloatControl object) {audios.add(object);}
     public static void removeObject(FloatControl object) {audios.remove(object);}
+
+    public static void addObject(Component component){getPanel().add(component);}
+    public static void removeObject(Component component){getPanel().remove(component);}
+
+    public static GamePanel getPanel(){return WindowGame.panel;}
+
+    public static WindowGame getFrame(){return WindowGame.frame;}
 
     private static ArrayList<ArrayList<Renderable>> fillList(){
         ArrayList<ArrayList<Renderable>> rnds = new ArrayList<>();
@@ -70,12 +84,9 @@ public class Handler {
         g2d.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_SPEED);
         g2d.setRenderingHint(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_DISABLE);
 
-        AffineTransform at = new AffineTransform();
-        Composite comp = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,1f);
-        BasicStroke stroke = new BasicStroke(5);
-        Color color = Color.white;
-
-        font = Assets.HEAVY_FONT.deriveFont(fontSize);
+        font = new Font("Dialog", Font.PLAIN, (int) fontSize);;
+        resetGraphics(g2d);
+        metrics=g2d.getFontMetrics();
 
         if (GamePanel.mouse!=null) {
             mousePosition = GamePanel.mouse;
@@ -86,17 +97,11 @@ public class Handler {
 
         ArrayList<ArrayList<Renderable>> renderables = new ArrayList<>(Handler.renderables);
 
-        System.out.println(g2d.getFontMetrics());
         for (int i = 0; i <renderables.toArray().length;i++){
             ArrayList<Renderable> rList = new ArrayList<>(renderables.get(i));
             for (Renderable r:rList){
 
-                g2d.setFont(font);
-                g2d.setTransform(at);
-                g2d.setColor(color);
-                g2d.setComposite(comp);
-                g2d.setStroke(stroke);
-
+                resetGraphics(g2d);
                 if (r.affectedByCamera()){
                     camera.render(g2d);
                 }
@@ -104,6 +109,15 @@ public class Handler {
                 r.render(g2d);
             }
         }
+        resetGraphics(g2d);
+    }
+
+    private static void resetGraphics(Graphics2D g2d){
+        g2d.setFont(font);
+        g2d.setTransform(new AffineTransform());
+        g2d.setColor(WindowGame.panel.getBackground());
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,1f));
+        g2d.setStroke(new BasicStroke(5));
     }
 
     public static void setBpm(float bpm){
@@ -120,8 +134,8 @@ public class Handler {
     }
     public static void bpmTick(){
         List<BpmTicable> bpmTicables = new ArrayList<>(Handler.bpmTicables);
-        if (bpmAge>=16){
-            bpmAge=0;
+        if (bpmAge>16){
+            bpmAge=1;
         }
         for (BpmTicable o:bpmTicables){
             o.bpmTick(bpmAge);
@@ -152,9 +166,23 @@ public class Handler {
             o.mouseReleased();
         }
     }
+    public static void keyPressed(KeyEvent e) {
+        List<KeyboardInteractive> keyboardInteractives = new ArrayList<>(Handler.keyboardInteractives);
+        for (KeyboardInteractive o:keyboardInteractives){
+            o.keyPressed(e);
+        }
+    }
+    public static void keyTyped(KeyEvent e) {
+        List<KeyboardInteractive> keyboardInteractives = new ArrayList<>(Handler.keyboardInteractives);
+        for (KeyboardInteractive o:keyboardInteractives){
+            o.keyTyped(e);
+        }
+    }
+
     public static float getValidVolume(float max85){
         return max85-80;
     }
+
     public static void setVolume(float max85){
         if (max85>85f){
             max85=85f;

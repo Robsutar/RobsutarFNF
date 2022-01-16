@@ -5,15 +5,21 @@ import com.robsutar.robsutarfnf.Engine.Window.Anchor.Anchor;
 import com.robsutar.robsutarfnf.Engine.Window.Anchor.AnchorTypes;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Box extends Rectangle {
     private double rotation;
     private double scale = 1;
     private float opacity = 1f;
 
+    protected Point absolutePosition = new Point();
+
     protected Anchor anchor = AnchorTypes.ANCHOR_NONE;
 
     public MovementStream animation = new MovementStream(this);
+
+    protected List<Box> subordinatedObjects = new ArrayList<>();
 
     public Box(){
 
@@ -102,7 +108,7 @@ public class Box extends Rectangle {
     }
 
     public Point getAbsolutePosition(){
-        return new Point((int)(getFullX()-getScaledWidth()/2),(int)(getFullY()-getScaledHeight()/2));
+        return absolutePosition;
     }
 
     public int getFullX(){return x+ anchor.getX();}

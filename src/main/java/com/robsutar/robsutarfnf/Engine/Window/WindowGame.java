@@ -5,16 +5,19 @@ import com.robsutar.robsutarfnf.Engine.Graphics.Camera;
 import javax.swing.*;
 import java.awt.*;
 
-public class Window extends JFrame {
+public class WindowGame extends JFrame {
     public static Dimension windowDim = Toolkit.getDefaultToolkit().getScreenSize();
     private static boolean fullscreen = false;
 
-    public static Window frame;
+    public static WindowGame frame;
+    public static GamePanel panel;
 
-    public Window(){
-
-        GamePanel panel = new GamePanel();
+    public WindowGame(){
+        frame=this;
+        panel=new GamePanel();
         panel.setBackground(Color.BLACK);
+        panel.setLayout(null);
+        panel.setFocusable(true);
 
         this.setTitle("Robsutar FNF");
         this.add(panel);
@@ -27,25 +30,25 @@ public class Window extends JFrame {
         return fullscreen;
     }
 
-    public void resize(Dimension dim, boolean noBorder){
+    public static void resize(Dimension dim, boolean noBorder){
         fullscreen=false;
 
-        setWindowDim(dim);
+        frame.setWindowDim(dim);
 
-        this.dispose();
-        this.setSize(windowDim);
-        this.setUndecorated(noBorder);
+        frame.dispose();
+        frame.setSize(windowDim);
+        frame.setUndecorated(noBorder);
 
-        this.setVisible(true);
-        this.setLocationRelativeTo(null);
+        frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
 
         if (!noBorder){
-            Dimension contentPanel = this.getContentPane().getSize();
+            Dimension contentPanel = frame.getContentPane().getSize();
             int wBorder = windowDim.width-contentPanel.width;
             int yBorder = windowDim.height-contentPanel.height;
-            this.setSize(new Dimension(windowDim.width+wBorder, windowDim.height+yBorder));
+            frame.setSize(new Dimension(windowDim.width+wBorder, windowDim.height+yBorder));
         }
-        Camera.getCamera().setDimension(Window.windowDim);
+        Camera.getCamera().setDimension(WindowGame.windowDim);
     }
 
     public void setWindowDim(Dimension dim){windowDim = dim;}

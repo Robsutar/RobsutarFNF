@@ -1,10 +1,8 @@
 package com.robsutar.robsutarfnf.Engine.Renderable;
 
+import com.robsutar.robsutarfnf.Engine.Box;
 import com.robsutar.robsutarfnf.Engine.Threads.Ticable;
 import com.robsutar.robsutarfnf.Engine.Window.Anchor.Anchor;
-
-import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class GameObject extends SimpleRenderable implements Ticable {
     protected int priority;
@@ -22,8 +20,17 @@ public class GameObject extends SimpleRenderable implements Ticable {
         this.priority = priority;
     }
 
+    public void subordinatesTick(){
+        for (Box o:subordinatedObjects) {
+            if (o instanceof Ticable){
+                ((Ticable) o).tick();
+            }
+        }
+    }
+
     @Override
     public void tick() {
         animation.tick();
+        subordinatesTick();
     }
 }
