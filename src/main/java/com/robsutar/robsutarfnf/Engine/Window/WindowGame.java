@@ -15,12 +15,11 @@ public class WindowGame extends JFrame {
     public WindowGame(){
         frame=this;
         panel=new GamePanel();
-        panel.setBackground(Color.BLACK);
-        panel.setLayout(null);
-        panel.setFocusable(true);
+        panel.setOpaque(false);
 
+        this.setLayout(new BorderLayout());
         this.setTitle("Robsutar FNF");
-        this.add(panel);
+        this.add(panel,BorderLayout.CENTER);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         bigScreen();

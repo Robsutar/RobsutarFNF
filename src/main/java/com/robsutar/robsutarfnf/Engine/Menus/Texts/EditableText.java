@@ -3,13 +3,14 @@ package com.robsutar.robsutarfnf.Engine.Menus.Texts;
 import com.robsutar.robsutarfnf.Engine.Box;
 import com.robsutar.robsutarfnf.Engine.Handler;
 import com.robsutar.robsutarfnf.Engine.Threads.FullSpawn;
+import com.robsutar.robsutarfnf.Engine.Threads.Ticable;
 import com.robsutar.robsutarfnf.Engine.Window.Anchor.Anchor;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class EditableText extends Box implements FullSpawn  {
+public class EditableText extends Box implements Ticable {
     public JTextField textField;
     public EditableText(Anchor anchor, String text, int x, int y, ActionListener action){
         setLocation(x,y);
@@ -24,7 +25,6 @@ public class EditableText extends Box implements FullSpawn  {
         }
         this.anchor=anchor;
         textField = new JTextField(text);
-        textField.setOpaque(true);
         textField.setBorder(null);
         textField.setHorizontalAlignment(JTextField.CENTER);
         textField.setFont(Handler.font);
@@ -35,14 +35,19 @@ public class EditableText extends Box implements FullSpawn  {
     }
 
     @Override
+    public void tick() {
+        textField.setBounds(x + anchor.getX() - width / 2, y + anchor.getY() - height / 2 - Handler.metrics.getAscent(), width, height);
+    }
+
+    @Override
     public void spawnAll() {
-        FullSpawn.super.spawnAll();
+        Ticable.super.spawnAll();
         Handler.addObject(textField);
     }
 
     @Override
     public void killAll() {
-        FullSpawn.super.killAll();
+        Ticable.super.killAll();
         Handler.removeObject(textField);
     }
 }

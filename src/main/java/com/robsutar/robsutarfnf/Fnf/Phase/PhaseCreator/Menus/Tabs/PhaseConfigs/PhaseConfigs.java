@@ -1,4 +1,4 @@
-package com.robsutar.robsutarfnf.Fnf.Phase.PhaseCreator.Menus;
+package com.robsutar.robsutarfnf.Fnf.Phase.PhaseCreator.Menus.Tabs.PhaseConfigs;
 
 import com.robsutar.robsutarfnf.Engine.Audio.Music;
 import com.robsutar.robsutarfnf.Engine.Files.FileManager;
@@ -36,7 +36,7 @@ public class PhaseConfigs {
     FileOption oMapMusic = new FileOption("Map music: ",new FileNameExtensionFilter("WAV file (.wav)","wav"));
 
     //animatedObjects List
-    AnimatedObjectsOption oAnimatedObjects = new AnimatedObjectsOption("Animated: ",new FileNameExtensionFilter("XML file (.xml)","xml"));
+    AnimatedObjectsOption oAtlas = new AnimatedObjectsOption("Animated: ",new FileNameExtensionFilter("XML file (.xml)","xml"));
 
     public PhaseConfigs(PhaseHandler phaseHandler) {
         handler=phaseHandler;
@@ -56,7 +56,7 @@ public class PhaseConfigs {
         options.add(oMapTitle);
         options.add(oMapAuthor);
         options.add(oMapMusic);
-        options.add(oAnimatedObjects);
+        options.add(oAtlas);
 
         //add jPanels in list
         for (Option o : options){
@@ -82,17 +82,17 @@ public class PhaseConfigs {
             }
         }
 
-        List<AnimatedObject> animObjects = new ArrayList<>();
+        List<Atlas> animObjects = new ArrayList<>();
 
-        for (File o:oAnimatedObjects.getAnswer()){
-            AnimatedObject an = new AnimatedObject(AnchorTypes.ANCHOR_MIDDLE,new Atlas(o));
+        for (File o: oAtlas.getAnswer()){
+            Atlas an = new Atlas(o);
             animObjects.add(an);
         }
 
         handler.mapTitle = oMapTitle.getAnswer();
         handler.mapAuthor = oMapAuthor.getAnswer();
         handler.music = new Music(FileManager.loadWav((File) oMapMusic.getAnswer()),90);
-        handler.animatedObjects.addAll(animObjects);
+        handler.atlas.addAll(animObjects);
     }
     protected abstract class Option{
         protected JPanel panel = new JPanel();

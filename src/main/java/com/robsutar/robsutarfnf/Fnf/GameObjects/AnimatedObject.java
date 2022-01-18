@@ -7,7 +7,7 @@ import com.robsutar.robsutarfnf.Engine.Window.Anchor.Anchor;
 
 import java.awt.*;
 public class AnimatedObject extends GameObject implements AnimationTicable {
-    private final Atlas atlas;
+    public final Atlas atlas;
     private int animationIndex = 0;
 
     public AnimatedObject(Anchor anchor, Atlas atlas) {
@@ -17,11 +17,13 @@ public class AnimatedObject extends GameObject implements AnimationTicable {
         onAnimationIndexUpdate(animationIndex);
     }
 
-    private void setAnimationIndex(int index){
-        if (index <=0){
-            onAnimationIndexUpdate(0);
-        } else if (!(index <atlas.getNames().toArray().length)){
-            onAnimationIndexUpdate(atlas.getNames().toArray().length-1);
+    protected void playIdle(){
+        onAnimationIndexUpdate(0);
+    }
+
+    protected void setAnimationIndex(int index){
+        if (index <0||index>=atlas.getNames().toArray().length){
+            playIdle();
         } else {
             onAnimationIndexUpdate(index);
         }

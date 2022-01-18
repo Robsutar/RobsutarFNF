@@ -34,10 +34,7 @@ public class XmlImageStream {
 
         BufferedImage fullImage = FileManager.loadImage(FileManager.loadFile(folderPath+imageName));
 
-
         NodeList list = xmlFile.getElementsByTagName("SubTexture");
-
-
 
         int i = 0;
         int lastWidth=0;
@@ -61,6 +58,7 @@ public class XmlImageStream {
 
                     if(lastName.equals("")) {
                         lastName = substring;
+                        names.add(substring);
                     }else if (!lastName.equals(substring)){
 
                         this.framesX.add(framesX);
@@ -140,7 +138,6 @@ public class XmlImageStream {
                         this.images.add(images);
                         this.widths.add(lastWidth);
                         this.heights.add(lastHeight);
-                        this.names.add(substring);
                         break l1;
                     }
                 }

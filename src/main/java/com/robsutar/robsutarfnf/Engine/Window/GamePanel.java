@@ -23,6 +23,10 @@ public class GamePanel extends JPanel implements KeyListener, MouseListener, Mou
 
     public GamePanel() {
 
+        this.setBackground(Color.BLACK);
+        this.setFocusable(true);
+        this.setLayout(null);
+
         renderer = new Thread(new Runnable() {
             @Override
             public void run() {

@@ -1,17 +1,18 @@
-package com.robsutar.robsutarfnf.Fnf.Phase.PhaseCreator.Menus;
+package com.robsutar.robsutarfnf.Fnf.Phase.PhaseCreator.Menus.Tabs.TapBpm;
 
 import com.robsutar.robsutarfnf.Engine.Graphics.RainbowColor;
 import com.robsutar.robsutarfnf.Engine.Handler;
 import com.robsutar.robsutarfnf.Engine.Menus.Texts.EditableText;
 import com.robsutar.robsutarfnf.Engine.Movement.KeyFrame;
 import com.robsutar.robsutarfnf.Engine.Renderable.GameObject;
-import com.robsutar.robsutarfnf.Engine.Renderable.SimpleRenderable;
 import com.robsutar.robsutarfnf.Engine.Threads.BpmTicable;
 import com.robsutar.robsutarfnf.Engine.Threads.KeyboardInteractive;
 import com.robsutar.robsutarfnf.Engine.Threads.Ticable;
 import com.robsutar.robsutarfnf.Engine.Window.Anchor.AnchorTypes;
+import com.robsutar.robsutarfnf.Fnf.Phase.PhaseCreator.Menus.Tabs.PhaseCreatorTab;
 import com.robsutar.robsutarfnf.Fnf.Phase.PhaseHandler;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,6 +30,9 @@ public class TapBpm implements PhaseCreatorTab,BpmTicable, Ticable, KeyboardInte
     private long lastCtrlTap = 0;
     private List<Long> range = new ArrayList<>();
     private boolean ctrlPressed=false;
+    private final PhaseHandler handler;
+    private JPanel panel = new JPanel();
+
     private EditableText text = new EditableText(AnchorTypes.ANCHOR_MIDDLE, String.valueOf(bpm), 0, 100, new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -45,12 +49,29 @@ public class TapBpm implements PhaseCreatorTab,BpmTicable, Ticable, KeyboardInte
             text.textField.setText(String.valueOf(f));
             text.textField.setEnabled(false);
             text.textField.setEnabled(true);
-            bpm = f;
+            range = new ArrayList<>();
+            bpm=f;
         }
     });
 
     private IlluminatedBox[] boxes = new IlluminatedBox[4];
+
     public TapBpm(PhaseHandler phaseHandler){
+        this.handler = phaseHandler;
+
+        List<JLabel> keyTips = new ArrayList<>();
+
+        keyTips.add(new JLabel("CTRL to double"));
+        keyTips.add(new JLabel("SPACE to reset count"));
+        keyTips.add(new JLabel("press T on the beat"));
+        keyTips.add(new JLabel("Arrow LEFT and Right to change offset"));
+
+        for (JLabel l : keyTips){
+            panel.add(l);
+        }
+
+        panel.setLayout(new GridLayout(1,keyTips.toArray().length));
+
         Handler.setBpm(bpm);
         for (int i = 0;i<boxes.length;i++) {
             boxes[i]=new IlluminatedBox(bpm);
@@ -82,11 +103,7 @@ public class TapBpm implements PhaseCreatorTab,BpmTicable, Ticable, KeyboardInte
 
     @Override
     public void bpmTick(int age) {
-        if (!Objects.equals(text.textField.getText(), String.valueOf(bpm))){
-        }
         if (lastBpm!=bpm){
-            System.out.println(bpm);
-            Handler.setBpm(bpm);
             text.textField.setText(String.valueOf(bpm));
         }
         lastBpm=bpm;
@@ -103,12 +120,14 @@ public class TapBpm implements PhaseCreatorTab,BpmTicable, Ticable, KeyboardInte
             }
             bAge++;
         }
+        Handler.setBpm(bpm);
     }
 
     @Override
     public void open() {
         spawnAll();
         text.spawnAll();
+        handler.panel.add(panel,BorderLayout.CENTER);
     }
 
     @Override
@@ -118,6 +137,12 @@ public class TapBpm implements PhaseCreatorTab,BpmTicable, Ticable, KeyboardInte
         for (IlluminatedBox b:boxes) {
             b.killAll();
         }
+        handler.panel.remove(panel);
+    }
+
+    @Override
+    public String getName() {
+        return "Tap Bpm";
     }
 
     @Override
@@ -126,16 +151,21 @@ public class TapBpm implements PhaseCreatorTab,BpmTicable, Ticable, KeyboardInte
             if (lastNanoTap ==0){lastNanoTap =System.nanoTime();return;}
             deltaNanoTap = System.nanoTime()-lastNanoTap;
             lastNanoTap=System.nanoTime();
-            if (deltaNanoTap>3000000000L){
+            if (deltaNanoTap>3000000000L&&!range.isEmpty()){
                 deltaNanoTap = range.get(range.toArray().length-1);
+            } else {
+                range.add(deltaNanoTap);
             }
-            range.add(deltaNanoTap);
         } else if (e.getKeyCode()==KeyEvent.VK_SPACE){
             lastNanoTap=0;
             range=new ArrayList<>();
         } else if(e.getKeyCode()==KeyEvent.VK_CONTROL){
             ctrlPressed=true;
             lastCtrlTap=System.currentTimeMillis();
+        }else if(e.getKeyCode()==KeyEvent.VK_RIGHT){
+            Handler.bpmAge++;
+        }else if(e.getKeyCode()==KeyEvent.VK_LEFT){
+            Handler.bpmAge--;
         }
     }
 
@@ -154,7 +184,7 @@ public class TapBpm implements PhaseCreatorTab,BpmTicable, Ticable, KeyboardInte
             super.spawnAll();
             animation.finishAll();
             setOpacity(1);
-            animation.addFrame(new KeyFrame((int) bpm,0,0,0,0,-1));
+            animation.addFrame(new KeyFrame((int) (5000/bpm),0,0,0,0,-1));
         }
 
         @Override
@@ -166,6 +196,8 @@ public class TapBpm implements PhaseCreatorTab,BpmTicable, Ticable, KeyboardInte
 
         @Override
         public void renderDrawImage(Graphics2D g2d) {
+            g2d.setColor(Color.black);
+            g2d.fillRect(-5,-5,width+10,height+10);
             g2d.setColor(RainbowColor.rainbowColor(0));
             g2d.fillRect(0,0,width,height);
         }

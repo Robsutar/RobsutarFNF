@@ -14,6 +14,8 @@ public class Assets {
 
     public static Atlas GF_TITLE;
 
+    public static Atlas TEMPORARY_ROBOT;
+
     public static Font HEAVY_FONT;
 
     public static Font LIGHT_FONT;
@@ -27,6 +29,8 @@ public class Assets {
         MENU_OPTION = FileManager.loadImage(FileManager.loadFile("textures/menuOption.png",assetsTextureFolder));
 
         GF_TITLE = new Atlas(FileManager.loadFile("animatedObjects/gfDance/gfDance.xml",assetsTextureFolder));
+
+        TEMPORARY_ROBOT = new Atlas(FileManager.loadFile("phases/ankha/ankha_assets.xml",assetsTextureFolder));
 
         HEAVY_FONT = FileManager.loadFont(FileManager.loadFile("cocoSharp-heavy.ttf",assetsTextureFolder));
 

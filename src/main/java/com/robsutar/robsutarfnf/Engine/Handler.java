@@ -7,6 +7,7 @@ import com.robsutar.robsutarfnf.Engine.Window.GamePanel;
 import com.robsutar.robsutarfnf.Engine.Window.WindowGame;
 
 import javax.sound.sampled.FloatControl;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -33,7 +34,7 @@ public class Handler {
     public static Font font = Assets.HEAVY_FONT;
     public static FontMetrics metrics;
 
-    private static int bpmAge = 0;
+    public static int bpmAge = 0;
     public static float volume=40;
     public static float fontSize=32;
 

@@ -9,6 +9,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class Atlas {
 
@@ -31,9 +32,25 @@ public class Atlas {
     }
 
     public void rotate(int animationIndex, int range){
-        Collections.rotate(semiAtlas.images.get(animationIndex),1);
-        Collections.rotate(semiAtlas.framesX.get(animationIndex),1);
-        Collections.rotate(semiAtlas.framesY.get(animationIndex),1);
+        Collections.rotate(semiAtlas.images.get(animationIndex),range);
+        Collections.rotate(semiAtlas.framesX.get(animationIndex),range);
+        Collections.rotate(semiAtlas.framesY.get(animationIndex),range);
+    }
+
+    public int getAnimationIndex(String animationName){
+        for(int i = 0; i <getNames().toArray().length;i++){
+            if (Objects.equals(getNames().get(i), animationName)){
+                return i;
+            }
+        }
+        return 0;
+    }
+
+    public String getAnimationName(int index){
+        if (index<0||index>=getNames().toArray().length){
+            return null;
+        }
+        return getNames().get(index);
     }
 
     public void rotate(int animationIndex){
@@ -78,5 +95,9 @@ public class Atlas {
         int x = -getFrameX(animationIndex)+getReadjust(animationIndex).x;
         int y = -getFrameY(animationIndex)+getReadjust(animationIndex).y;
         g2d.translate(x,y);
+    }
+
+    public String getName() {
+        return semiAtlas.getImageName().replace(".png","");
     }
 }
