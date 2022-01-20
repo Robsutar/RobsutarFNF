@@ -12,7 +12,7 @@ public class TextDisappear extends TextTitleSubtitle {
     @Override
     public void setTextImage() {
         super.setTextImage();
-        setLocation((int) (width/2),height/2+100);
+        setLocation((width/2),height/2+100);
     }
 
     @Override

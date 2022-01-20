@@ -32,83 +32,69 @@ public class GamePanel extends JPanel implements KeyListener, MouseListener, Mou
         this.setFocusable(true);
         this.setLayout(new BorderLayout());
 
-        renderer = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                long now = 0;
-                long total = 0;
-                while (true) {
-                    long fpsTime = (long) ((1000.0 / fps) * 1000000.0);
-                    now = System.nanoTime();
-                    repaint();
-                    try {
-                        total = System.nanoTime() - now;
-                        if(total > fpsTime) {
-                            continue;
-                        }
-                        Thread.sleep((fpsTime - (System.nanoTime() - now)) / 1000000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+        renderer = new Thread(() -> {
+            long now;
+            long total;
+            while (true) {
+                long fpsTime = (long) ((1000.0 / fps) * 1000000.0);
+                now = System.nanoTime();
+                repaint();
+                try {
+                    total = System.nanoTime() - now;
+                    if(total > fpsTime) {
+                        continue;
                     }
+                    Thread.sleep((fpsTime - (System.nanoTime() - now)) / 1000000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         });
         renderer.start();
 
-        bpmTick = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                long now = 0;
-                long total = 0;
-                while (true) {
-                    long bpmTime = (long) ((1000000000*60d)/(bpm*16));
-                    now = System.nanoTime();
-                    Handler.bpmTick();
-                    try {
-                        total = System.nanoTime() - now;
-                        if(total > bpmTime) {
-                            continue;
-                        }
-                        Thread.sleep((bpmTime - (System.nanoTime() - now)) / 1000000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+        bpmTick = new Thread(() -> {
+            long now ;
+            long total ;
+            while (true) {
+                long bpmTime = (long) ((1000000000*60d)/(bpm*16));
+                now = System.nanoTime();
+                Handler.bpmTick();
+                try {
+                    total = System.nanoTime() - now;
+                    if(total > bpmTime) {
+                        continue;
                     }
+                    Thread.sleep((bpmTime - (System.nanoTime() - now)) / 1000000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         });
         bpmTick.start();
 
-        animationTick = new Thread(new Runnable() {
-            @Override
-            public void run() {
+        animationTick = new Thread(() -> {
 
-                long now = 0;
-                long total = 0;
-                while (true) {
-                    long bpmTime = (long) ((1000000000*60d)/(bpm*15));
-                    now = System.nanoTime();
-                    Handler.animationTick();
-                    try {
-                        total = System.nanoTime() - now;
-                        if(total > bpmTime) {
-                            continue;
-                        }
-                        Thread.sleep((bpmTime - (System.nanoTime() - now)) / 1000000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+            long now ;
+            long total;
+            while (true) {
+                long bpmTime = (long) ((1000000000*60d)/(bpm*15));
+                now = System.nanoTime();
+                Handler.animationTick();
+                try {
+                    total = System.nanoTime() - now;
+                    if(total > bpmTime) {
+                        continue;
                     }
+                    Thread.sleep((bpmTime - (System.nanoTime() - now)) / 1000000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         });
         animationTick.start();
 
         tick = Executors.newSingleThreadScheduledExecutor();
-        tick.scheduleAtFixedRate(new Runnable() {
-            @Override
-            public void run() {
-                Handler.tick();
-            }
-        }, 0, 10, TimeUnit.MILLISECONDS);
+        tick.scheduleAtFixedRate(Handler::tick, 0, 10, TimeUnit.MILLISECONDS);
 
 
         addKeyListener(this);

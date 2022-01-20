@@ -58,14 +58,11 @@ public class PhaseHandler {
         for (PhaseCreatorTab p:tabList){
             JButton b = new JButton(p.getName());
             b.setFocusable(false);
-            b.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    closeTabs();
-                    p.open();
-                    panel.revalidate();
-                    panel.repaint();
-                }
+            b.addActionListener(e -> {
+                closeTabs();
+                p.open();
+                panel.revalidate();
+                panel.repaint();
             });
             tabs.add(b);
         }

@@ -44,12 +44,7 @@ public class PhaseConfigs {
         JPanel continuePanel = new JPanel();
         Button continueButton = new Button("CONTINUE!");
         continuePanel.add(continueButton);
-        continueButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                finish();
-            }
-        });
+        continueButton.addActionListener(e -> finish());
 
         //add options in list
         options.add(oMapTitle);
@@ -140,13 +135,10 @@ public class PhaseConfigs {
             JLabel text = new JLabel(label);
             panel.add(text);
             panel.add(box);
-            box.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    File f = FileManager.loadExplorerFile(filter);
-                    if (f != null) {
-                        setFile(f);
-                    }
+            box.addActionListener(e -> {
+                File f = FileManager.loadExplorerFile(filter);
+                if (f != null) {
+                    setFile(f);
                 }
             });
         }

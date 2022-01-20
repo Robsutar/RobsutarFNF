@@ -87,7 +87,7 @@ public class Handler {
         g2d.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_SPEED);
         g2d.setRenderingHint(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_DISABLE);
 
-        font = new Font("Dialog", Font.PLAIN, (int) fontSize);;
+        font = new Font("Dialog", Font.PLAIN, (int) fontSize);
         resetGraphics(g2d);
         metrics=g2d.getFontMetrics();
 

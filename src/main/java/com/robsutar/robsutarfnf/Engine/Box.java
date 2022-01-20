@@ -118,9 +118,7 @@ public class Box extends Rectangle {
         int x = point.x;
         int y = point.y;
         if (x>=absolutePos.x&&x<=getScaledWidth()+getAbsolutePosition().x){
-            if (y>=absolutePos.y&&y<=getScaledHeight()+getAbsolutePosition().y){
-                return true;
-            }
+            return y >= absolutePos.y && y <= getScaledHeight() + getAbsolutePosition().y;
         }
         return false;
     }

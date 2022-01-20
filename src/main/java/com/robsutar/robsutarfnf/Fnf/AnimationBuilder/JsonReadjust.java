@@ -35,6 +35,7 @@ public class JsonReadjust {
 
     public static JSONObject writeAnimationReadjust(List<Box> streams){
         JSONArray frameModifier = new JSONArray();
+
         for (int i = 0; i < streams.toArray().length;i++) {
             JSONObject configs  = new JSONObject();
             JSONObject transform = new JSONObject();

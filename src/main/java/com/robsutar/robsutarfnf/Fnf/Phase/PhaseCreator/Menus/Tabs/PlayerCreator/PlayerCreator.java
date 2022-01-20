@@ -138,33 +138,30 @@ public class PlayerCreator implements PhaseCreatorTab {
             List<JMenuItem> buttons = new ArrayList<>();
             for(String s : atlas.getNames()){
                 JMenuItem b = new JMenuItem(s);
-                b.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        arrow=s;
-                        menu.setText(getArrow());
+                b.addActionListener(e -> {
+                    arrow=s;
+                    menu.setText(getArrow());
 
-                        if (Objects.equals(typeArrow, "Up")){
-                            arrowUp=getArrow();
-                            updatePlayerAnimations();
-                            player.playUp();
-                        } else if(Objects.equals(typeArrow, "Down")){
-                            arrowUp=getArrow();
-                            updatePlayerAnimations();
-                            player.playDown();
-                        } else if(Objects.equals(typeArrow, "Left")){
-                            arrowUp=getArrow();
-                            updatePlayerAnimations();
-                            player.playLeft();
-                        } else if(Objects.equals(typeArrow, "Right")){
-                            arrowUp=getArrow();
-                            updatePlayerAnimations();
-                            player.playRight();
-                        } else if(Objects.equals(typeArrow, "Idle")){
-                            idle=getArrow();
-                            updatePlayerAnimations();
-                            player.playIdle();
-                        }
+                    if (Objects.equals(typeArrow, "Up")){
+                        arrowUp=getArrow();
+                        updatePlayerAnimations();
+                        player.playUp();
+                    } else if(Objects.equals(typeArrow, "Down")){
+                        arrowUp=getArrow();
+                        updatePlayerAnimations();
+                        player.playDown();
+                    } else if(Objects.equals(typeArrow, "Left")){
+                        arrowUp=getArrow();
+                        updatePlayerAnimations();
+                        player.playLeft();
+                    } else if(Objects.equals(typeArrow, "Right")){
+                        arrowUp=getArrow();
+                        updatePlayerAnimations();
+                        player.playRight();
+                    } else if(Objects.equals(typeArrow, "Idle")){
+                        idle=getArrow();
+                        updatePlayerAnimations();
+                        player.playIdle();
                     }
                 });
                 buttons.add(b);

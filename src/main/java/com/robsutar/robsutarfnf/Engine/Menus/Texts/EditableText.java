@@ -17,12 +17,9 @@ public class EditableText extends Box implements Ticable {
         this.text=text;
         setLocation(x,y);
         if (action==null){
-            action = new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    textField.setEnabled(false);
-                    textField.setEnabled(true);
-                }
+            action = e -> {
+                textField.setEnabled(false);
+                textField.setEnabled(true);
             };
         }
         this.anchor=anchor;
