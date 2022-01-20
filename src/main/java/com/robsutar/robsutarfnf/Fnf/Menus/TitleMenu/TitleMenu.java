@@ -2,18 +2,18 @@ package com.robsutar.robsutarfnf.Fnf.Menus.TitleMenu;
 
 import com.robsutar.robsutarfnf.Engine.Graphics.Camera;
 import com.robsutar.robsutarfnf.Engine.Handler;
+import com.robsutar.robsutarfnf.Engine.Window.Anchor.Anchor;
 import com.robsutar.robsutarfnf.Fnf.Menus.TitleMenu.TitleOptions.TitleOptions;
 import com.robsutar.robsutarfnf.Engine.Movement.KeyFrame;
 import com.robsutar.robsutarfnf.Engine.Threads.MouseInteractive;
 import com.robsutar.robsutarfnf.Engine.Threads.Ticable;
 import com.robsutar.robsutarfnf.Engine.Window.Anchor.AnchorBox;
-import com.robsutar.robsutarfnf.Engine.Window.Anchor.AnchorTypes;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TitleMenu implements Ticable, MouseInteractive {
-    private final GfTitle gf = new GfTitle(AnchorTypes.ANCHOR_MIDDLE);
+    private final GfTitle gf = new GfTitle(Anchor.ANCHOR_MIDDLE);
     private final List<TitleOptions> titleOptions = new ArrayList<>();
     private boolean clicked = false;
 

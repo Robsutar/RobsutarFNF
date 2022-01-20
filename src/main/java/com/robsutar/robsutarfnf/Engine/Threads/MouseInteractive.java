@@ -2,6 +2,8 @@ package com.robsutar.robsutarfnf.Engine.Threads;
 
 import com.robsutar.robsutarfnf.Engine.Handler;
 
+import java.awt.event.MouseEvent;
+
 public interface MouseInteractive extends FullSpawn{
     default void spawnMouseInteractive(){Handler.addObject(this);}
     default void killMouseInteractive(){
@@ -13,5 +15,8 @@ public interface MouseInteractive extends FullSpawn{
     default void mousePressed() {
     }
     default void mouseReleased() {
+    }
+    default void mouseDragged(int xDistance, int yDistance){
+
     }
 }

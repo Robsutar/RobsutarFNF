@@ -29,7 +29,7 @@ public class JsonReadjust {
                 pos.setRotation(Double.parseDouble(frame.get("rotation").toString()));
                 positionList.add(pos);
             }
-        } catch (NullPointerException e){e.printStackTrace();return null;}
+        } catch (NullPointerException e){return null;}
         return positionList;
     }
 

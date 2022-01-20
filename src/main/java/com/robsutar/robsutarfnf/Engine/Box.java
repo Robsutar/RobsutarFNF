@@ -2,8 +2,6 @@ package com.robsutar.robsutarfnf.Engine;
 
 import com.robsutar.robsutarfnf.Engine.Movement.MovementStream;
 import com.robsutar.robsutarfnf.Engine.Window.Anchor.Anchor;
-import com.robsutar.robsutarfnf.Engine.Window.Anchor.AnchorTypes;
-
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +13,7 @@ public class Box extends Rectangle {
 
     protected Point absolutePosition = new Point();
 
-    protected Anchor anchor = AnchorTypes.ANCHOR_NONE;
+    protected Anchor anchor = Anchor.ANCHOR_NONE;
 
     public MovementStream animation = new MovementStream(this);
 

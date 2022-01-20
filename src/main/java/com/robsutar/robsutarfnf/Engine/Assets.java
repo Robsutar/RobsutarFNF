@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 
 public class Assets {
 
+    public static Image ICON;
     public static BufferedImage BACKGROUND;
 
     public static BufferedImage MENU_OPTION;
@@ -24,6 +25,8 @@ public class Assets {
         if (assetsTextureFolder!=null){
             assetsTextureFolder = FileManager.texturesPath+assetsTextureFolder+"/";
         }
+        ICON = FileManager.loadImage(FileManager.loadFile("icon.png",assetsTextureFolder));
+
         BACKGROUND = FileManager.loadImage(FileManager.loadFile("textures/wallpaper.jpg",assetsTextureFolder));
 
         MENU_OPTION = FileManager.loadImage(FileManager.loadFile("textures/menuOption.png",assetsTextureFolder));

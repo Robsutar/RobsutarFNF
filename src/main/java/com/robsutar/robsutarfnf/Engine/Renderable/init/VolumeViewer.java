@@ -3,14 +3,14 @@ package com.robsutar.robsutarfnf.Engine.Renderable.init;
 import com.robsutar.robsutarfnf.Engine.Renderable.GameObject;
 import com.robsutar.robsutarfnf.Engine.Handler;
 import com.robsutar.robsutarfnf.Engine.Movement.KeyFrame;
-import com.robsutar.robsutarfnf.Engine.Window.Anchor.AnchorTypes;
+import com.robsutar.robsutarfnf.Engine.Window.Anchor.Anchor;
 
 import java.awt.*;
 
 public class VolumeViewer extends GameObject {
     public static long lastRequest = 0;
     public VolumeViewer() {
-        super(AnchorTypes.ANCHOR_MIDDLE_BOTTOM);
+        super(Anchor.ANCHOR_MIDDLE_BOTTOM);
         setBounds(85*2,50);
         setPriority(MAX_PRIORITY);
         setScale(0);

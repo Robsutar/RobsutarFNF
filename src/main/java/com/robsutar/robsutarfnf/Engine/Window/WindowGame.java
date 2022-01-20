@@ -1,5 +1,6 @@
 package com.robsutar.robsutarfnf.Engine.Window;
 
+import com.robsutar.robsutarfnf.Engine.Assets;
 import com.robsutar.robsutarfnf.Engine.Graphics.Camera;
 
 import javax.swing.*;
@@ -17,9 +18,9 @@ public class WindowGame extends JFrame {
         panel=new GamePanel();
         panel.setOpaque(false);
 
-        this.setLayout(new BorderLayout());
         this.setTitle("Robsutar FNF");
-        this.add(panel,BorderLayout.CENTER);
+        this.setIconImage(Assets.ICON);
+        this.add(panel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         bigScreen();

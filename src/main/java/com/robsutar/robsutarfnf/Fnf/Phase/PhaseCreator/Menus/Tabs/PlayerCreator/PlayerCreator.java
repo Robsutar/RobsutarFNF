@@ -99,7 +99,6 @@ public class PlayerCreator implements PhaseCreatorTab {
 
         //player
         player = new PedestalPlayer(atlas,arrowUp,arrowDown,arrowLeft,arrowRight,idle);
-        player.spawnAll();
     }
 
     @Override
@@ -107,6 +106,9 @@ public class PlayerCreator implements PhaseCreatorTab {
         handler.add(panel,BorderLayout.CENTER);
         handler.revalidate();
         handler.repaint();
+        if (player==null){return;}
+        player.spawnAll();
+        player.playIdle();
     }
 
     @Override

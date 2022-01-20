@@ -1,5 +1,7 @@
 package com.robsutar.robsutarfnf.Engine.Files;
 
+import com.robsutar.robsutarfnf.Engine.Handler;
+import com.robsutar.robsutarfnf.Fnf.AnimationBuilder.Atlas;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.w3c.dom.Document;
@@ -8,6 +10,8 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -16,6 +20,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Objects;
 
 public class FileManager {
 
@@ -64,6 +69,26 @@ public class FileManager {
             e.printStackTrace();
         }
         return img;
+    }
+
+    public static File loadExplorerFile(){
+        return loadExplorerFile(null,null);
+    }
+
+    public static File loadExplorerFile(FileNameExtensionFilter filter){
+        return loadExplorerFile(null,filter);
+    }
+
+    public static File loadExplorerFile(JFileChooser fileChooser,FileNameExtensionFilter filter){
+        JFileChooser chooser;
+        chooser = Objects.requireNonNullElseGet(fileChooser, () -> new JFileChooser(FileManager.resourcesPath));
+        if (filter!=null){chooser.setFileFilter(filter);}
+
+        File f = null;
+        if (chooser.showOpenDialog(Handler.getWindow()) == JFileChooser.APPROVE_OPTION) {
+            f = chooser.getSelectedFile();
+        }
+        return f;
     }
 
     public static File loadFile(String absoluteFilePath){

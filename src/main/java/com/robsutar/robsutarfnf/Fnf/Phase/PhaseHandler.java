@@ -71,8 +71,8 @@ public class PhaseHandler {
         }
         tabs.setLayout(new GridLayout(0,tabList.toArray().length));
 
-        Handler.getFrame().add(tabs,BorderLayout.NORTH);
-        Handler.getFrame().add(panel,BorderLayout.SOUTH);
+        Handler.getPanel().add(panel,BorderLayout.SOUTH);
+        Handler.getPanel().add(tabs,BorderLayout.NORTH);
     }
 
     private void closeTabs(){
@@ -83,16 +83,6 @@ public class PhaseHandler {
     }
 
     public Atlas loadAnimatedObject(){
-        Atlas a = null;
-        JFileChooser chooser = new JFileChooser(FileManager.resourcesPath);
-        chooser.setFileFilter(new FileNameExtensionFilter("XML file (.xml)","xml"));
-        if (chooser.showOpenDialog(Handler.getFrame()) == JFileChooser.APPROVE_OPTION) {
-            File f = chooser.getSelectedFile();
-            if (f == null) {
-                return null;
-            }
-            a = new Atlas(f);
-        }
-        return a;
+        return new Atlas(FileManager.loadExplorerFile(new FileNameExtensionFilter("XML file (.xml)","xml")));
     }
 }

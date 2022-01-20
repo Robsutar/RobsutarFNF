@@ -12,7 +12,9 @@ import java.awt.event.ActionListener;
 
 public class EditableText extends Box implements Ticable {
     public JTextField textField;
+    String text ;
     public EditableText(Anchor anchor, String text, int x, int y, ActionListener action){
+        this.text=text;
         setLocation(x,y);
         if (action==null){
             action = new ActionListener() {
@@ -28,9 +30,6 @@ public class EditableText extends Box implements Ticable {
         textField.setBorder(null);
         textField.setHorizontalAlignment(JTextField.CENTER);
         textField.setFont(Handler.font);
-        height= (int) (Handler.metrics.getHeight()*1.3);
-        width = Handler.metrics.stringWidth(" " + text + " ")*2;
-        textField.setBounds(x + anchor.getX() - width / 2, y + anchor.getY() - height / 2 - Handler.metrics.getAscent(), width, height);
         textField.addActionListener(action);
     }
 
@@ -41,6 +40,9 @@ public class EditableText extends Box implements Ticable {
 
     @Override
     public void spawnAll() {
+        height= (int) (Handler.metrics.getHeight()*1.3);
+        width = Handler.metrics.stringWidth(" " + text + " ")*2;
+        textField.setBounds(x + anchor.getX() - width / 2, y + anchor.getY() - height / 2 - Handler.metrics.getAscent(), width, height);
         Ticable.super.spawnAll();
         Handler.addObject(textField);
     }

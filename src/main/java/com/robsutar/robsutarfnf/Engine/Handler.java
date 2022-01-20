@@ -2,6 +2,7 @@ package com.robsutar.robsutarfnf.Engine;
 
 import com.robsutar.robsutarfnf.Engine.Renderable.init.VolumeViewer;
 import com.robsutar.robsutarfnf.Engine.Graphics.Camera;
+import com.robsutar.robsutarfnf.Engine.Settings.GameSettings;
 import com.robsutar.robsutarfnf.Engine.Threads.*;
 import com.robsutar.robsutarfnf.Engine.Window.GamePanel;
 import com.robsutar.robsutarfnf.Engine.Window.WindowGame;
@@ -15,6 +16,7 @@ import java.awt.geom.AffineTransform;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Handler {
@@ -64,7 +66,7 @@ public class Handler {
 
     public static GamePanel getPanel(){return WindowGame.panel;}
 
-    public static WindowGame getFrame(){return WindowGame.frame;}
+    public static WindowGame getWindow(){return WindowGame.frame;}
 
     private static ArrayList<ArrayList<Renderable>> fillList(){
         ArrayList<ArrayList<Renderable>> rnds = new ArrayList<>();
@@ -118,7 +120,7 @@ public class Handler {
         g2d.setTransform(new AffineTransform());
         g2d.setColor(WindowGame.panel.getBackground());
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,1f));
-        g2d.setStroke(new BasicStroke(5));
+        g2d.setStroke(new BasicStroke(GameSettings.THICKNESS));
     }
 
     public static void setBpm(float bpm){
@@ -167,12 +169,19 @@ public class Handler {
             o.mouseReleased();
         }
     }
+    public static void mouseDragged(MouseEvent e, int xDistance, int yDistance) {
+        List<MouseInteractive> mouseInteractives = new ArrayList<>(Handler.mouseInteractives);
+        for (MouseInteractive o:mouseInteractives){
+            o.mouseDragged(xDistance,yDistance);
+        }
+    }
     public static void keyPressed(KeyEvent e) {
         List<KeyboardInteractive> keyboardInteractives = new ArrayList<>(Handler.keyboardInteractives);
         for (KeyboardInteractive o:keyboardInteractives){
             o.keyPressed(e);
         }
     }
+
     public static void keyTyped(KeyEvent e) {
         List<KeyboardInteractive> keyboardInteractives = new ArrayList<>(Handler.keyboardInteractives);
         for (KeyboardInteractive o:keyboardInteractives){

@@ -9,10 +9,15 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class GamePanel extends JPanel implements KeyListener, MouseListener, MouseWheelListener {
+public class GamePanel extends JPanel implements KeyListener, MouseListener, MouseWheelListener,MouseMotionListener {
 
     public int fps = 60;
     private static float bpm = 60;
+
+    boolean mouseOnScreen = false;
+    boolean dragging = false;
+
+    int startDragX,startDragY;
 
     public static Point mouse = new Point(WindowGame.wdt()/2, WindowGame.hgt()/2);
 
@@ -23,9 +28,9 @@ public class GamePanel extends JPanel implements KeyListener, MouseListener, Mou
 
     public GamePanel() {
 
-        this.setBackground(Color.BLACK);
+        this.setBackground(Color.GRAY);
         this.setFocusable(true);
-        this.setLayout(null);
+        this.setLayout(new BorderLayout());
 
         renderer = new Thread(new Runnable() {
             @Override
@@ -109,6 +114,7 @@ public class GamePanel extends JPanel implements KeyListener, MouseListener, Mou
         addKeyListener(this);
         addMouseListener(this);
         addMouseWheelListener(this);
+        addMouseMotionListener(this);
     }
 
     public static void setBpm(float bpm) {
@@ -155,11 +161,19 @@ public class GamePanel extends JPanel implements KeyListener, MouseListener, Mou
     public void mouseClicked(MouseEvent e) {
         Handler.mouseClicked(e);
     }
+    @Override
     public void mousePressed(MouseEvent e) {
+        mouseOnScreen=true;
+        startDragX = e.getX();startDragY = e.getY();
+        dragging = true;
         Handler.mousePressed(e);
     }
+
+    @Override
     public void mouseReleased(MouseEvent e) {
+        dragging = false;
         Handler.mouseReleased(e);
+
     }
 
     @Override
@@ -171,4 +185,14 @@ public class GamePanel extends JPanel implements KeyListener, MouseListener, Mou
         }
     }
 
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        Point p = e.getPoint();
+        Handler.mouseDragged(e,startDragX-p.x,startDragY-p.y);
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+
+    }
 }

@@ -8,7 +8,7 @@ import com.robsutar.robsutarfnf.Engine.Renderable.GameObject;
 import com.robsutar.robsutarfnf.Engine.Threads.BpmTicable;
 import com.robsutar.robsutarfnf.Engine.Threads.KeyboardInteractive;
 import com.robsutar.robsutarfnf.Engine.Threads.Ticable;
-import com.robsutar.robsutarfnf.Engine.Window.Anchor.AnchorTypes;
+import com.robsutar.robsutarfnf.Engine.Window.Anchor.Anchor;
 import com.robsutar.robsutarfnf.Fnf.Phase.PhaseCreator.Menus.Tabs.PhaseCreatorTab;
 import com.robsutar.robsutarfnf.Fnf.Phase.PhaseHandler;
 
@@ -33,7 +33,7 @@ public class TapBpm implements PhaseCreatorTab,BpmTicable, Ticable, KeyboardInte
     private final PhaseHandler handler;
     private JPanel panel = new JPanel();
 
-    private EditableText text = new EditableText(AnchorTypes.ANCHOR_MIDDLE, String.valueOf(bpm), 0, 100, new ActionListener() {
+    private EditableText text = new EditableText(Anchor.ANCHOR_MIDDLE, String.valueOf(bpm), 0, 100, new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             StringBuilder s = new StringBuilder(text.textField.getText());
@@ -173,7 +173,7 @@ public class TapBpm implements PhaseCreatorTab,BpmTicable, Ticable, KeyboardInte
         private float bpm;
 
         private IlluminatedBox(float bpm){
-            super(AnchorTypes.ANCHOR_MIDDLE);
+            super(Anchor.ANCHOR_MIDDLE);
             setBounds(100,50);
             this.bpm=bpm;
         }

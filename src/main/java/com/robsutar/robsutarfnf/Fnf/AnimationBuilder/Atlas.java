@@ -6,35 +6,34 @@ import com.robsutar.robsutarfnf.Engine.Files.FileManager;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 import java.util.List;
-import java.util.Objects;
 
 public class Atlas {
 
     private final XmlImageStream semiAtlas;
     private final JsonReadjust readjust;
 
+    private final String folder;
+    private final String jsonPath;
+
     public Atlas(File xmlPath){
         semiAtlas=new XmlImageStream(xmlPath);
-        String folder = semiAtlas.folderPath;
-        String jsonPath = (semiAtlas.getImageName().replace(".png",".json"));
+        folder = semiAtlas.folderPath;
+        jsonPath = (semiAtlas.getImageName().replace(".png",".json"));
         readjust = new JsonReadjust(FileManager.loadFile(folder+jsonPath));
         if (readjust.getReadjusts()==null) {
             List<Box> rdj = new ArrayList<>();
             for (int i = 0; i < semiAtlas.getNames().toArray().length; i++) {
                 rdj.add(new Box());
             }
-            FileManager.writeJson(folder,jsonPath, JsonReadjust.writeAnimationReadjust(rdj));
             readjust.setReadjusts(rdj);
         }
     }
 
-    public void rotate(int animationIndex, int range){
-        Collections.rotate(semiAtlas.images.get(animationIndex),range);
-        Collections.rotate(semiAtlas.framesX.get(animationIndex),range);
-        Collections.rotate(semiAtlas.framesY.get(animationIndex),range);
+    public void writeReadjustFile(List<Box> newReadjust){
+        readjust.setReadjusts(newReadjust);
+        FileManager.writeJson(folder,jsonPath, JsonReadjust.writeAnimationReadjust(newReadjust));
     }
 
     public int getAnimationIndex(String animationName){
@@ -53,19 +52,15 @@ public class Atlas {
         return getNames().get(index);
     }
 
-    public void rotate(int animationIndex){
-        rotate(animationIndex,1);
-    }
-
-    public int getFrameX(int animationIndex){
+    public int getFrameX(int animationIndex, int imageIndex){
         if (!semiAtlas.framesX.isEmpty()) {
-            return semiAtlas.framesX.get(animationIndex).get(0);
+            return semiAtlas.framesX.get(animationIndex).get(imageIndex);
         }
         return 0;
     }
-    public int getFrameY(int animationIndex){
+    public int getFrameY(int animationIndex, int imageIndex){
         if (!semiAtlas.framesY.isEmpty()) {
-            return semiAtlas.framesY.get(animationIndex).get(0);
+            return semiAtlas.framesY.get(animationIndex).get(imageIndex);
         }
         return 0;
     }
@@ -80,9 +75,9 @@ public class Atlas {
 
     public List<String> getNames(){return semiAtlas.getNames();}
 
-    public BufferedImage getImage(int animationIndex){
+    public BufferedImage getImage(int animationIndex, int imageIndex){
         if (!semiAtlas.images.isEmpty()) {
-            return semiAtlas.images.get(animationIndex).get(0);
+            return semiAtlas.images.get(animationIndex).get(imageIndex);
         }
         return null;
     }
@@ -91,13 +86,21 @@ public class Atlas {
         return readjust.getReadjusts().get(animationIndex);
     }
 
-    public void renderReadjust(Graphics2D g2d, int animationIndex){
-        int x = -getFrameX(animationIndex)+getReadjust(animationIndex).x;
-        int y = -getFrameY(animationIndex)+getReadjust(animationIndex).y;
+    public void renderReadjust(Graphics2D g2d, int animationIndex, int imageIndex){
+        int x = -getFrameX(animationIndex,imageIndex)+getReadjust(animationIndex).x;
+        int y = -getFrameY(animationIndex,imageIndex)+getReadjust(animationIndex).y;
         g2d.translate(x,y);
     }
 
     public String getName() {
         return semiAtlas.getImageName().replace(".png","");
+    }
+
+    public List<Box> getReadjust() {
+        return readjust.getReadjusts();
+    }
+
+    public List<List<BufferedImage>> getImages() {
+        return semiAtlas.getImages();
     }
 }

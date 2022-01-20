@@ -3,7 +3,6 @@ package com.robsutar.robsutarfnf.Fnf.Phase.PhaseCreator.Menus.Tabs.PhaseConfigs;
 import com.robsutar.robsutarfnf.Engine.Audio.Music;
 import com.robsutar.robsutarfnf.Engine.Files.FileManager;
 import com.robsutar.robsutarfnf.Engine.Handler;
-import com.robsutar.robsutarfnf.Engine.Window.Anchor.AnchorTypes;
 import com.robsutar.robsutarfnf.Fnf.AnimationBuilder.Atlas;
 import com.robsutar.robsutarfnf.Fnf.GameObjects.AnimatedObject;
 import com.robsutar.robsutarfnf.Fnf.Phase.PhaseHandler;
@@ -144,13 +143,8 @@ public class PhaseConfigs {
             box.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    JFileChooser chooser = new JFileChooser(FileManager.resourcesPath);
-                    chooser.setFileFilter(filter);
-                    if (chooser.showOpenDialog(Handler.getFrame()) == JFileChooser.APPROVE_OPTION) {
-                        File f = chooser.getSelectedFile();
-                        if (f == null) {
-                            return;
-                        }
+                    File f = FileManager.loadExplorerFile(filter);
+                    if (f != null) {
                         setFile(f);
                     }
                 }
