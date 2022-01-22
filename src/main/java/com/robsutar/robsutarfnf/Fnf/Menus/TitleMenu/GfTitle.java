@@ -1,6 +1,6 @@
 package com.robsutar.robsutarfnf.Fnf.Menus.TitleMenu;
 
-import com.robsutar.robsutarfnf.Engine.Assets;
+import com.robsutar.robsutarfnf.Assets;
 import com.robsutar.robsutarfnf.Fnf.GameObjects.AnimatedObject;
 import com.robsutar.robsutarfnf.Engine.Handler;
 import com.robsutar.robsutarfnf.Engine.Movement.KeyFrame;

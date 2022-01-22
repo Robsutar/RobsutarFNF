@@ -1,30 +1,29 @@
 package com.robsutar.robsutarfnf.Fnf.Phase.PhaseCreator.Menus.Tabs.PlayerCreator;
 
-import com.robsutar.robsutarfnf.Engine.Box;
+import com.robsutar.robsutarfnf.Engine.ExtendedRectangle;
 import com.robsutar.robsutarfnf.Engine.Menus.Texts.TextDisappear;
-import com.robsutar.robsutarfnf.Engine.Menus.Texts.TextTitleSubtitle;
 import com.robsutar.robsutarfnf.Engine.Threads.KeyboardInteractive;
 import com.robsutar.robsutarfnf.Engine.Threads.MouseInteractive;
-import com.robsutar.robsutarfnf.Engine.Window.Anchor.Anchor;
 import com.robsutar.robsutarfnf.Engine.Window.WindowGame;
 import com.robsutar.robsutarfnf.Fnf.AnimationBuilder.Atlas;
 import com.robsutar.robsutarfnf.Fnf.GameObjects.Player;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.List;
 
 public class PedestalPlayer extends Player implements KeyboardInteractive, MouseInteractive {
     private final Player background;
-    private final List<Box> readjustPos;
     private int actualX,actualY;
 
     public PedestalPlayer(Atlas atlas, String arrowUp, String arrowDown, String arrowLeft, String arrowRight, String idle) {
         super(atlas, arrowUp, arrowDown, arrowLeft, arrowRight, idle);
         background = new Player(atlas, arrowUp, arrowDown, arrowLeft, arrowRight, idle);
+        construct();
+    }
+
+    private void construct(){
         background.setOpacity(0.2f);
         setPriority(background.getPriority()+1);
-        readjustPos=atlas.getReadjust();
         background.playBack();
     }
 
@@ -52,7 +51,10 @@ public class PedestalPlayer extends Player implements KeyboardInteractive, Mouse
         if (e.isControlDown()){
             if (e.isShiftDown()) {
                 if(e.getKeyCode() == KeyEvent.VK_S) {
-                    atlas.writeReadjustFile(background.atlas.getReadjust());
+                    atlas.writeReadjust(background.atlas.getReadjust());
+                    atlas.writeArrows(atlas.getAnimationName(arrowUp), atlas.getAnimationName(arrowDown),
+                            atlas.getAnimationName(arrowLeft),atlas.getAnimationName(arrowRight), atlas.getAnimationName(arrowIdle));
+                    atlas.writeFile();
 
                     TextDisappear saved = new TextDisappear("Saved!",null);
                     saved.spawnAll();
@@ -76,7 +78,7 @@ public class PedestalPlayer extends Player implements KeyboardInteractive, Mouse
 
              */
 
-            Box b = background.atlas.getReadjust(getAnimationIndex());
+            ExtendedRectangle b = background.atlas.getReadjust(getAnimationIndex());
 
             b.setLocation((int)b.getX()-actualX,(int)b.getY()-actualY);
 

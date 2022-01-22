@@ -54,6 +54,7 @@ public class AnimatedObject extends GameObject implements AnimationTicable {
         this.imageIndex=0;
         width=atlas.getWidth(animationIndex);
         height=atlas.getHeight(animationIndex);
+        this.image=atlas.getImage(animationIndex,imageIndex);
     }
 
     public int getAnimationIndex() {

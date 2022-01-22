@@ -1,7 +1,8 @@
 package com.robsutar.robsutarfnf.Fnf.AnimationBuilder;
 
-import com.robsutar.robsutarfnf.Engine.Box;
+import com.robsutar.robsutarfnf.Engine.ExtendedRectangle;
 import com.robsutar.robsutarfnf.Engine.Files.FileManager;
+import com.robsutar.robsutarfnf.Fnf.GameObjects.Player;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -21,19 +22,38 @@ public class Atlas {
         semiAtlas=new XmlImageStream(xmlPath);
         folder = semiAtlas.folderPath;
         jsonPath = (semiAtlas.getImageName().replace(".png",".json"));
-        readjust = new JsonReadjust(FileManager.loadFile(folder+jsonPath));
-        if (readjust.getReadjusts()==null) {
-            List<Box> rdj = new ArrayList<>();
-            for (int i = 0; i < semiAtlas.getNames().toArray().length; i++) {
-                rdj.add(new Box());
-            }
-            readjust.setReadjusts(rdj);
+        readjust = new JsonReadjust(semiAtlas.getNames().toArray().length);
+        readjust.loadReadjust(FileManager.loadFile(folder+jsonPath));
+    }
+    public boolean isPlayer(){return readjust.isPlayer();}
+
+    public String getArrow(String type){
+        if (readjust.arrows==null){
+            return null;
         }
+        return (String) readjust.arrows.get("arrow"+type);
     }
 
-    public void writeReadjustFile(List<Box> newReadjust){
+    public Player getPlayer(){
+        return  new Player(this,readjust.getArrow("Up"),readjust.getArrow("Down")
+                ,readjust.getArrow("Left"),readjust.getArrow("Right"),readjust.getArrow("Idle"));
+    }
+
+    public void loadReadjust(){
+        readjust.loadReadjust(FileManager.loadFile(folder+jsonPath));
+    }
+
+    public void writeFile(){
+        readjust.writeFile(folder,jsonPath);
+    }
+
+    public void writeReadjust(List<ExtendedRectangle> newReadjust){
         readjust.setReadjusts(newReadjust);
-        FileManager.writeJson(folder,jsonPath, JsonReadjust.writeAnimationReadjust(newReadjust));
+        readjust.writeAnimationReadjust(newReadjust);
+    }
+
+    public void writeArrows(String arrowUp,String arrowDown,String arrowLeft,String arrowRight,String arrowIdle){
+        readjust.writeArrows(arrowUp,arrowDown,arrowLeft,arrowRight,arrowIdle);
     }
 
     public int getAnimationIndex(String animationName){
@@ -82,7 +102,7 @@ public class Atlas {
         return null;
     }
 
-    public Box getReadjust(int animationIndex){
+    public ExtendedRectangle getReadjust(int animationIndex){
         return readjust.getReadjusts().get(animationIndex);
     }
 
@@ -96,7 +116,7 @@ public class Atlas {
         return semiAtlas.getImageName().replace(".png","");
     }
 
-    public List<Box> getReadjust() {
+    public List<ExtendedRectangle> getReadjust() {
         return readjust.getReadjusts();
     }
 

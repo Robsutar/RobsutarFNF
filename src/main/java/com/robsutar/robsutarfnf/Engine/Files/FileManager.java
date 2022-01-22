@@ -1,7 +1,7 @@
 package com.robsutar.robsutarfnf.Engine.Files;
 
 import com.robsutar.robsutarfnf.Engine.Handler;
-import com.robsutar.robsutarfnf.Fnf.AnimationBuilder.Atlas;
+import com.robsutar.robsutarfnf.Engine.SystemPrinter;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.w3c.dom.Document;
@@ -24,39 +24,33 @@ import java.util.Objects;
 
 public class FileManager {
 
-    public static final String resourcesPath = new File("").getAbsolutePath()+"/resources/";
-    public static final String mainAssetsPath = resourcesPath+"assets/";
-    public static final String texturesPath=resourcesPath+"resourcepacks/";
-    public static final String phasesPath=mainAssetsPath+"phases/";
-
-    private static final String resetColor = "\033[0m";
-
-    private static final String loading = "\033[1;32m"+"Loading file: "+"\033[0;32m";
-    private static final String failedToLoad = "\033[1;31m"+"failed to load file: "+"\033[0;31m";
-    private static final String writing = "\033[1;35m"+"Writing file: "+"\033[0;32m";
-    private static final String failedToWrite = "\033[1;31m"+"failed to write file: "+"\033[0;31m";
+    public static final String resourcesPath = new File("").getAbsolutePath()+"\\resources\\";
+    public static final String mainAssetsPath = resourcesPath+"assets\\";
+    public static final String texturesPath=resourcesPath+"resourcepacks\\";
+    public static final String phasesPath=mainAssetsPath+"phases\\";
 
     private static final String standard = "\033[1;37m"+"ORIGINAL - ";
     private static final String resourcePack = "\033[1;33m"+"TEXTURE - ";
 
-    private static final String IMAGE = " \033[4;36m"+"IMAGE"+resetColor;
-    private static final String JSON = " \033[4;34m"+"JSON"+resetColor;
-    private static final String XML = " \033[4;31m"+"XML"+resetColor;
-    private static final String WAV = " \033[4;33m"+"WAV"+resetColor;
-    private static final String FONT = " \033[4;35m"+"FONT"+resetColor;
+    private static final String IMAGE = " \033[4;36m"+"IMAGE";
+    private static final String JSON = " \033[4;34m"+"JSON";
+    private static final String XML = " \033[4;31m"+"XML";
+    private static final String WAV = " \033[4;33m"+"WAV";
+    private static final String FONT = " \033[4;35m"+"FONT";
 
     public static File loadFile(String filePath, String assetsTexturePath){
         File file;
         if (assetsTexturePath!=null){
             file = new File(assetsTexturePath+filePath);
             if (file.exists()){
-                System.out.println(resourcePack+loading+file.getPath()+IMAGE);
+                SystemPrinter.print(resourcePack+SystemPrinter.loading+file.getPath()+IMAGE);
                 return file;
             }
         }
 
         file = new File(mainAssetsPath+filePath);
-        System.out.println(standard+loading+file.getPath()+IMAGE);
+        SystemPrinter.print(standard+SystemPrinter.loading+file.getPath()+IMAGE);
+
         return file;
     }
 
@@ -65,7 +59,8 @@ public class FileManager {
         try {
             img= ImageIO.read(file);
         } catch (IOException e) {
-            System.out.println(failedToLoad+file.getPath()+IMAGE);
+
+            SystemPrinter.print(SystemPrinter.failedToLoad+file.getPath()+IMAGE);
             e.printStackTrace();
         }
         return img;
@@ -103,7 +98,7 @@ public class FileManager {
             Object obj = parser.parse(reader);
             jObject = (JSONObject) obj;
         } catch (Exception e) {
-            System.out.println(failedToLoad+file.getPath()+JSON);
+            SystemPrinter.print(SystemPrinter.failedToLoad+file.getPath()+JSON);
             e.printStackTrace();
         }
         return jObject;
@@ -118,7 +113,7 @@ public class FileManager {
             doc = db.parse(file);
             doc.getDocumentElement().normalize();
         }catch (Exception e){
-            System.out.println(failedToLoad+file.getPath()+XML);
+            SystemPrinter.print(SystemPrinter.failedToLoad+file.getPath()+XML);
             e.printStackTrace();
         }
         return doc;
@@ -131,7 +126,7 @@ public class FileManager {
             clip = AudioSystem.getClip();
             clip.open(stream);
         }catch (Exception e){
-            System.out.println(failedToLoad+file.getPath()+WAV);
+            SystemPrinter.print(SystemPrinter.failedToLoad+file.getPath()+WAV);
             e.printStackTrace();
         }
         return clip;
@@ -142,7 +137,7 @@ public class FileManager {
         try {
             font=Font.createFont(Font.TRUETYPE_FONT, file);
         } catch (FontFormatException | IOException e) {
-            System.out.println(failedToLoad+file.getPath()+FONT);
+            SystemPrinter.print(SystemPrinter.failedToLoad+file.getPath()+FONT);
             e.printStackTrace();
         }
         return font;
@@ -153,13 +148,13 @@ public class FileManager {
         if (!fileFolder.exists()){
             fileFolder.mkdirs();
         }
-        System.out.println(writing+name+JSON);
+        SystemPrinter.print(SystemPrinter.writing+name+JSON);
         try (FileWriter file = new FileWriter(folder+name)) {
             file.write(json.toJSONString());
             file.flush();
 
         } catch (IOException e) {
-            System.out.println(failedToLoad+name+JSON);
+            SystemPrinter.print(SystemPrinter.failedToLoad+name+JSON);
             e.printStackTrace();
         }
     }

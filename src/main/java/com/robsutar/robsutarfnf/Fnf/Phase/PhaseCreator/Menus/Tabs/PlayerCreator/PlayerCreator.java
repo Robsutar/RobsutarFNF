@@ -1,14 +1,11 @@
 package com.robsutar.robsutarfnf.Fnf.Phase.PhaseCreator.Menus.Tabs.PlayerCreator;
 
 import com.robsutar.robsutarfnf.Fnf.AnimationBuilder.Atlas;
-import com.robsutar.robsutarfnf.Fnf.GameObjects.Player;
 import com.robsutar.robsutarfnf.Fnf.Phase.PhaseCreator.Menus.Tabs.PhaseCreatorTab;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -20,7 +17,7 @@ public class PlayerCreator implements PhaseCreatorTab {
     private String arrowDown;
     private String arrowLeft;
     private String arrowRight;
-    private String idle;
+    private String arrowIdle;
 
     //Arrows select
     JPanel arrows = new JPanel();
@@ -92,13 +89,44 @@ public class PlayerCreator implements PhaseCreatorTab {
                 arrowRight=s;
                 ARight.menu.setText(s);
             } else if (s.contains("IDLE")||s.contains("idle")||s.contains("Idle")){
-                idle=s;
+                arrowIdle =s;
                 AIdle.menu.setText(s);
             }
         }
 
         //player
-        player = new PedestalPlayer(atlas,arrowUp,arrowDown,arrowLeft,arrowRight,idle);
+        if (atlas.isPlayer()) {
+            arrowUp=atlas.getArrow("Up");
+            arrowDown=atlas.getArrow("Down");
+            arrowLeft=atlas.getArrow("Left");
+            arrowRight=atlas.getArrow("Right");
+            arrowIdle=atlas.getArrow("Idle");
+        }
+        else {
+            for(String s : atlas.getNames()){
+                if (s.contains("UP")||s.contains("up")||s.contains("Up")){
+                    arrowUp=s;
+                } else if (s.contains("DOWN")||s.contains("down")||s.contains("Down")){
+                    arrowDown=s;
+                } else if (s.contains("LEFT")||s.contains("left")||s.contains("Left")){
+                    arrowLeft=s;
+                } else if (s.contains("RIGHT")||s.contains("right")||s.contains("Right")){
+                    arrowRight=s;
+                } else if (s.contains("IDLE")||s.contains("idle")||s.contains("Idle")){
+                    arrowIdle =s;
+                }
+            }
+        }
+        player = new PedestalPlayer(atlas, arrowUp, arrowDown, arrowLeft, arrowRight, arrowIdle);
+        setArrowsBoxText();
+    }
+
+    private void setArrowsBoxText(){
+        AUp.menu.setText(arrowUp);
+        ADown.menu.setText(arrowDown);
+        ALeft.menu.setText(arrowLeft);
+        ARight.menu.setText(arrowRight);
+        AIdle.menu.setText(arrowIdle);
     }
 
     @Override
@@ -124,7 +152,7 @@ public class PlayerCreator implements PhaseCreatorTab {
     }
 
     private void updatePlayerAnimations(){
-        player.setAnimations(arrowUp,arrowDown,arrowLeft,arrowRight,idle);
+        player.setAnimations(arrowUp,arrowDown,arrowLeft,arrowRight, arrowIdle);
     }
 
     private class ArrowsPanel{
@@ -147,19 +175,19 @@ public class PlayerCreator implements PhaseCreatorTab {
                         updatePlayerAnimations();
                         player.playUp();
                     } else if(Objects.equals(typeArrow, "Down")){
-                        arrowUp=getArrow();
+                        arrowDown=getArrow();
                         updatePlayerAnimations();
                         player.playDown();
                     } else if(Objects.equals(typeArrow, "Left")){
-                        arrowUp=getArrow();
+                        arrowLeft=getArrow();
                         updatePlayerAnimations();
                         player.playLeft();
                     } else if(Objects.equals(typeArrow, "Right")){
-                        arrowUp=getArrow();
+                        arrowRight=getArrow();
                         updatePlayerAnimations();
                         player.playRight();
                     } else if(Objects.equals(typeArrow, "Idle")){
-                        idle=getArrow();
+                        arrowIdle =getArrow();
                         updatePlayerAnimations();
                         player.playIdle();
                     }

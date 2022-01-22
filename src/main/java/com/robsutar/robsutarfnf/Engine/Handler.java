@@ -1,5 +1,6 @@
 package com.robsutar.robsutarfnf.Engine;
 
+import com.robsutar.robsutarfnf.Assets;
 import com.robsutar.robsutarfnf.Engine.Renderable.init.VolumeViewer;
 import com.robsutar.robsutarfnf.Engine.Graphics.Camera;
 import com.robsutar.robsutarfnf.Engine.Settings.GameSettings;
@@ -8,15 +9,11 @@ import com.robsutar.robsutarfnf.Engine.Window.GamePanel;
 import com.robsutar.robsutarfnf.Engine.Window.WindowGame;
 
 import javax.sound.sampled.FloatControl;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Handler {

@@ -1,6 +1,6 @@
 package com.robsutar.robsutarfnf.Engine.Window;
 
-import com.robsutar.robsutarfnf.Engine.Assets;
+import com.robsutar.robsutarfnf.Assets;
 import com.robsutar.robsutarfnf.Engine.Graphics.Camera;
 
 import javax.swing.*;

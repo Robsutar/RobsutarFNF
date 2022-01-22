@@ -15,9 +15,6 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,8 +25,6 @@ public class PhaseHandler {
     public Music music;
     public List<Atlas> atlas = new ArrayList<>();
     public List<Player> players = new ArrayList<>();
-    public Player player1;
-    public Player player2;
 
     public JPanel panel = new JPanel();
 

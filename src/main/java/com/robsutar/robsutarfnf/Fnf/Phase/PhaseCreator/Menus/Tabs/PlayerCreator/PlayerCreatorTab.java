@@ -1,6 +1,6 @@
 package com.robsutar.robsutarfnf.Fnf.Phase.PhaseCreator.Menus.Tabs.PlayerCreator;
 
-import com.robsutar.robsutarfnf.Engine.Assets;
+import com.robsutar.robsutarfnf.Assets;
 import com.robsutar.robsutarfnf.Fnf.AnimationBuilder.Atlas;
 import com.robsutar.robsutarfnf.Fnf.Phase.PhaseCreator.Menus.Tabs.PhaseCreatorTab;
 import com.robsutar.robsutarfnf.Fnf.Phase.PhaseHandler;
