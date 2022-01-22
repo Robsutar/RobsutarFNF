@@ -1,48 +1,41 @@
 package com.robsutar.robsutarfnf;
 
-import com.robsutar.robsutarfnf.AbstractObjects.Box;
-import com.robsutar.robsutarfnf.AnimationBuilder.AnimationFactory;
-import com.robsutar.robsutarfnf.Files.JsonFiles;
-import com.robsutar.robsutarfnf.Frame.GameFrame;
-import com.robsutar.robsutarfnf.Handlers.GuiHandler;
-import com.robsutar.robsutarfnf.Handlers.Handlers;
-import com.robsutar.robsutarfnf.ImageBuffer.ImageManager;
-import com.robsutar.robsutarfnf.Menus.Buttons.BaseButton;
+import com.robsutar.robsutarfnf.Engine.Handler;
+import com.robsutar.robsutarfnf.Engine.Menus.Forms.Forms;
+import com.robsutar.robsutarfnf.Engine.Menus.Forms.FormsAnswer;
+import com.robsutar.robsutarfnf.Engine.Menus.Forms.FormsTextField;
+import com.robsutar.robsutarfnf.Engine.Window.WindowGame;
+import com.robsutar.robsutarfnf.Fnf.Phase.PhaseHandler;
 
-import java.awt.*;
-import java.io.File;
+import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Main {
-    static Handlers handlers = new Handlers();
-
-    public static String resourcesPath = new File("src/main/resources/").getAbsolutePath();
-    public static String assetsPath = resourcesPath+"/assets/";
-    public static String phasesPath = assetsPath+ "/phases/";
-    public static String loadingConsoleMessage = "Loading: ";public static String failedToLoadConsoleMessage = ("Failed to load ");
-
-    public static byte state = 0;
-
     public static void main(String[] args){
+        startGame();
 
-        new GameFrame(handlers);
+        //PhaseHandler handler =new PhaseHandler();
 
-        String liannaPhaseFolder = phasesPath+"lianna/";
-        String lianaJsonConfig = liannaPhaseFolder+"lianna-Config.json";
-        JsonFiles.writePhaseConfig(liannaPhaseFolder+"lianna-Config.json");
-        AnimationFactory factory = new AnimationFactory(lianaJsonConfig,liannaPhaseFolder);
+        List<FormsAnswer> fa = new ArrayList<>();
+        fa.add(new FormsTextField("Map title: ",""));
+        fa.add(new FormsTextField("Map author: ",""));
+        fa.add(new FormsTextField("Music author: ",""));
 
-        BaseButton box = new BaseButton(ImageManager.loadImage(assetsPath+"/cenary/img.png"));
+        Forms forms = new Forms(fa, Handler.getPanel());
 
-        GuiHandler guiHandler =  new GuiHandler(factory);
-        guiHandler.addObject(box);
-        handlers.addHandler(guiHandler);
-
+        WindowGame.resize(WindowGame.windowDim,false);
     }
-    public static void tick(){
-        handlers.handlersTick();
-    }
-    public static void renderer(Graphics g){
-        Graphics2D g2d = (Graphics2D) g;
-        handlers.handlersRenderer(g2d);
+    public static void startGame(){
+        //lookAndFeel visual
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        }
+
+        new Assets(null);
+        WindowGame.frame=new WindowGame();
     }
 }

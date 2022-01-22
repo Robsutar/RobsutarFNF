@@ -1,0 +1,12 @@
+Renderable object needs:
+Speed decreasing (scale,position)
+Default transform
+Json transform - Animated object
+
+------
+Optimise jsonFiles
+------
+Optimise lists
+-----
+Try : new FontMetrics.ascent
+-----
