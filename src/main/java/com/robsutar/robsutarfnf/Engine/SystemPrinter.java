@@ -1,5 +1,8 @@
 package com.robsutar.robsutarfnf.Engine;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import static com.robsutar.robsutarfnf.Engine.Files.FileManager.resourcesPath;
 
 public abstract class SystemPrinter {
@@ -10,9 +13,11 @@ public abstract class SystemPrinter {
     public static final String failedToLoad = failed+"to load file: "+"\033[0;31m";
     public static final String writing = "\033[1;35m"+"Writing file: "+"\033[0;32m";
     public static final String failedToWrite = failed+"to write file: "+"\033[0;31m";
+    private static final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
 
     public static void print(String x){
-        String replacement = " ⛣ "+(x.replace(resourcesPath,"resources\\"+"\033[1;97m"))+resetColor;
+        LocalDateTime now = LocalDateTime.now();
+        String replacement = dtf.format(now)+" ⛣ "+(x.replace(resourcesPath,"resources\\"+"\033[1;97m"))+resetColor;
         System.out.println(replacement);
     }
 }
