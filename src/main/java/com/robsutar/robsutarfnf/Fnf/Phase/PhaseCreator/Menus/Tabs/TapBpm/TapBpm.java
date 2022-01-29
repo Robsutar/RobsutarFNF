@@ -5,9 +5,9 @@ import com.robsutar.robsutarfnf.Engine.Handler;
 import com.robsutar.robsutarfnf.Engine.Menus.Texts.EditableText;
 import com.robsutar.robsutarfnf.Engine.Movement.KeyFrame;
 import com.robsutar.robsutarfnf.Engine.Renderable.GameObject;
-import com.robsutar.robsutarfnf.Engine.Threads.BpmTicable;
-import com.robsutar.robsutarfnf.Engine.Threads.KeyboardInteractive;
-import com.robsutar.robsutarfnf.Engine.Threads.Ticable;
+import com.robsutar.robsutarfnf.Engine.Interfaces.BpmTicable;
+import com.robsutar.robsutarfnf.Engine.Interfaces.KeyboardInteractive;
+import com.robsutar.robsutarfnf.Engine.Interfaces.Ticable;
 import com.robsutar.robsutarfnf.Engine.Window.Anchor.Anchor;
 import com.robsutar.robsutarfnf.Fnf.Phase.PhaseCreator.Menus.Tabs.PhaseCreatorTab;
 import com.robsutar.robsutarfnf.Fnf.Phase.PhaseHandler;
@@ -19,10 +19,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class TapBpm implements PhaseCreatorTab,BpmTicable, Ticable, KeyboardInteractive {
-    private float bpm=90;
+    private float bpm;
     private int bAge = 0;
     private float lastBpm = 0;
     private long deltaNanoTap = 0;
@@ -58,6 +57,8 @@ public class TapBpm implements PhaseCreatorTab,BpmTicable, Ticable, KeyboardInte
 
     public TapBpm(PhaseHandler phaseHandler){
         this.handler = phaseHandler;
+
+        bpm=handler.bpm;
 
         List<JLabel> keyTips = new ArrayList<>();
 
@@ -132,6 +133,7 @@ public class TapBpm implements PhaseCreatorTab,BpmTicable, Ticable, KeyboardInte
 
     @Override
     public void close() {
+        handler.bpm=bpm;
         killAll();
         text.killAll();
         for (IlluminatedBox b:boxes) {
@@ -143,6 +145,11 @@ public class TapBpm implements PhaseCreatorTab,BpmTicable, Ticable, KeyboardInte
     @Override
     public String getName() {
         return "Tap Bpm";
+    }
+
+    @Override
+    public void onHandlerSave() {
+        handler.bpm=bpm;
     }
 
     @Override

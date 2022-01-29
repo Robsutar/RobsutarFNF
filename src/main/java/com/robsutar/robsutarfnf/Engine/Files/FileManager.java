@@ -17,10 +17,10 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
 import java.util.Objects;
+import java.util.prefs.Preferences;
 
 public class FileManager {
 
@@ -75,13 +75,20 @@ public class FileManager {
     }
 
     public static File loadExplorerFile(JFileChooser fileChooser,FileNameExtensionFilter filter){
+        Preferences prefs = Preferences.userRoot().node(FileManager.class.getName());
         JFileChooser chooser;
         chooser = Objects.requireNonNullElseGet(fileChooser, () -> new JFileChooser(FileManager.resourcesPath));
+
+        String LAST_USED_FOLDER = "fileManager";
+
+        chooser.setCurrentDirectory(new File(prefs.get(LAST_USED_FOLDER, new File(".").getAbsolutePath())));
+
         if (filter!=null){chooser.setFileFilter(filter);}
 
         File f = null;
         if (chooser.showOpenDialog(Handler.getWindow()) == JFileChooser.APPROVE_OPTION) {
             f = chooser.getSelectedFile();
+            prefs.put(LAST_USED_FOLDER,f.getParent());
         }
         return f;
     }
@@ -99,7 +106,6 @@ public class FileManager {
             jObject = (JSONObject) obj;
         } catch (Exception e) {
             SystemPrinter.print(SystemPrinter.failedToLoad+file.getPath()+JSON);
-            e.printStackTrace();
         }
         return jObject;
     }
@@ -143,18 +149,59 @@ public class FileManager {
         return font;
     }
 
-    public static void writeJson(String folder,String name,JSONObject json){
-        File fileFolder = new File(folder);
+    public static void writeFile(JSONObject json,File path){
+        File fileFolder = new File(path.getParent());
         if (!fileFolder.exists()){
             fileFolder.mkdirs();
         }
-        SystemPrinter.print(SystemPrinter.writing+name+JSON);
-        try (FileWriter file = new FileWriter(folder+name)) {
+
+        SystemPrinter.print(SystemPrinter.writing+path.getName()+JSON);
+
+        try (FileWriter file = new FileWriter(path)) {
             file.write(json.toJSONString());
             file.flush();
 
         } catch (IOException e) {
-            SystemPrinter.print(SystemPrinter.failedToLoad+name+JSON);
+            SystemPrinter.print(SystemPrinter.failedToLoad+path.getName()+JSON);
+            e.printStackTrace();
+        }
+    }
+
+    public static File writeFile(File file, File path){
+
+        File fileFolder = new File(path.getParent());
+        if (!fileFolder.exists()){
+            fileFolder.mkdirs();
+        }
+
+        SystemPrinter.print(SystemPrinter.writing+file.getName()+JSON);
+
+        try (
+            InputStream in = new BufferedInputStream(
+                    new FileInputStream(file));
+            OutputStream out = new BufferedOutputStream(
+                    new FileOutputStream(path))) {
+
+            byte[] buffer = new byte[1024];
+            int lengthRead;
+            while ((lengthRead = in.read(buffer)) > 0) {
+                out.write(buffer, 0, lengthRead);
+                out.flush();
+                return new File(path.getPath());
+            }
+        } catch (IOException fileNotFoundException) {
+            SystemPrinter.print(SystemPrinter.failedToWrite+path);
+            fileNotFoundException.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void deleteFile(File file) {
+        SystemPrinter.print(SystemPrinter.deleting+file.getPath());
+        try {
+            Files.delete(file.toPath());
+        } catch (IOException e) {
+            SystemPrinter.print(SystemPrinter.failedToDelete+file.getPath());
             e.printStackTrace();
         }
     }

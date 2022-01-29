@@ -4,7 +4,7 @@ import com.robsutar.robsutarfnf.Assets;
 import com.robsutar.robsutarfnf.Fnf.GameObjects.AnimatedObject;
 import com.robsutar.robsutarfnf.Engine.Handler;
 import com.robsutar.robsutarfnf.Engine.Movement.KeyFrame;
-import com.robsutar.robsutarfnf.Engine.Threads.BpmTicable;
+import com.robsutar.robsutarfnf.Engine.Interfaces.BpmTicable;
 import com.robsutar.robsutarfnf.Engine.Window.Anchor.Anchor;
 
 public class GfTitle extends AnimatedObject implements BpmTicable {

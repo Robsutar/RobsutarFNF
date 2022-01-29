@@ -69,8 +69,8 @@ public class JsonReadjust {
         return positionList;
     }
 
-    public void writeFile(String folder, String name){
-        FileManager.writeJson(folder,name,file);
+    public void writeFile(File path){
+        FileManager.writeFile(file,path);
     }
 
     public void writeAnimationReadjust(int count){

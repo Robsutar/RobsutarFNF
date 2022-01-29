@@ -151,6 +151,11 @@ public class PlayerCreator implements PhaseCreatorTab {
         return "Player Creator";
     }
 
+    @Override
+    public void onHandlerSave() {
+
+    }
+
     private void updatePlayerAnimations(){
         player.setAnimations(arrowUp,arrowDown,arrowLeft,arrowRight, arrowIdle);
     }

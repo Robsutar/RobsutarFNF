@@ -6,8 +6,10 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 
 public class WavAudio {
-    private final Clip audio;
+    public final Clip audio;
     private final FloatControl fc;
+
+    private boolean initialized = false;
 
     public WavAudio(Clip audio){
         this.audio=audio;
@@ -24,10 +26,12 @@ public class WavAudio {
     public void pause(){
         audio.stop();
     }
-    public void start(){audio.start();}
+    public void start(){if(!initialized){initialize();}audio.start();}
+
     public void initialize(){
         Handler.addObject(this.fc);
         fc.setValue(Handler.getValidVolume(Handler.volume));
+        initialized=true;
     }
 
     public void stop(){

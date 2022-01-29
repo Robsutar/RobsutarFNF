@@ -1,14 +1,12 @@
 package com.robsutar.robsutarfnf.Engine.Renderable;
 
 import com.robsutar.robsutarfnf.Engine.Box;
-import com.robsutar.robsutarfnf.Engine.Threads.Renderable;
+import com.robsutar.robsutarfnf.Engine.Interfaces.Renderable;
 import com.robsutar.robsutarfnf.Engine.Window.Anchor.Anchor;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.List;
 
 public abstract class SimpleRenderable extends Box implements Renderable {
     protected BufferedImage image;

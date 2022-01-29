@@ -44,7 +44,7 @@ public class Atlas {
     }
 
     public void writeFile(){
-        readjust.writeFile(folder,jsonPath);
+        readjust.writeFile(FileManager.loadFile(folder+jsonPath));
     }
 
     public void writeReadjust(List<ExtendedRectangle> newReadjust){

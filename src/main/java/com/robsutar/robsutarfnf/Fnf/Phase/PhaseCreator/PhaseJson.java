@@ -1,67 +1,50 @@
 package com.robsutar.robsutarfnf.Fnf.Phase.PhaseCreator;
 
-import com.robsutar.robsutarfnf.Fnf.AnimationBuilder.Atlas;
 import com.robsutar.robsutarfnf.Engine.Audio.Music;
 import com.robsutar.robsutarfnf.Engine.Files.FileManager;
+import com.robsutar.robsutarfnf.Fnf.AnimationBuilder.Atlas;
+import com.robsutar.robsutarfnf.Fnf.Phase.PhaseHandler;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import javax.sound.sampled.Clip;
 import java.io.File;
 
 public class PhaseJson {
-    public final String mapAuthor;
-    public final String musicAuthor;
-    public final Atlas player1;
-    public final Atlas player2;
-    public final Music music;
-    public final Clip voices;
-    public final JSONObject phaseObjects;
 
-    public PhaseJson(String mapAuthor, String musicAuthor, Atlas player1, Atlas player2, Music music, Clip voices, JSONObject phaseObjects){
-        this.mapAuthor=mapAuthor;this.musicAuthor=musicAuthor;this.player1=player1;this.player2=player2;
-        this.music=music;this.voices=voices;this.phaseObjects=phaseObjects;
+    public static void readPhaseConfigs(File jsonFile,PhaseHandler handler){
 
-        System.out.println(mapAuthor+"\n"+musicAuthor+"\n"+player1+"\n"+player2+"\n"+music+"\n"+voices+"\n"+phaseObjects);
-    }
-
-    public static PhaseJson readPhaseConfigs(File file){
-        JSONObject object = FileManager.loadJson(file);
-
+        JSONObject object = FileManager.loadJson(jsonFile);
         JSONObject phaseConfigs = (JSONObject) object.get("phaseConfigs");
         JSONObject credits = (JSONObject) phaseConfigs.get("credits");
         JSONObject filePaths = (JSONObject) phaseConfigs.get("filePaths");
         JSONObject phaseSettings = (JSONObject) phaseConfigs.get("phaseSettings");
 
         String musicPath = (String) filePaths.get("music");
-        String voicesPath = (String) filePaths.get("voices");
-        int musicBpm = Integer.parseInt(phaseSettings.get("bpm").toString());
-        String player1PathXml = "/characters/robot.xml";
-        String player2PathXml = "/characters/ankha_assets.xml";
-        String mapFolder = file.getParent()+"/";
+        String p1Voice = (String) filePaths.get("p1Voice");
+        String p2Voice = (String) filePaths.get("p2Voice");
+        float musicBpm = Float.parseFloat(phaseSettings.get("bpm").toString());
 
         String mapAuthor= (String) credits.get("mapAuthor");
         String musicAuthor= (String) credits.get("musicAuthor");
 
-        Atlas player1 = new Atlas(FileManager.loadFile(mapFolder+player1PathXml));
-        Atlas player2 = new Atlas(FileManager.loadFile(mapFolder+player2PathXml));
-
-        Music music =  new Music(FileManager.loadWav(FileManager.loadFile(mapFolder+musicPath)),musicBpm);
-        Clip voices = FileManager.loadWav(FileManager.loadFile(mapFolder+voicesPath));
-
         JSONObject phaseObjects = (JSONObject) phaseConfigs.get("phaseObjects");
 
-        return  new PhaseJson(mapAuthor,musicAuthor,player1,player2,music,voices,phaseObjects);
+        handler.phaseTitle = jsonFile.getParentFile().getName();
+        handler.mapAuthor = mapAuthor;
+        handler.musicAuthor = musicAuthor;
+        handler.music = new Music(FileManager.loadFile(jsonFile.getParent()+"\\sounds\\"+musicPath));
+        handler.p1Voice = new Music(FileManager.loadFile(jsonFile.getParent()+"\\sounds\\"+p1Voice));
+        handler.p2Voice = new Music(FileManager.loadFile(jsonFile.getParent()+"\\sounds\\"+p2Voice));
+        handler.bpm = musicBpm;
     }
 
-    public static JSONObject writePhaseConfigs(){
-        String mapAuthor="Robsutar";
-        String musicAuthor="RWBY";
-        String musicPath = "sounds/liannaMusic.wav";
-        String voicesPath = "sounds/liannaVoices.wav";
-        int musicBpm = 132;
-        String player1PathXml = "characters/robot.xml";
-        String player2PathXml = "characters/ankha_assets.xml";
+    public static JSONObject writePhaseConfigs(PhaseHandler handler){
+        String mapAuthor=handler.mapAuthor;
+        String musicAuthor=handler.musicAuthor;
+        String musicPath = handler.music.getName();
+        String p1Voice = handler.p1Voice.getName();
+        String p2Voice = handler.p2Voice.getName();
+        float musicBpm = handler.bpm;
 
         JSONObject phaseJson = new JSONObject(); //Out file
 
@@ -77,10 +60,14 @@ public class PhaseJson {
         //FilePaths
         JSONObject filePaths = new JSONObject();
         filePaths.put("music",musicPath);
-        filePaths.put("voices",voicesPath);
-        filePaths.put("p1Xml",player1PathXml);
-        filePaths.put("p2Xml",player2PathXml);
+        filePaths.put("p1Voice",p1Voice);
+        filePaths.put("p2Voice",p2Voice);
 
+        //Atlas
+        JSONArray animatedObjects = new JSONArray();
+        for (int i =0;i<handler.atlas.toArray().length;i++){
+            animatedObjects.add(handler.atlas.get(i).getName());
+        }
         //PhaseObjects
         JSONObject phaseObjects = new JSONObject();
         JSONArray phaseArrows = new JSONArray();
@@ -94,6 +81,7 @@ public class PhaseJson {
         phaseJson.put("phaseSettings",phaseSettings);
         phaseJson.put("filePaths",filePaths);
         phaseJson.put("phaseObjects",phaseObjects);
+        phaseJson.put("animatedObjects",animatedObjects);
 
         JSONObject outFile = new JSONObject();
         outFile.put("phaseConfigs",phaseJson);

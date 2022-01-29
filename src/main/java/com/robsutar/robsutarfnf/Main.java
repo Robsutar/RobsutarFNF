@@ -1,34 +1,33 @@
 package com.robsutar.robsutarfnf;
 
+import com.robsutar.robsutarfnf.Engine.ClassReader;
+import com.robsutar.robsutarfnf.Engine.Files.FileManager;
 import com.robsutar.robsutarfnf.Engine.Handler;
 import com.robsutar.robsutarfnf.Engine.Menus.Forms.Forms;
 import com.robsutar.robsutarfnf.Engine.Menus.Forms.FormsAnswer;
+import com.robsutar.robsutarfnf.Engine.Menus.Forms.FormsFile;
 import com.robsutar.robsutarfnf.Engine.Menus.Forms.FormsTextField;
 import com.robsutar.robsutarfnf.Engine.Window.WindowGame;
+import com.robsutar.robsutarfnf.Fnf.Phase.PhaseFolderCreator;
 import com.robsutar.robsutarfnf.Fnf.Phase.PhaseHandler;
 
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class Main {
     public static void main(String[] args){
         startGame();
 
-        //PhaseHandler handler =new PhaseHandler();
+        //PhaseFolderCreator pcreator = new PhaseFolderCreator();
+        //pcreator.open();
 
-        List<FormsAnswer> fa = new ArrayList<>();
-        fa.add(new FormsTextField("Map title: ",""));
-        fa.add(new FormsTextField("Map author: ",""));
-        fa.add(new FormsTextField("Music author: ",""));
-
-        Forms forms = new Forms(fa, Handler.getPanel());
+        PhaseHandler handler = new PhaseHandler(FileManager.loadFile(FileManager.phasesPath+"Rwby\\Rwby system.json"));
+        //PhaseHandler handler = new PhaseHandler();
+        handler.open();
 
         WindowGame.resize(WindowGame.windowDim,false);
     }
     public static void startGame(){
-        //lookAndFeel visual
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
