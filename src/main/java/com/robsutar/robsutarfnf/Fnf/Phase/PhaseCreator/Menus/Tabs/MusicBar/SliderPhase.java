@@ -31,6 +31,8 @@ public class SliderPhase extends Component implements PhaseCreatorTab,MouseInter
     private List<point> selectedPoints = new ArrayList<>();
     private List<point> busyPoints = new ArrayList<>();
 
+    private point lastClickedPoint = null;
+
     public SliderPhase(MusicBar musicbar){
         this.handler=musicbar.handler;
 
@@ -43,30 +45,44 @@ public class SliderPhase extends Component implements PhaseCreatorTab,MouseInter
         addMouseListener(new MouseInputListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
             }
 
             @Override
             public void mousePressed(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
                 point p = getPointAtClick();
                 if(p != null) {
                     if(e.getButton() == MouseEvent.BUTTON1) {
-                        SliderObject o =SliderObject.getObject(handler.selectedObject);if (o==null){return;}
-                        if(p.object == null) {
-                            p.addObject(o);
-                        } else {
-                            if (Objects.equals(o.getType(), p.object.getType())){
-                                p.changeSelect();
-                            } else {
+                        SliderObject o =SliderObject.getObject(handler.selectedObject);if (o!=null) {
+                            if(p.object == null) {
                                 p.addObject(o);
                             }
                         }
                     } else if(e.getButton() == MouseEvent.BUTTON3) {
                         p.removeObject();
+                    }
+                    lastClickedPoint = p;
+                }
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                point p = getPointAtClick();
+                if (p!=null){
+                    if (p!=lastClickedPoint) {
+                        if(lastClickedPoint.getObject() instanceof SliderObject.Arrow) {
+                            if (p.value-lastClickedPoint.value>0) {
+                                SliderObject.Arrow a = (SliderObject.Arrow) lastClickedPoint.getObject();
+                                a.setSlider(p.value - lastClickedPoint.value);
+                            }
+                        }
+                    } else {
+                        SliderObject o =SliderObject.getObject(handler.selectedObject);if (o!=null) {
+                            if(Objects.equals(o.getType(), p.object.getType())) {
+                                p.changeSelect();
+                            } else {
+                                p.addObject(o);
+                            }
+                        }
                     }
                 }
             }
@@ -91,10 +107,6 @@ public class SliderPhase extends Component implements PhaseCreatorTab,MouseInter
 
             }
         });
-    }
-
-    @Override
-    public void mouseReleased() {
     }
 
     private point getPointAtClick() {
@@ -244,6 +256,7 @@ public class SliderPhase extends Component implements PhaseCreatorTab,MouseInter
 
         private void render(Graphics2D g2d){
             int height = pointHeight;
+            double pDistance = pointDistance;
             if (value%4==0){height*=1.4;}
 
             g2d.setColor(Color.black);
@@ -252,6 +265,11 @@ public class SliderPhase extends Component implements PhaseCreatorTab,MouseInter
             if (object!=null){
                 g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,0.8f));
                 object.selected = selected;
+
+                if (object instanceof SliderObject.Arrow){
+                    SliderObject.Arrow a = (SliderObject.Arrow) object;
+                    a.renderDrawSlider(g2d,x,y-pointHeight/2, (int) ((pDistance*a.getSlider())),pointHeight);
+                }
                 object.render(g2d,x,y);
             }
         }

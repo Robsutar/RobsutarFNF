@@ -48,9 +48,9 @@ public class Assets {
 
         ARROW_ASSETS = new Atlas(FileManager.loadFile("toCut\\NOTE_assets.xml",assetsTextureFolder));
 
-        ARROW_UP = ARROW_ASSETS.getImage(ARROW_ASSETS.getAnimationIndex("arrowUP"),0);
-        ARROW_DOWN = ARROW_ASSETS.getImage(ARROW_ASSETS.getAnimationIndex("arrowDOWN"),0);
-        ARROW_LEFT = ARROW_ASSETS.getImage(ARROW_ASSETS.getAnimationIndex("arrowLEFT"),0);
-        ARROW_RIGHT = ARROW_ASSETS.getImage(ARROW_ASSETS.getAnimationIndex("arrowRIGHT"),0);
+        ARROW_UP = ARROW_ASSETS.getImage(ARROW_ASSETS.getAnimationIndex("green"),0);
+        ARROW_DOWN = ARROW_ASSETS.getImage(ARROW_ASSETS.getAnimationIndex("blue"),0);
+        ARROW_LEFT = ARROW_ASSETS.getImage(ARROW_ASSETS.getAnimationIndex("purple"),0);
+        ARROW_RIGHT = ARROW_ASSETS.getImage(ARROW_ASSETS.getAnimationIndex("red"),0);
     }
 }

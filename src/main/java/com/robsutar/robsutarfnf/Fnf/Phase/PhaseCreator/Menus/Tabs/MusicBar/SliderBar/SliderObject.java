@@ -61,17 +61,33 @@ public abstract class SliderObject{
     }
 
     public static abstract class Arrow extends SliderObject {
+        int slider = 0;
+        public void setSlider(int i){
+            slider = i;
+        }
+
+        public int getSlider(){return slider;}
+
+        public void renderDrawSlider(Graphics2D g2d, int x, int y, int pDistance, int pointHeight) {
+            if (getSlider()>0){
+                g2d.setColor(getColor());
+                g2d.fillRect(x,y,pDistance,pointHeight);
+            }
+        }
+
+        protected abstract Color getColor();
     }
 
     public static class ArrowUp extends Arrow{
-        @Override
-        protected BufferedImage getImage() {
+        @Override protected BufferedImage getImage() {
             return Assets.ARROW_UP;
         }
 
-        @Override
-        public String getType() {return "arrowUp";}
+        @Override public String getType() {return "arrowUp";}
+
+        @Override protected Color getColor() {return new Color(0,255,0);}
     }
+
     public static class ArrowDown extends Arrow{
         @Override
         protected BufferedImage getImage() {
@@ -80,7 +96,10 @@ public abstract class SliderObject{
 
         @Override
         public String getType() {return "arrowDown";}
+
+        @Override protected Color getColor() {return new Color(0,255,255);}
     }
+
     public static class ArrowLeft extends Arrow{
         @Override
         protected BufferedImage getImage() {
@@ -89,14 +108,17 @@ public abstract class SliderObject{
 
         @Override
         public String getType() {return "arrowLeft";}
+
+        @Override protected Color getColor() {return new Color(204,0,204);}
     }
+
     public static class ArrowRight extends Arrow{
-        @Override
-        protected BufferedImage getImage() {
+        @Override protected BufferedImage getImage() {
             return Assets.ARROW_RIGHT;
         }
 
-        @Override
-        public String getType() {return "arrowRight";}
+        @Override public String getType() {return "arrowRight";}
+
+        @Override protected Color getColor() {return new Color(255,0,0);}
     }
 }
