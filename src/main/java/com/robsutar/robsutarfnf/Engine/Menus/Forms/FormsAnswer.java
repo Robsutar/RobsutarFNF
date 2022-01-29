@@ -46,4 +46,6 @@ public abstract class FormsAnswer {
         }
         return true;
     }
+
+    public abstract void setAnswer(Object answer);
 }

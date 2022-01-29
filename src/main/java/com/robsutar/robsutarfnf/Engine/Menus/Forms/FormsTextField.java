@@ -30,7 +30,7 @@ public class FormsTextField extends FormsAnswer{
     }
 
     @Override
-    protected String getAnswer() {
+    public String getAnswer() {
         if (textField.getText().length()>0){
             return textField.getText();
         }
@@ -40,5 +40,12 @@ public class FormsTextField extends FormsAnswer{
     @Override
     protected JComponent getComponent() {
         return getTextField();
+    }
+
+    @Override
+    public void setAnswer(Object answer) {
+        if ((answer instanceof String)){
+            getTextField().setText((String) answer);
+        }
     }
 }

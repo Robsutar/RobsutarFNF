@@ -1,9 +1,8 @@
 package com.robsutar.robsutarfnf.Fnf.GameObjects;
 
-import com.robsutar.robsutarfnf.Engine.Handler;
 import com.robsutar.robsutarfnf.Fnf.AnimationBuilder.Atlas;
 import com.robsutar.robsutarfnf.Engine.Renderable.GameObject;
-import com.robsutar.robsutarfnf.Engine.Threads.AnimationTicable;
+import com.robsutar.robsutarfnf.Engine.Interfaces.AnimationTicable;
 import com.robsutar.robsutarfnf.Engine.Window.Anchor.Anchor;
 
 import java.awt.*;

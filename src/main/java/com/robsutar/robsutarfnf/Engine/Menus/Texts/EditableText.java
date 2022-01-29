@@ -2,12 +2,10 @@ package com.robsutar.robsutarfnf.Engine.Menus.Texts;
 
 import com.robsutar.robsutarfnf.Engine.Box;
 import com.robsutar.robsutarfnf.Engine.Handler;
-import com.robsutar.robsutarfnf.Engine.Threads.FullSpawn;
-import com.robsutar.robsutarfnf.Engine.Threads.Ticable;
+import com.robsutar.robsutarfnf.Engine.Interfaces.Ticable;
 import com.robsutar.robsutarfnf.Engine.Window.Anchor.Anchor;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class EditableText extends Box implements Ticable {

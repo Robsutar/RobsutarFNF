@@ -1,53 +1,29 @@
 package com.robsutar.robsutarfnf;
 
 import com.robsutar.robsutarfnf.Engine.ClassReader;
+import com.robsutar.robsutarfnf.Engine.Files.FileManager;
 import com.robsutar.robsutarfnf.Engine.Handler;
 import com.robsutar.robsutarfnf.Engine.Menus.Forms.Forms;
 import com.robsutar.robsutarfnf.Engine.Menus.Forms.FormsAnswer;
 import com.robsutar.robsutarfnf.Engine.Menus.Forms.FormsFile;
 import com.robsutar.robsutarfnf.Engine.Menus.Forms.FormsTextField;
 import com.robsutar.robsutarfnf.Engine.Window.WindowGame;
+import com.robsutar.robsutarfnf.Fnf.Phase.PhaseFolderCreator;
 import com.robsutar.robsutarfnf.Fnf.Phase.PhaseHandler;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class Main {
     public static void main(String[] args){
         startGame();
 
-        //PhaseHandler handler =new PhaseHandler();
+        //PhaseFolderCreator pcreator = new PhaseFolderCreator();
+        //pcreator.open();
 
-        ActionListener act = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Ta´zada");
-            }
-        };
-
-        List<FormsAnswer> fa = new ArrayList<>();
-
-        FormsTextField ff = new FormsTextField("File netecte",null);
-        ff.setRequired(true);
-
-        fa.add(new FormsTextField("Map title: ",""));
-        fa.add(new FormsTextField("Map author: ",""));
-        fa.add(new FormsTextField("Music author: ",""));
-        fa.add(new FormsTextField("coiso title: ",""));
-        fa.add(new FormsTextField("coiso author: ",""));
-        fa.add(new FormsTextField("ar author: ",""));
-        fa.add(new FormsFile("select music: ",new FileNameExtensionFilter("WAV files","wav")));
-        fa.add(new FormsFile("select: ",new FileNameExtensionFilter("WAV files","wav")));
-        fa.add(new FormsFile("select: ",new FileNameExtensionFilter("WAV files","wav")));
-        fa.add(ff);
-
-        Forms forms = new Forms("PhaseHandler",Handler.getWindow(),300,500,fa,act);
-        forms.open();
+        PhaseHandler handler = new PhaseHandler(FileManager.loadFile(FileManager.phasesPath+"Rwby\\Rwby system.json"));
+        //PhaseHandler handler = new PhaseHandler();
+        handler.open();
 
         WindowGame.resize(WindowGame.windowDim,false);
     }

@@ -4,7 +4,7 @@ import com.robsutar.robsutarfnf.Assets;
 import com.robsutar.robsutarfnf.Engine.Renderable.init.VolumeViewer;
 import com.robsutar.robsutarfnf.Engine.Graphics.Camera;
 import com.robsutar.robsutarfnf.Engine.Settings.GameSettings;
-import com.robsutar.robsutarfnf.Engine.Threads.*;
+import com.robsutar.robsutarfnf.Engine.Interfaces.*;
 import com.robsutar.robsutarfnf.Engine.Window.GamePanel;
 import com.robsutar.robsutarfnf.Engine.Window.WindowGame;
 
@@ -12,6 +12,7 @@ import javax.sound.sampled.FloatControl;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.List;
@@ -172,6 +173,13 @@ public class Handler {
             o.mouseDragged(xDistance,yDistance);
         }
     }
+    public static void mouseWheelMoved(MouseWheelEvent e) {
+        List<MouseInteractive> mouseInteractives = new ArrayList<>(Handler.mouseInteractives);
+        for (MouseInteractive o:mouseInteractives){
+            o.mouseWheel(e);
+        }
+    }
+
     public static void keyPressed(KeyEvent e) {
         List<KeyboardInteractive> keyboardInteractives = new ArrayList<>(Handler.keyboardInteractives);
         for (KeyboardInteractive o:keyboardInteractives){
@@ -211,5 +219,6 @@ public class Handler {
         bpmTicables= new ArrayList<>();
         animationTicables= new ArrayList<>();
         mouseInteractives= new ArrayList<>();
+
     }
 }

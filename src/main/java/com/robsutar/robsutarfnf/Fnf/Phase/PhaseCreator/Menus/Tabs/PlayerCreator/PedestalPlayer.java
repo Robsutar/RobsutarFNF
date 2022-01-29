@@ -2,8 +2,8 @@ package com.robsutar.robsutarfnf.Fnf.Phase.PhaseCreator.Menus.Tabs.PlayerCreator
 
 import com.robsutar.robsutarfnf.Engine.ExtendedRectangle;
 import com.robsutar.robsutarfnf.Engine.Menus.Texts.TextDisappear;
-import com.robsutar.robsutarfnf.Engine.Threads.KeyboardInteractive;
-import com.robsutar.robsutarfnf.Engine.Threads.MouseInteractive;
+import com.robsutar.robsutarfnf.Engine.Interfaces.KeyboardInteractive;
+import com.robsutar.robsutarfnf.Engine.Interfaces.MouseInteractive;
 import com.robsutar.robsutarfnf.Engine.Window.WindowGame;
 import com.robsutar.robsutarfnf.Fnf.AnimationBuilder.Atlas;
 import com.robsutar.robsutarfnf.Fnf.GameObjects.Player;

@@ -4,4 +4,6 @@ public interface PhaseCreatorTab {
     void open();
     void close();
     String getName();
+
+    void onHandlerSave();
 }

@@ -94,7 +94,7 @@ public class GamePanel extends JPanel implements KeyListener, MouseListener, Mou
         animationTick.start();
 
         tick = Executors.newSingleThreadScheduledExecutor();
-        tick.scheduleAtFixedRate(Handler::tick, 0, 10, TimeUnit.MILLISECONDS);
+        tick.scheduleAtFixedRate(Handler::tick,0, 10, TimeUnit.MILLISECONDS);
 
 
         addKeyListener(this);
@@ -169,6 +169,7 @@ public class GamePanel extends JPanel implements KeyListener, MouseListener, Mou
         } else {
             Handler.setVolume(Handler.volume-e.getWheelRotation());
         }
+        Handler.mouseWheelMoved(e);
     }
 
     @Override

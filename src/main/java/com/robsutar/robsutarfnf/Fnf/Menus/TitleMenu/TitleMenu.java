@@ -5,8 +5,8 @@ import com.robsutar.robsutarfnf.Engine.Handler;
 import com.robsutar.robsutarfnf.Engine.Window.Anchor.Anchor;
 import com.robsutar.robsutarfnf.Fnf.Menus.TitleMenu.TitleOptions.TitleOptions;
 import com.robsutar.robsutarfnf.Engine.Movement.KeyFrame;
-import com.robsutar.robsutarfnf.Engine.Threads.MouseInteractive;
-import com.robsutar.robsutarfnf.Engine.Threads.Ticable;
+import com.robsutar.robsutarfnf.Engine.Interfaces.MouseInteractive;
+import com.robsutar.robsutarfnf.Engine.Interfaces.Ticable;
 import com.robsutar.robsutarfnf.Engine.Window.Anchor.AnchorBox;
 
 import java.util.ArrayList;

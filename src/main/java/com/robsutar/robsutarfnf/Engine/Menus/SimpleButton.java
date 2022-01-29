@@ -2,7 +2,7 @@ package com.robsutar.robsutarfnf.Engine.Menus;
 
 import com.robsutar.robsutarfnf.Engine.Renderable.GameObject;
 import com.robsutar.robsutarfnf.Engine.Handler;
-import com.robsutar.robsutarfnf.Engine.Threads.MouseInteractive;
+import com.robsutar.robsutarfnf.Engine.Interfaces.MouseInteractive;
 import com.robsutar.robsutarfnf.Engine.Window.Anchor.Anchor;
 
 import java.awt.image.BufferedImage;

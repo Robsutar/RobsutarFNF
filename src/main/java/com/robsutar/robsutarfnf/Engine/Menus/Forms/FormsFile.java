@@ -11,7 +11,7 @@ import java.io.File;
 
 public class FormsFile extends FormsAnswer{
     private final JButton button = new JButton();
-    private File file;
+    public File file;
 
     public FormsFile(String labelText, FileNameExtensionFilter filter){
         super(labelText);
@@ -50,12 +50,20 @@ public class FormsFile extends FormsAnswer{
     }
 
     @Override
-    protected File getAnswer() {
+    public File getAnswer() {
         return file;
     }
 
     @Override
     protected JComponent getComponent() {
         return getButton();
+    }
+
+    @Override
+    public void setAnswer(Object answer) {
+        if (answer instanceof File){
+            this.file= (File) answer;
+            button.setText(file.getName());
+        }
     }
 }

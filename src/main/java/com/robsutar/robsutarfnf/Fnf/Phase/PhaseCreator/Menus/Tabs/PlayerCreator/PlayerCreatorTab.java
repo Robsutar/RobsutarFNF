@@ -18,6 +18,7 @@ public class PlayerCreatorTab implements PhaseCreatorTab {
     private JPanel panel = new JPanel();
     private PlayerCreator playerCreator = new PlayerCreator(null,panel);
     private List<JMenuItem> atlasListButtons = new ArrayList<>();
+
     JMenu atlasList = new JMenu("Animated");
     JMenuBar atlasListBar = new JMenuBar();
 
@@ -106,5 +107,10 @@ public class PlayerCreatorTab implements PhaseCreatorTab {
     @Override
     public String getName() {
         return "Player Maker";
+    }
+
+    @Override
+    public void onHandlerSave() {
+
     }
 }

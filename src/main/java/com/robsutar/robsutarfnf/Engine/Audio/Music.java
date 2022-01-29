@@ -1,18 +1,32 @@
 package com.robsutar.robsutarfnf.Engine.Audio;
 
-import javax.sound.sampled.Clip;
+import com.robsutar.robsutarfnf.Engine.Files.FileManager;
+import com.robsutar.robsutarfnf.Engine.SystemPrinter;
+
+import java.io.File;
 
 public class Music extends WavAudio{
-    private float bpm;
+    public final File file;
 
-    public Music(Clip audio, float bpm) {
-        super(audio);
-        this.bpm=bpm;
+    public Music(File file) {
+        super(FileManager.loadWav(file));
+        this.file=file;
     }
 
-    public float getBpm() {return bpm;}
+    public String getName() {
+        return file.getName();
+    }
 
-    public void setBpm(float bpm) {
-        this.bpm=bpm;
+    public long getActualPosition(long maxPercent){
+        return audio.getMicrosecondPosition() *maxPercent/ audio.getMicrosecondLength();
+    }
+
+    public void setPosition(long actualPercent,long maxPercent){
+        long dx = actualPercent *audio.getMicrosecondLength()/maxPercent;
+        audio.setMicrosecondPosition(dx);
+    }
+
+    public double getBeatLength(float bpm){
+        return (audio.getMicrosecondLength()*Math.pow(10,-6)/60*bpm);
     }
 }

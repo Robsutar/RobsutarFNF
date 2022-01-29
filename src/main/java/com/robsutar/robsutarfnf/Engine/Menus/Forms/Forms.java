@@ -11,9 +11,9 @@ public class Forms extends JDialog {
 
     JPanel panel = new JPanel();
 
-    JButton ok = new JButton("ok");
+    public JButton ok = new JButton("ok");
 
-    JButton cancel = new JButton("cancel");
+    public JButton cancel = new JButton("cancel");
 
     private List<FormsAnswer> forms;
 
@@ -23,12 +23,10 @@ public class Forms extends JDialog {
         setTitle(formsTitle);
         setConfigs();
 
-        ok.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (formsCheckout()){
-                    act.actionPerformed(e);
-                }
+        ok.addActionListener(e -> {
+            if (formsCheckout()){
+                act.actionPerformed(e);
+                close();
             }
         });
 
@@ -77,6 +75,6 @@ public class Forms extends JDialog {
         this.setVisible(true);
     }
     public void close(){
-        this.setVisible(false);
+        this.dispose();
     }
 }
